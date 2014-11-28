@@ -1,6 +1,6 @@
 ﻿namespace GraveyardManagement
 {
-    partial class Form1
+    partial class EFTestForm
     {
         /// <summary>
         /// Required designer variable.
