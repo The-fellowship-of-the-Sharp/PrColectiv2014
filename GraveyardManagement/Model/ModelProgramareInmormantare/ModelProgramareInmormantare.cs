@@ -142,7 +142,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
                 CnpDecedat = programare.cnpDecedat, NumeDecedat = programare.Persoana.nume, PrenumeDecedat = programare.Persoana.prenume, Religie = programare.Religie.nume, Cimitir = programare.Mormant.Cimitir.nume, Parcela = programare.Mormant.parcela, NumarMormant = programare.Mormant.numar, Data = programare.dataInmormantarii
             }).ToList();
         }
-      /*BUGGED*/  public void ActualizeazaProgramareInmormantare(int id, string cimitirNou, string parcelaNoua, int? numarMormantNou, DateTime? dataNoua, string religieNoua)
+        public void ActualizeazaProgramareInmormantare(int id, string cimitirNou, string parcelaNoua, int? numarMormantNou, DateTime? dataNoua, string religieNoua)
         {
             var query =
                 from programare in entities.ProgramareInmormantare
@@ -159,15 +159,25 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             var programareDeActualizat = listaProgramari[0];
 
             string cimitir = null;
-            string parcela;
-            string numar;
-            string data;
-            string religie;
+            string parcela = null;
+            string numar = null;
+            string data = null;
+            string religie = null;
 
             if (cimitirNou != null)
             {
-                programareDeActualizat.Mormant.Cimitir.nume = cimitirNou;
-                cimitir = cimitirNou;
+                try
+                {
+                    var cimitirTemp = entities.Cimitir.First(cim => cim.nume == cimitirNou);
+                    programareDeActualizat.Mormant.cimitirId = cimitirTemp.id;
+                    programareDeActualizat.Mormant.Cimitir = cimitirTemp;
+
+                    cimitir = cimitirNou;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Cimitir invalid!");
+                }
             }
             else
             {
@@ -175,8 +185,21 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
             if (parcelaNoua != null)
             {
-                programareDeActualizat.Mormant.parcela = parcelaNoua;
-                parcela = parcelaNoua;
+                // exista mormant disponibil pe numarul actual si pe celalalta parcela?
+                var existaMormantPeCealaltaParcela =
+                    from mormant in entities.Mormant
+                    where mormant.numar == programareDeActualizat.Mormant.numar && mormant.parcela == parcelaNoua
+                    select mormant;
+
+                if (existaMormantPeCealaltaParcela.ToArray().Length == 0)
+                {
+                    throw new Exception("Nu exista mormantul cu numarul curent si pe cealalta parcela!");
+                }
+
+                var mormantTemp = existaMormantPeCealaltaParcela.ToArray()[0];
+
+                programareDeActualizat.Mormant = mormantTemp;
+                programareDeActualizat.mormantId = mormantTemp.id;
             }
             else
             {
@@ -184,7 +207,19 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
             if (numarMormantNou != null)
             {
-                programareDeActualizat.Mormant.numar = numarMormantNou;
+                var existaMormantCuNumarulNouPeParcela =
+                    from mormant in entities.Mormant
+                    where mormant.numar == numarMormantNou && mormant.parcela == programareDeActualizat.Mormant.parcela 
+                    select mormant;
+
+                if (existaMormantCuNumarulNouPeParcela.ToArray().Length == 0)
+                {
+                    throw new Exception("Nu exista Mormant cu acel numar pe parcela!");
+                }
+                var mormantTemp = existaMormantCuNumarulNouPeParcela.ToArray()[0];
+                programareDeActualizat.mormantId = mormantTemp.id;
+                programareDeActualizat.Mormant = mormantTemp;
+
                 numar = numarMormantNou.ToString();
             }
             else
@@ -202,8 +237,15 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
             if (religieNoua != null)
             {
-                programareDeActualizat.Religie.nume = religieNoua; // modifica si ID-ul??
-                religie = religieNoua;
+                try
+                {
+                    programareDeActualizat.religieId = (entities.Religie.First(rel => rel.nume == religieNoua)).id;
+                    religie = religieNoua;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Religie invalida!");
+                }
             }
             else
             {
