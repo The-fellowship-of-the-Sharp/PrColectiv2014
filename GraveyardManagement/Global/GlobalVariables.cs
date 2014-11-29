@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GraveyardManagement.Model;
+﻿using GraveyardManagement.Model;
+using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.Global
 {
     public static class GlobalVariables
     {
+        private static NecropolisEntities entities = new NecropolisEntities();
+
         public static User CurrentUser { get; set; }
+        public static NecropolisEntities Entities 
+        {
+            get { return entities; }
+        }
     }
 }

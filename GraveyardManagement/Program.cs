@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using GraveyardManagement.Global;
+using GraveyardManagement.Model.ModelProgramareInmormantare;
 using GraveyardManagement.View.Login;
 
 namespace GraveyardManagement
@@ -15,9 +14,15 @@ namespace GraveyardManagement
         [STAThread]
         static void Main()
         {
+            var mpi = new ModelProgramareInmormantare(GlobalVariables.Entities);
+            GlobalVariables.CurrentUser = new Model.User() { AccountName = "inspector007" };
+            mpi.StergeProgramareInmormantare(1);
+
+
+            /*
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new LoginForm());*/
         }
     }
 }

@@ -22,7 +22,7 @@ namespace GraveyardManagement.Model.EntityFramework
     
         public int id { get; set; }
         public Nullable<int> cimitirId { get; set; }
-        public Nullable<int> parcela { get; set; }
+        public string parcela { get; set; }
         public Nullable<int> numar { get; set; }
     
         public virtual ICollection<AlocareLoc> AlocareLoc { get; set; }

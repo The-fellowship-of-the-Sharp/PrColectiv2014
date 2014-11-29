@@ -197,7 +197,7 @@
           </Key>
           <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="cimitirId" Type="int" />
-          <Property Name="parcela" Type="int" />
+          <Property Name="parcela" Type="varchar(max)" />
           <Property Name="numar" Type="int" />
         </EntityType>
         <EntityType Name="Persoana">
@@ -686,7 +686,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="cimitirId" Type="Int32" />
-          <Property Name="parcela" Type="Int32" />
+          <Property Name="parcela" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="numar" Type="Int32" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_AlocareLoc_Mormant" FromRole="Mormant" ToRole="AlocareLoc" />
           <NavigationProperty Name="Cimitir" Relationship="NecropolisModel.FK_Mormant_Cimitir" FromRole="Mormant" ToRole="Cimitir" />
