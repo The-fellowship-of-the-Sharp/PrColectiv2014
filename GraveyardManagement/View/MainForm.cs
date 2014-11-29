@@ -6,7 +6,7 @@ namespace GraveyardManagement.View
 {
     public partial class MainForm : Form
     {
-        private WatermarkTextBox _textBoxCnp;
+        private WatermarkTextBox _textBoxCnpCetatean;
 
         public MainForm()
         {
@@ -17,7 +17,7 @@ namespace GraveyardManagement.View
 
         private void InitializeUiCetateni()
         {
-            _textBoxCnp = new WatermarkTextBox
+            _textBoxCnpCetatean = new WatermarkTextBox
             {
                 Cursor = Cursors.IBeam,
                 Location = new System.Drawing.Point(4, 69),
@@ -27,7 +27,7 @@ namespace GraveyardManagement.View
                 WatermarkText = "CNP"
             };
 
-            tabCetateni.Controls.Add(_textBoxCnp);
+            tabCetateni.Controls.Add(_textBoxCnpCetatean);
         }
     }
 }
