@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using GraveyardManagement.CustomControls;
+using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.View
 {
