@@ -126,7 +126,14 @@
     </Compile>
     <Compile Include="Model\ModelProgramareInmormantare\ModelProgramareInmormantare.cs" />
     <Compile Include="Model\ModelProgramareInmormantare\ProgramareInmormantareDTO.cs" />
+    <Compile Include="Model\Mormant\Domiciliu.cs" />
+    <Compile Include="Model\Mormant\ModelMormant.cs" />
+    <Compile Include="Model\Mormant\MormantCuProprietarDTO.cs" />
+    <Compile Include="Model\Mormant\MormantDTO.cs" />
+    <Compile Include="Model\Mormant\MormantFaraProprietarDTO.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Utils\CimitirDTO.cs" />
+    <Compile Include="Model\Utils\ModelUtils.cs" />
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
