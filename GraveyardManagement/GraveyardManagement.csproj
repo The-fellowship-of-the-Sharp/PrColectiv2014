@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ProgramareInmormantareService.cs" />
     <Compile Include="CustomControls\WatermarkTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -140,6 +141,18 @@
     <Compile Include="View\Login\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\ProgramareInmormantari\ActualizeazaProgramareForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ProgramareInmormantari\ActualizeazaProgramareForm.Designer.cs">
+      <DependentUpon>ActualizeazaProgramareForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProgramareInmormantari\AdaugaProgramareForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ProgramareInmormantari\AdaugaProgramareForm.Designer.cs">
+      <DependentUpon>AdaugaProgramareForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +167,12 @@
     </Compile>
     <EmbeddedResource Include="View\Login\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ProgramareInmormantari\ActualizeazaProgramareForm.resx">
+      <DependentUpon>ActualizeazaProgramareForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ProgramareInmormantari\AdaugaProgramareForm.resx">
+      <DependentUpon>AdaugaProgramareForm.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="Model\EntityFramework\NecropolisEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -173,6 +192,8 @@
       <LastGenOutput>NecropolisEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.EntityFramework.ProgramareInmormantare.datasource" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.ModelProgramareInmormantare.ProgramareInmormantareDTO.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
