@@ -60,7 +60,6 @@
       <DependentUpon>EFTestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\GlobalVariables.cs" />
-    <Compile Include="Model\EFTestModel.cs" />
     <Compile Include="Model\EntityFramework\AlocareCuProprietar.cs">
       <DependentUpon>NecropolisEntitites.tt</DependentUpon>
     </Compile>

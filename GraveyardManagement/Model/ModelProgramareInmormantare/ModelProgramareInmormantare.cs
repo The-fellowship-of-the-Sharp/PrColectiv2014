@@ -81,6 +81,16 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
         }
         public ProgramareInmormantareDTO CautaProgramareDupaDecedat(string cnpDecedat)
         {
+            var queryCNP =
+                from decedat in entities.Persoana
+                where decedat.cnp == cnpDecedat
+                select decedat;
+
+            if (queryCNP.ToArray().Length == 0)
+            {
+                throw new Exception("CNP-ul nu exista in baza de date!");
+            }
+
             var queryProgramare =
                 from programare in entities.ProgramareInmormantare
                 where programare.cnpDecedat == cnpDecedat
@@ -160,46 +170,21 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             string cimitir = null;
             string parcela = null;
-            string numar = null;
+            int? numar = null;
             string data = null;
             string religie = null;
 
             if (cimitirNou != null)
             {
-                try
-                {
-                    var cimitirTemp = entities.Cimitir.First(cim => cim.nume == cimitirNou);
-                    programareDeActualizat.Mormant.cimitirId = cimitirTemp.id;
-                    programareDeActualizat.Mormant.Cimitir = cimitirTemp;
-
                     cimitir = cimitirNou;
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Cimitir invalid!");
-                }
             }
             else
             {
-                cimitirNou = "null";
+                cimitir = "null";
             }
             if (parcelaNoua != null)
             {
-                // exista mormant disponibil pe numarul actual si pe celalalta parcela?
-                var existaMormantPeCealaltaParcela =
-                    from mormant in entities.Mormant
-                    where mormant.numar == programareDeActualizat.Mormant.numar && mormant.parcela == parcelaNoua
-                    select mormant;
-
-                if (existaMormantPeCealaltaParcela.ToArray().Length == 0)
-                {
-                    throw new Exception("Nu exista mormantul cu numarul curent si pe cealalta parcela!");
-                }
-
-                var mormantTemp = existaMormantPeCealaltaParcela.ToArray()[0];
-
-                programareDeActualizat.Mormant = mormantTemp;
-                programareDeActualizat.mormantId = mormantTemp.id;
+                parcela = parcelaNoua;
             }
             else
             {
@@ -207,24 +192,11 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
             if (numarMormantNou != null)
             {
-                var existaMormantCuNumarulNouPeParcela =
-                    from mormant in entities.Mormant
-                    where mormant.numar == numarMormantNou && mormant.parcela == programareDeActualizat.Mormant.parcela 
-                    select mormant;
-
-                if (existaMormantCuNumarulNouPeParcela.ToArray().Length == 0)
-                {
-                    throw new Exception("Nu exista Mormant cu acel numar pe parcela!");
-                }
-                var mormantTemp = existaMormantCuNumarulNouPeParcela.ToArray()[0];
-                programareDeActualizat.mormantId = mormantTemp.id;
-                programareDeActualizat.Mormant = mormantTemp;
-
-                numar = numarMormantNou.ToString();
+                numar = numarMormantNou;
             }
             else
             {
-                numar = "null";
+                numar = null;
             }
             if (dataNoua != null)
             {
@@ -252,11 +224,38 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
                 religie = "null";
             }
 
+            // exista mormantul dorit?
+            var queryMormant =
+                from mormant in entities.Mormant
+                where (mormant.Cimitir.nume == cimitir || cimitir == "null") && (mormant.numar == numar || numar == null) && (mormant.parcela == parcela || parcela == "null")
+                select mormant;
+
+            if (queryMormant.ToArray().Length == 0)
+            {
+                throw new Exception("Nu exista Mormantul cerut!");
+            }
+
+            var mormantDisponbil = queryMormant.ToArray()[0];
+
+            programareDeActualizat.mormantId = mormantDisponbil.id;
+            programareDeActualizat.Mormant = mormantDisponbil;
+
+
+            string nrMormant = null;
+
+            if (numar == null)
+            {
+                nrMormant = "null";
+            }
+            else
+            {
+                nrMormant = numar.ToString();
+            }
             var detalii = String.Format(
                 "PROGRAMARE-ACTUALIZARE-{0}-{1},{2},{3}-{4}-{5}",
-                programareDeActualizat.cnpDecedat, cimitir, parcela, numar, data, religie);
+                programareDeActualizat.cnpDecedat, cimitir, parcela, nrMormant, data, religie);
 
-            var intrareIstoric = new Istoric() { data =  DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii };
+            var intrareIstoric = new Istoric() { data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii };
 
             entities.Istoric.Add(intrareIstoric);
             
