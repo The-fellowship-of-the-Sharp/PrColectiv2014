@@ -56,78 +56,72 @@
     </Compile>
     <Compile Include="Controller\ILoginService.cs" />
     <Compile Include="Controller\LoginMock.cs" />
-    <Compile Include="EFTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EFTestForm.Designer.cs">
-      <DependentUpon>EFTestForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Global\GlobalVariables.cs" />
     <Compile Include="Model\EntityFramework\AlocareCuProprietar.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\AlocareFaraProprietar.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\AlocareLoc.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\CerereLoc.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Cimitir.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\ContractConcesiune.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Domiciliu.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Istoric.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Localitate.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Mormant.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\EntityFramework\NecropolisEntitites.Context.cs">
+    <Compile Include="Model\EntityFramework\NecropolisEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NecropolisEntitites.Context.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\EntityFramework\NecropolisEntitites.cs">
+    <Compile Include="Model\EntityFramework\NecropolisEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\EntityFramework\NecropolisEntitites.Designer.cs">
+    <Compile Include="Model\EntityFramework\NecropolisEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>NecropolisEntitites.edmx</DependentUpon>
+      <DependentUpon>NecropolisEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Persoana.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Poza.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\ProgramareInmormantare.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Reclamatie.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Religie.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Stadiu.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Strada.cs">
-      <DependentUpon>NecropolisEntitites.tt</DependentUpon>
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ModelProgramareInmormantare\ModelProgramareInmormantare.cs" />
     <Compile Include="Model\ModelProgramareInmormantare\ProgramareInmormantareDTO.cs" />
@@ -161,22 +155,22 @@
     <EmbeddedResource Include="View\Login\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\EntityFramework\NecropolisEntitites.edmx">
+    <EntityDeploy Include="Model\EntityFramework\NecropolisEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>NecropolisEntitites.Designer.cs</LastGenOutput>
+      <LastGenOutput>NecropolisEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\EntityFramework\NecropolisEntitites.Context.tt">
+    <None Include="Model\EntityFramework\NecropolisEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>NecropolisEntitites.edmx</DependentUpon>
-      <LastGenOutput>NecropolisEntitites.Context.cs</LastGenOutput>
+      <DependentUpon>NecropolisEntities.edmx</DependentUpon>
+      <LastGenOutput>NecropolisEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="Model\EntityFramework\NecropolisEntitites.edmx.diagram">
-      <DependentUpon>NecropolisEntitites.edmx</DependentUpon>
+    <None Include="Model\EntityFramework\NecropolisEntities.edmx.diagram">
+      <DependentUpon>NecropolisEntities.edmx</DependentUpon>
     </None>
-    <None Include="Model\EntityFramework\NecropolisEntitites.tt">
+    <None Include="Model\EntityFramework\NecropolisEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>NecropolisEntitites.edmx</DependentUpon>
-      <LastGenOutput>NecropolisEntitites.cs</LastGenOutput>
+      <DependentUpon>NecropolisEntities.edmx</DependentUpon>
+      <LastGenOutput>NecropolisEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
