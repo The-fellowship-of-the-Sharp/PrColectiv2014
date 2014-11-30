@@ -44,6 +44,7 @@ namespace GraveyardManagement.View
             this.tabCereri = new System.Windows.Forms.TabPage();
             this.tabContracte = new System.Windows.Forms.TabPage();
             this.tabInmormantari = new System.Windows.Forms.TabPage();
+            this.watermarkTextBox1 = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.tabControl1.SuspendLayout();
             this.tabCetateni.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCetateni)).BeginInit();
@@ -86,6 +87,7 @@ namespace GraveyardManagement.View
             // 
             // tabCetateni
             // 
+            this.tabCetateni.Controls.Add(this.watermarkTextBox1);
             this.tabCetateni.Controls.Add(this.butonActualizareCetatean);
             this.tabCetateni.Controls.Add(this.label2);
             this.tabCetateni.Controls.Add(this.butonCautareCetatean);
@@ -186,6 +188,14 @@ namespace GraveyardManagement.View
             this.tabInmormantari.Text = "Programare Inmormantari";
             this.tabInmormantari.UseVisualStyleBackColor = true;
             // 
+            // watermarkTextBox1
+            // 
+            this.watermarkTextBox1.Location = new System.Drawing.Point(4, 70);
+            this.watermarkTextBox1.Name = "watermarkTextBox1";
+            this.watermarkTextBox1.Size = new System.Drawing.Size(153, 20);
+            this.watermarkTextBox1.TabIndex = 7;
+            this.watermarkTextBox1.WatermarkText = "CNP";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,6 +206,7 @@ namespace GraveyardManagement.View
             this.Text = "MainForm";
             this.tabControl1.ResumeLayout(false);
             this.tabCetateni.ResumeLayout(false);
+            this.tabCetateni.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCetateni)).EndInit();
             this.ResumeLayout(false);
 
@@ -217,5 +228,6 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button butonAdaugareCetatean;
         private System.Windows.Forms.DataGridView gridViewCetateni;
+        private WatermarkTextBox watermarkTextBox1;
     }
 }

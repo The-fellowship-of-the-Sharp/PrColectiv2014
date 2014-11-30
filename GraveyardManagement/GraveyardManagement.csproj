@@ -123,6 +123,8 @@
     <Compile Include="Model\EntityFramework\Strada.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ModelCetatean\CetateanDto.cs" />
+    <Compile Include="Model\ModelCetatean\ModelCetatean.cs" />
     <Compile Include="Model\ModelProgramareInmormantare\ModelProgramareInmormantare.cs" />
     <Compile Include="Model\ModelProgramareInmormantare\ProgramareInmormantareDTO.cs" />
     <Compile Include="Model\User.cs" />

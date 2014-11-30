@@ -33,6 +33,10 @@ namespace GraveyardManagement.View.Login
                 GlobalVariables.CurrentUser = user; // clasa statica, in folderul Global
 
                 // TODO: apelat formul principal
+                this.Hide();
+
+                var mainForm = new MainForm();
+                mainForm.ShowDialog();
 
                 this.Dispose();
             }
