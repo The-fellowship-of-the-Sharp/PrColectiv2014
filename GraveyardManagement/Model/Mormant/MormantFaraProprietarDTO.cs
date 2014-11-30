@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraveyardManagement.Model.Mormant
 {
-    class MormantFaraProprietarDTO : MormantDTO
+    public class MormantFaraProprietarDTO : MormantDTO
     {
         private int numarSolicitareAsistentaSociala;
 

@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using GraveyardManagement.Controller;
 using GraveyardManagement.CustomControls;
 using GraveyardManagement.Model.ModelProgramareInmormantare;
@@ -12,6 +13,7 @@ namespace GraveyardManagement.View
     {
         private WatermarkTextBox _textBoxCnpCetatean;
         private ProgramareInmormantareService _programareInmormantare;
+        private ControllerMormant _mormant;
 
         public MainForm()
         {
@@ -20,6 +22,8 @@ namespace GraveyardManagement.View
             InitializeUiCetateni();
 
             InitializeUiProgramari();
+
+            InitializeUiMorminte();
         }
 
         private void InitializeUiCetateni()
@@ -50,6 +54,29 @@ namespace GraveyardManagement.View
                 g.DrawLine(Pens.Black, new Point(xStart, yFirstLine), new Point(xEnd, yFirstLine));
                 g.DrawLine(Pens.Black, new Point(xStart, ySecondLine), new Point(xEnd, ySecondLine));
             };
+        }
+
+        private void InitializeUiMorminte()
+        {
+            var cimitire = Global.GlobalVariables.Utils.IncarcaToateCimitirele();
+            foreach (var it in cimitire)
+            {
+                filtruCimitir.Items.Add(it);
+            }
+            filtruCimitir.DisplayMember = "Name";
+            this._mormant = new ControllerMormant();
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            morminteView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private void loadIntoMorminte(List<Model.Mormant.MormantDTO> list)
+        {
+            morminteView.Rows.Clear();
+            foreach (var it in list)
+            {
+                morminteView.Rows.Add(it.Cimitir, it.Parcela, it.NumarMormant,
+                    it.DataExpirare, it.Suprafata, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
+            }
         }
 
         private void cautaDupaDecedatButton_Click(object sender, System.EventArgs e)
@@ -110,5 +137,65 @@ namespace GraveyardManagement.View
             _programareInmormantare.AdaugaProgramareInmormantare(cnp, cimitir, parcela, nrMormant, data, religie);
             programariView.DataSource = null;
         }
+
+        private void adaugaMorminte_Click(object sender, System.EventArgs e)
+        {
+            var adauga = new View.Mormant.AdaugaMormant();
+            var result = adauga.ShowDialog();
+            if (result == DialogResult.Cancel) return;
+            var cimitir = adauga.getCimitir();
+            if (cimitir == null)
+            {
+                MessageBox.Show("Nu a fost selectat nici un cimitir");
+                return;
+            }
+            var parcela = adauga.getParcela();
+            try 
+            {
+                _mormant.AdaugaMormant(cimitir.Id, parcela);
+                loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            }
+            catch (System.Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                loadIntoMorminte(this._mormant.CautaMormantDupaDecedat(filtruCNP.Text));
+            }
+            catch (System.Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void cautaLoc_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
+                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name, 
+                    filtruParcela.Text, 
+                    (filtruNumar.Text.Length==0 ? "0" : filtruNumar.Text)));
+            }
+            catch (System.Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void button2_Click(object sender, System.EventArgs e)
+        {
+            this._mormant.ElibereazaMormant(
+                (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
+                );
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+        }
+
+
     }
 }

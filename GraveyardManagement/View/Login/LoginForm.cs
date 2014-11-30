@@ -15,6 +15,11 @@ namespace GraveyardManagement.View.Login
             loginService = new LoginMock(); // TODO: asta trebuie schimbat cu un serviciu autentic ... candva
         }
 
+        private void applicationClose(object sender, EventArgs e) 
+        {
+            Application.Exit();
+        }
+
         private void btn_Login_Click(object sender, EventArgs e)
         {
             var username = txt_Username.Text.Trim();
@@ -31,10 +36,12 @@ namespace GraveyardManagement.View.Login
             {
                 lbl_LoginError.Hide();
                 GlobalVariables.CurrentUser = user; // clasa statica, in folderul Global
-
+                var mainForm = new MainForm();
+                mainForm.Show();
+                mainForm.FormClosed += applicationClose;
                 // TODO: apelat formul principal
 
-                this.Dispose();
+                this.Hide();
             }
         }
     }
