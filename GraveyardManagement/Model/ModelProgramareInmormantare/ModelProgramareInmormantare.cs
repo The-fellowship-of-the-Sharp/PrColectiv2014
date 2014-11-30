@@ -15,7 +15,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             this.entities = entities;
         }
 
-        public void AdaugaProgramareInmormantare(string cnpDecedat, string cimitir, string parcela, int numarMormant, DateTime? data, int religieId)
+        public void AdaugaProgramareInmormantare(string cnpDecedat, string cimitir, string parcela, int numarMormant, DateTime? data, string religieNume)
         {
             var queryDecedat =
                 from persoana in entities.Persoana
@@ -50,7 +50,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             var queryReligie =
                 from religie in entities.Religie
-                where religie.id == religieId
+                where religie.nume.Equals(religieNume) 
                 select religie;
 
             var listaReligii = queryReligie.ToArray();
@@ -68,8 +68,8 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
                 entities.ProgramareInmormantare.Add(programare);
 
                 var detalii = String.Format("PROGRAMARE-ADAUGARE-{0}-{1},{2},{3}-{4}-{5}", programare.cnpDecedat, programare.Mormant.Cimitir.nume, programare.Mormant.parcela, programare.Mormant.numar, programare.dataInmormantarii, programare.Religie.nume);
-                var intrareIstoric = new Istoric() {data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii};
-                entities.Istoric.Add(intrareIstoric);
+                //var intrareIstoric = new Istoric() {data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii};
+                //entities.Istoric.Add(intrareIstoric);
 
                 entities.SaveChanges();
             }
@@ -83,12 +83,12 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
         {
             var queryCNP =
                 from decedat in entities.Persoana
-                where decedat.cnp == cnpDecedat
+                where decedat.cnp.Equals(cnpDecedat)
                 select decedat;
 
             if (queryCNP.ToArray().Length == 0)
             {
-                throw new Exception("CNP-ul nu exista in baza de date!");
+                return null;
             }
 
             var queryProgramare =
@@ -105,6 +105,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             var programareGasita = listaProgramari[0];
             var progDTO = new ProgramareInmormantareDTO()
             {
+                Id = programareGasita.id,
                 CnpDecedat = programareGasita.cnpDecedat,   
                 NumeDecedat = programareGasita.Persoana.nume, 
                 PrenumeDecedat =  programareGasita.Persoana.prenume, 
@@ -149,7 +150,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             return query.ToArray().Select(programare => new ProgramareInmormantareDTO()
             {
-                CnpDecedat = programare.cnpDecedat, NumeDecedat = programare.Persoana.nume, PrenumeDecedat = programare.Persoana.prenume, Religie = programare.Religie.nume, Cimitir = programare.Mormant.Cimitir.nume, Parcela = programare.Mormant.parcela, NumarMormant = programare.Mormant.numar, Data = programare.dataInmormantarii
+                Id = programare.id, CnpDecedat = programare.cnpDecedat, NumeDecedat = programare.Persoana.nume, PrenumeDecedat = programare.Persoana.prenume, Religie = programare.Religie.nume, Cimitir = programare.Mormant.Cimitir.nume, Parcela = programare.Mormant.parcela, NumarMormant = programare.Mormant.numar, Data = programare.dataInmormantarii
             }).ToList();
         }
         public void ActualizeazaProgramareInmormantare(int id, string cimitirNou, string parcelaNoua, int? numarMormantNou, DateTime? dataNoua, string religieNoua)
@@ -211,7 +212,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             {
                 try
                 {
-                    programareDeActualizat.religieId = (entities.Religie.First(rel => rel.nume == religieNoua)).id;
+                    programareDeActualizat.religieId = entities.Religie.First(rel => rel.nume == religieNoua).id;
                     religie = religieNoua;
                 }
                 catch (Exception)
@@ -255,9 +256,9 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
                 "PROGRAMARE-ACTUALIZARE-{0}-{1},{2},{3}-{4}-{5}",
                 programareDeActualizat.cnpDecedat, cimitir, parcela, nrMormant, data, religie);
 
-            var intrareIstoric = new Istoric() { data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii };
-
-            entities.Istoric.Add(intrareIstoric);
+            //var intrareIstoric = new Istoric() { data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii };
+            //
+            //entities.Istoric.Add(intrareIstoric);
             
             entities.SaveChanges();
         }
@@ -279,15 +280,15 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             try
             {
                 entities.ProgramareInmormantare.Remove(programareDeSters);
-                var intrareIstoric = new Istoric()
-                {
-                    data = DateTime.Now,
-                    numeUtilizator = GlobalVariables.CurrentUser.AccountName,
-                    numarDocument = null,
-                    detalii = detalii
-                };
-
-                entities.Istoric.Add(intrareIstoric); // logare stergere
+                //var intrareIstoric = new Istoric()
+                //{
+                //    data = DateTime.Now,
+                //    numeUtilizator = GlobalVariables.CurrentUser.AccountName,
+                //    numarDocument = null,
+                //    detalii = detalii
+                //};
+                //
+                //entities.Istoric.Add(intrareIstoric); // logare stergere
 
                 entities.SaveChanges();
 

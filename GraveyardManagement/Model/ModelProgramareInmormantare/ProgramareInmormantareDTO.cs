@@ -8,6 +8,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 {
     public class ProgramareInmormantareDTO
     {
+        public int Id { get; set; }
         public string CnpDecedat { get; set; }
         public string NumeDecedat { get; set; }
         public string PrenumeDecedat { get; set; }
