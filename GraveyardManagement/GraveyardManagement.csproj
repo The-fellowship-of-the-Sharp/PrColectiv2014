@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\CetateanService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
     <Compile Include="CustomControls\WatermarkTextBox.cs">
       <SubType>Component</SubType>
@@ -136,6 +137,18 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Utils\CimitirDTO.cs" />
     <Compile Include="Model\Utils\ModelUtils.cs" />
+    <Compile Include="View\Cetatean\ActualizareCetateanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cetatean\ActualizareCetateanForm.Designer.cs">
+      <DependentUpon>ActualizareCetateanForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Cetatean\AdaugareCetateanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cetatean\AdaugareCetateanForm.Designer.cs">
+      <DependentUpon>AdaugareCetateanForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +175,12 @@
     <Compile Include="View\ProgramareInmormantari\AdaugaProgramareForm.Designer.cs">
       <DependentUpon>AdaugaProgramareForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\Cetatean\ActualizareCetateanForm.resx">
+      <DependentUpon>ActualizareCetateanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Cetatean\AdaugareCetateanForm.resx">
+      <DependentUpon>AdaugareCetateanForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,6 +221,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.EntityFramework.ProgramareInmormantare.datasource" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.ModelCetatean.CetateanDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelProgramareInmormantare.ProgramareInmormantareDTO.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

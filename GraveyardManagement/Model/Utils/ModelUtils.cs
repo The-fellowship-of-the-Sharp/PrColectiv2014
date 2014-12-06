@@ -1,29 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.Model.Utils
 {
     class ModelUtils
     {
-        private readonly NecropolisEntities entities;
+        private readonly NecropolisEntities _entities;
 
         public ModelUtils(NecropolisEntities entities)
         {
-            this.entities = entities;
+            _entities = entities;
         }
         
         public List<CimitirDTO> IncarcaToateCimitirele()
         {
-            return (from it in entities.Cimitir
+            return (from it in _entities.Cimitir
                    select new CimitirDTO
                    {
                        Id = it.id,
                        Name = it.nume
                    }).ToList();
+        }
+
+        public List<string> IncarcaToateLocalitatile()
+        {
+            return _entities.Localitate.Select(loc => loc.nume).ToList();
         }
     }
 }

@@ -16,23 +16,27 @@ namespace GraveyardManagement.Model.ModelCetatean
         public void AdaugaCetatean(string cnp, string nume, string prenume, string localitate, string strada, string numar, string alteInformatii)
         {
             //ceva verificari: daca localitatea exista, daca strada exista
-            var existaLocalitatea = _entities.Localitate.FirstOrDefault(loc => loc.nume == localitate);
+            var localitateDb = _entities.Localitate.FirstOrDefault(loc => loc.nume == localitate);
 
-            if (existaLocalitatea == null)
+            if (localitateDb == null)
             {
                 throw new Exception(string.Format("Localitatea {0} nu exista printre localitatile inregistrate.", localitate));
             }
 
-            var existaStrada = _entities.Strada.FirstOrDefault(str => str.nume == strada && str.localitateId == existaLocalitatea.id);
+            var stradaDb = _entities.Strada.FirstOrDefault(str => str.nume == strada && str.localitateId == localitateDb.id);
 
-            if (existaStrada == null)
+            if (stradaDb == null)
             {
-                throw new Exception(string.Format("Strada {0} nu exista printre strazile inregistrate.", strada));
+                stradaDb = _entities.Strada.Add(new Strada
+                {
+                    nume = strada,
+                    localitateId = localitateDb.id
+                });
             }
 
             var domiciliuNou = new Domiciliu
             {
-                stradaId = existaStrada.id,
+                stradaId = stradaDb.id,
                 numar = numar,
                 alteInformatii = alteInformatii
             };
@@ -74,11 +78,11 @@ namespace GraveyardManagement.Model.ModelCetatean
                 throw new Exception(string.Format("Localitatea {0} nu exista printre localitatile inregistrate.", localitateNoua));
             }
 
-            var stradaDb = _entities.Strada.FirstOrDefault(str => str.nume == stradaNoua && str.localitateId == localitateDb.id);
+            var stradaDb = _entities.Strada.FirstOrDefault(str => str.localitateId == localitateDb.id);
 
             if (stradaDb == null)
             {
-                throw new Exception(string.Format("Strada {0} nu exista printre strazile inregistrate.", stradaNoua));
+                throw new Exception(string.Format("Strada curenta aferenta cetateanului {0} {1} cu CNP-ul {2} nu este valida.", cetateanDb.nume, cetateanDb.prenume, cetateanDb.cnp));//nu ar trebui sa fie aruncata
             }
 
             //introdu noile informatii in baza de date
