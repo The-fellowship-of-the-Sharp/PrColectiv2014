@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraveyardManagement.Model.Mormant
 {
-    class MormantCuProprietarDTO : MormantDTO
+    public class MormantCuProprietarDTO : MormantDTO
     {
         private String numeDetinator;
 

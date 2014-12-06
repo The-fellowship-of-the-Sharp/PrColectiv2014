@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraveyardManagement.Model.Utils
 {
-    class CimitirDTO
+    public class CimitirDTO
     {
         private int id;
 

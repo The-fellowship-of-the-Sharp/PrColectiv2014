@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraveyardManagement.Model.Mormant
 {
-    class MormantDTO
+    public class MormantDTO
     {
         private int id;
 
