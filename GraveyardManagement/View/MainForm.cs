@@ -1,0 +1,257 @@
+﻿using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using GraveyardManagement.Controller;
+using GraveyardManagement.CustomControls;
+using GraveyardManagement.Model.ModelProgramareInmormantare;
+using GraveyardManagement.View.ProgramareInmormantari;
+using GraveyardManagement.View.Decedat;
+using GraveyardManagement.Model.ModelDecedat;
+
+namespace GraveyardManagement.View
+{
+    public partial class MainForm : Form
+    {
+        private WatermarkTextBox _textBoxCnpCetatean;
+        private ProgramareInmormantareService _programareInmormantare;
+        private ControllerMormant _mormant;
+        private DecedatService _decedatService;
+
+        public MainForm()
+        {
+            InitializeComponent();
+
+            InitializeUiCetateni();
+
+            InitializeUiProgramari();
+
+            InitializeUiMorminte();
+
+            InitializeDecedati();
+        }
+
+        private void InitializeUiCetateni()
+        {
+            _textBoxCnpCetatean = new WatermarkTextBox
+            {
+                Cursor = Cursors.IBeam,
+                Location = new Point(4, 69),
+                Name = "textBoxCnp",
+                Size = new Size(153, 20),
+                TabIndex = 3,
+                WatermarkText = "CNP"
+            };
+
+            tabCetateni.Controls.Add(_textBoxCnpCetatean);
+        }
+
+        private void InitializeUiProgramari()
+        {
+            _programareInmormantare = new ProgramareInmormantareService();
+            tabInmormantari.Paint += (sender, args) =>
+            {
+                var g = args.Graphics;
+                var xStart = adaugaButton.Location.X;
+                var xEnd = cautaDupaDecedatButton.Location.X + cautaDupaDecedatButton.Size.Width;
+                var yFirstLine = (cnpTextBox.Location.Y + adaugaButton.Location.Y + adaugaButton.Size.Height)/2;
+                var ySecondLine = (actualizaButton.Location.Y + endDatePicker.Location.Y + endDatePicker.Size.Height)/2;
+                g.DrawLine(Pens.Black, new Point(xStart, yFirstLine), new Point(xEnd, yFirstLine));
+                g.DrawLine(Pens.Black, new Point(xStart, ySecondLine), new Point(xEnd, ySecondLine));
+            };
+        }
+
+        private void InitializeUiMorminte()
+        {
+            var cimitire = Global.GlobalVariables.Utils.IncarcaToateCimitirele();
+            foreach (var it in cimitire)
+            {
+                filtruCimitir.Items.Add(it);
+            }
+            filtruCimitir.DisplayMember = "Name";
+            this._mormant = new ControllerMormant();
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            morminteView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private void loadIntoMorminte(List<Model.Mormant.MormantDTO> list)
+        {
+            morminteView.Rows.Clear();
+            foreach (var it in list)
+            {
+                morminteView.Rows.Add(it.Cimitir, it.Parcela, it.NumarMormant,
+                    it.DataExpirare, it.Suprafata, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
+            }
+        }
+
+        private void cautaDupaDecedatButton_Click(object sender, System.EventArgs e)
+        {
+            var cnp = cnpTextBox.Text;
+            var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
+            programariView.DataSource = new[] {programare};
+        }
+
+        private void cautaInIntervalButton_Click(object sender, System.EventArgs e)
+        {
+            programariView.DataSource = _programareInmormantare.CautaProgramariInInterval(startDatePicker.Value,
+                endDatePicker.Value);
+        }
+
+        private void stergeButton_Click(object sender, System.EventArgs e)
+        {
+            var selected = programariView.SelectedRows.Cast<DataGridViewRow>();
+            var programari = selected
+                .Select(row => row.DataBoundItem)
+                .Cast<ProgramareInmormantareDTO>();
+            foreach (var programare in programari)
+            {
+                _programareInmormantare.StergeProgramareInmormantare(programare.Id);
+            }
+            programariView.DataSource = null;
+        }
+
+        private void actualizaButton_Click(object sender, System.EventArgs e)
+        {
+            var selectedItems = programariView.SelectedRows.Cast<DataGridViewRow>();
+            if (selectedItems.Count() != 1) return;
+            var selected = selectedItems
+                .Select(row => row.DataBoundItem)
+                .Cast<ProgramareInmormantareDTO>()
+                .First();
+            var actualizeazaForm = new ActualizeazaProgramareForm();
+            actualizeazaForm.SetValues(selected.Cimitir, selected.Parcela, selected.NumarMormant, selected.Data, selected.Religie);
+            var result = actualizeazaForm.ShowDialog();
+            if (result == DialogResult.Cancel) return;
+            _programareInmormantare.ActualizeazaProgramareInmormantare(selected.Id, actualizeazaForm.GetCimitir(), actualizeazaForm.GetParcela(), actualizeazaForm.GetNumarMormant(), actualizeazaForm.GetDateTime(), actualizeazaForm.GetReligie());
+            programariView.DataSource = null;
+        }
+
+        private void adaugaButton_Click(object sender, System.EventArgs e)
+        {
+            var adaugaForm = new AdaugaProgramareForm();
+            var result = adaugaForm.ShowDialog();
+            if (result == DialogResult.Cancel) return;
+            var religie = adaugaForm.GetReligie();
+            var cnp = adaugaForm.GetCNP();
+            var cimitir = adaugaForm.GetCimitir();
+            var data = adaugaForm.GetDateTime();
+            var parcela = adaugaForm.GetParcela();
+            var nrMormant = adaugaForm.GetNumarMormant();
+            if (religie.Trim().Equals("") || cnp.Trim().Equals("") || cimitir.Trim().Equals("") ||
+                parcela.Trim().Equals("")) return;
+            _programareInmormantare.AdaugaProgramareInmormantare(cnp, cimitir, parcela, nrMormant, data, religie);
+            programariView.DataSource = null;
+        }
+
+        private void adaugaMorminte_Click(object sender, System.EventArgs e)
+        {
+            var adauga = new View.Mormant.AdaugaMormant();
+            var result = adauga.ShowDialog();
+            if (result == DialogResult.Cancel) return;
+            var cimitir = adauga.getCimitir();
+            if (cimitir == null)
+            {
+                MessageBox.Show("Nu a fost selectat nici un cimitir");
+                return;
+            }
+            var parcela = adauga.getParcela();
+            try 
+            {
+                _mormant.AdaugaMormant(cimitir.Id, parcela);
+                loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            }
+            catch (System.Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                loadIntoMorminte(this._mormant.CautaMormantDupaDecedat(filtruCNP.Text));
+            }
+            catch (System.Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void cautaLoc_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
+                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name, 
+                    filtruParcela.Text, 
+                    (filtruNumar.Text.Length==0 ? "0" : filtruNumar.Text)));
+            }
+            catch (System.Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private void button2_Click(object sender, System.EventArgs e)
+        {
+            this._mormant.ElibereazaMormant(
+                (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
+                );
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+        }
+
+        private void loadIntoDecedato(List<Model.ModelDecedat.DecedatDTO> listDecedati)
+        {
+            decedatGridView.Rows.Clear();
+            foreach (var decedat in listDecedati)
+            {
+                decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume);
+            }
+        }
+
+        #region Decedati
+
+        private void InitializeDecedati()
+        {
+            _decedatService = new DecedatService();
+
+            foreach (var decedat in _decedatService.TotiDecedatii())
+            {
+                decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
+            }
+        }
+
+        private void buttonAdauga_Click(object sender, System.EventArgs e)
+        {
+            var form = new AdaugareDecedat();
+            form.ShowDialog();
+        }
+
+        private void buttonCauta_Click(object sender, System.EventArgs e)
+        {
+            DecedatDTO decedat;
+
+            try
+            {
+                decedat = _decedatService.CautaDecedat(CNPwatermarkTextBox.Text.Trim());
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            decedatGridView.Rows.Clear();
+            decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
+
+            if (decedat.Cimitir == "")
+            {
+                nuAreAlocatLabel.Visible = true;
+            }
+        }
+
+        #endregion
+
+    }
+}

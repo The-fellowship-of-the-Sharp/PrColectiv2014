@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="93fb7b1e18a046eba0cf0936dff6dc18" Name="Diagram1">
+        <EntityTypeShape EntityType="NecropolisModel.AlocareCuProprietar" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.AlocareFaraProprietar" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.AlocareLoc" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.CerereLoc" Width="1.5" PointX="12" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Cimitir" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.ContractConcesiune" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Domiciliu" Width="1.5" PointX="7.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Istoric" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Localitate" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Mormant" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Persoana" Width="1.5" PointX="9.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Poza" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.ProgramareInmormantare" Width="1.5" PointX="12" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Reclamatie" Width="1.5" PointX="12" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Religie" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Stadiu" Width="1.5" PointX="9.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="NecropolisModel.Strada" Width="1.5" PointX="5.25" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK__AlocareCu__pozaI__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_AlocareCuProprietar_AlocareLoc" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_AlocareFaraProprietar" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_AlocalreLoc_Persoana" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_AlocareLoc_Mormant" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_ContractConcesiune_AlocareLoc" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_CerereLoc_Persoana" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_CerereLoc_Stadiu" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_Mormant_Cimitir" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_Domiciliu_Strada" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_Persoana_Domiciliu" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_Strada_Localitate" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_ProgramareInmormantare_Mormant" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_ProgramareInmormantare_Persoana" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_Reclamatie_Persoana" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.FK_ProgramareInmormantare_Religie" ManuallyRouted="false" />
+        <AssociationConnector Association="NecropolisModel.DetinatorContractConcesiune" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using GraveyardManagement.Global;
+using GraveyardManagement.Model.ModelProgramareInmormantare;
+using GraveyardManagement.View;
+using GraveyardManagement.View.Login;
 
 namespace GraveyardManagement
 {
@@ -16,7 +17,7 @@ namespace GraveyardManagement
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new LoginForm());
         }
     }
 }
