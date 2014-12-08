@@ -8,6 +8,8 @@ using GraveyardManagement.Model.ModelCetatean;
 using GraveyardManagement.Model.ModelProgramareInmormantare;
 using GraveyardManagement.View.Cetatean;
 using GraveyardManagement.View.ProgramareInmormantari;
+using GraveyardManagement.View.Decedat;
+using GraveyardManagement.Model.ModelDecedat;
 
 namespace GraveyardManagement.View
 {
@@ -16,6 +18,7 @@ namespace GraveyardManagement.View
         private ProgramareInmormantareService _programareInmormantare;
         private ControllerMormant _mormant;
         private CetateanService _cetateanService;
+        private DecedatService _decedatService;
 
         public MainForm()
         {
@@ -24,6 +27,8 @@ namespace GraveyardManagement.View
             InitializeUiProgramari();
 
             InitializeUiMorminte();
+
+            InitializeDecedati();
 
             InitializeCetateni();
         }
@@ -184,6 +189,57 @@ namespace GraveyardManagement.View
             loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
         }
 
+        private void loadIntoDecedato(List<Model.ModelDecedat.DecedatDTO> listDecedati)
+        {
+            decedatGridView.Rows.Clear();
+            foreach (var decedat in listDecedati)
+            {
+                decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume);
+            }
+        }
+
+        #region Decedati
+
+        private void InitializeDecedati()
+        {
+            _decedatService = new DecedatService();
+
+            foreach (var decedat in _decedatService.TotiDecedatii())
+            {
+                decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
+            }
+        }
+
+        private void buttonAdauga_Click(object sender, System.EventArgs e)
+        {
+            var form = new AdaugareDecedat();
+            form.ShowDialog();
+        }
+
+        private void buttonCauta_Click(object sender, System.EventArgs e)
+        {
+            DecedatDTO decedat;
+
+            try
+            {
+                decedat = _decedatService.CautaDecedat(CNPwatermarkTextBox.Text.Trim());
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            decedatGridView.Rows.Clear();
+            decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
+
+            if (decedat.Cimitir == "")
+            {
+                nuAreAlocatLabel.Visible = true;
+            }
+        }
+
+        #endregion
 
         #endregion
 
