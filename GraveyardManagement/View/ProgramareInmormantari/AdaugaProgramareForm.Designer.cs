@@ -28,23 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cnpTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.cimitirComboBox = new System.Windows.Forms.ComboBox();
-            this.parcelaTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
-            this.numarMormantTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.religieComboBox = new System.Windows.Forms.ComboBox();
             this.renuntaButton = new System.Windows.Forms.Button();
             this.confirmaButton = new System.Windows.Forms.Button();
+            this.numarMormantTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
+            this.parcelaTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
+            this.cnpTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.SuspendLayout();
-            // 
-            // cnpTextBox
-            // 
-            this.cnpTextBox.Location = new System.Drawing.Point(12, 12);
-            this.cnpTextBox.Name = "cnpTextBox";
-            this.cnpTextBox.Size = new System.Drawing.Size(151, 20);
-            this.cnpTextBox.TabIndex = 0;
-            this.cnpTextBox.WatermarkText = "Cnp decedat";
             // 
             // cimitirComboBox
             // 
@@ -54,22 +46,6 @@
             this.cimitirComboBox.Name = "cimitirComboBox";
             this.cimitirComboBox.Size = new System.Drawing.Size(151, 21);
             this.cimitirComboBox.TabIndex = 1;
-            // 
-            // parcelaTextBox
-            // 
-            this.parcelaTextBox.Location = new System.Drawing.Point(12, 91);
-            this.parcelaTextBox.Name = "parcelaTextBox";
-            this.parcelaTextBox.Size = new System.Drawing.Size(151, 20);
-            this.parcelaTextBox.TabIndex = 2;
-            this.parcelaTextBox.WatermarkText = "Parcela";
-            // 
-            // numarMormantTextBox
-            // 
-            this.numarMormantTextBox.Location = new System.Drawing.Point(169, 12);
-            this.numarMormantTextBox.Name = "numarMormantTextBox";
-            this.numarMormantTextBox.Size = new System.Drawing.Size(162, 20);
-            this.numarMormantTextBox.TabIndex = 3;
-            this.numarMormantTextBox.WatermarkText = "Numar mormant";
             // 
             // datePicker
             // 
@@ -105,6 +81,30 @@
             this.confirmaButton.Text = "Confirma";
             this.confirmaButton.UseVisualStyleBackColor = true;
             // 
+            // numarMormantTextBox
+            // 
+            this.numarMormantTextBox.Location = new System.Drawing.Point(169, 12);
+            this.numarMormantTextBox.Name = "numarMormantTextBox";
+            this.numarMormantTextBox.Size = new System.Drawing.Size(162, 20);
+            this.numarMormantTextBox.TabIndex = 3;
+            this.numarMormantTextBox.WatermarkText = "Numar mormant";
+            // 
+            // parcelaTextBox
+            // 
+            this.parcelaTextBox.Location = new System.Drawing.Point(12, 91);
+            this.parcelaTextBox.Name = "parcelaTextBox";
+            this.parcelaTextBox.Size = new System.Drawing.Size(151, 20);
+            this.parcelaTextBox.TabIndex = 2;
+            this.parcelaTextBox.WatermarkText = "Parcela";
+            // 
+            // cnpTextBox
+            // 
+            this.cnpTextBox.Location = new System.Drawing.Point(12, 12);
+            this.cnpTextBox.Name = "cnpTextBox";
+            this.cnpTextBox.Size = new System.Drawing.Size(151, 20);
+            this.cnpTextBox.TabIndex = 0;
+            this.cnpTextBox.WatermarkText = "Cnp decedat";
+            // 
             // AdaugaProgramareForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -119,7 +119,7 @@
             this.Controls.Add(this.cimitirComboBox);
             this.Controls.Add(this.cnpTextBox);
             this.Name = "AdaugaProgramareForm";
-            this.Text = "AdaugaProgramareForm";
+            this.Text = "AdaugaProgramare";
             this.ResumeLayout(false);
             this.PerformLayout();
 

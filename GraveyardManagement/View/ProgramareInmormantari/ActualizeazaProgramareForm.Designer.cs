@@ -109,7 +109,7 @@
             this.Controls.Add(this.parcelaTextBox);
             this.Controls.Add(this.cimitirComboBox);
             this.Name = "ActualizeazaProgramareForm";
-            this.Text = "ActualizeazaProgramareForm";
+            this.Text = "ActualizeazaProgramare";
             this.ResumeLayout(false);
             this.PerformLayout();
 
