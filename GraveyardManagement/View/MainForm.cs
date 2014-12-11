@@ -76,7 +76,10 @@ namespace GraveyardManagement.View
         {
             var cnp = cnpTextBox.Text;
             var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
-            programariView.DataSource = new[] {programare};
+            if (programare != null)
+            {
+                programariView.DataSource = new[] { programare };   
+            }
         }
 
         private void cautaInIntervalButton_Click(object sender, EventArgs e)
@@ -106,6 +109,7 @@ namespace GraveyardManagement.View
                 .Select(row => row.DataBoundItem)
                 .Cast<ProgramareInmormantareDTO>()
                 .First();
+            if (selected == null) return;
             var actualizeazaForm = new ActualizeazaProgramareForm();
             actualizeazaForm.SetValues(selected.Cimitir, selected.Parcela, selected.NumarMormant, selected.Data, selected.Religie);
             var result = actualizeazaForm.ShowDialog();
@@ -126,7 +130,7 @@ namespace GraveyardManagement.View
             var parcela = adaugaForm.GetParcela();
             var nrMormant = adaugaForm.GetNumarMormant();
             if (religie.Trim().Equals("") || cnp.Trim().Equals("") || cimitir.Trim().Equals("") ||
-                parcela.Trim().Equals("")) return;
+                parcela.Trim().Equals("") || cimitir.Equals(@"Cimitir") || religie.Equals(@"Religie")) return;
             _programareInmormantare.AdaugaProgramareInmormantare(cnp, cimitir, parcela, nrMormant, data, religie);
             programariView.DataSource = null;
         }

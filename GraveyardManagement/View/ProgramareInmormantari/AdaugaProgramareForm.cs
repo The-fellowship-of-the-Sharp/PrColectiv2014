@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GraveyardManagement.Global;
 
@@ -21,6 +15,8 @@ namespace GraveyardManagement.View.ProgramareInmormantari
             confirmaButton.DialogResult = DialogResult.OK;
 
             var entities = GlobalVariables.Entities;
+            cimitirComboBox.Items.Add(@"Cimitir");
+            religieComboBox.Items.Add(@"Religie");
             foreach (var c in entities.Cimitir.ToArray())
             {
                 cimitirComboBox.Items.Add(c.nume);
@@ -29,6 +25,8 @@ namespace GraveyardManagement.View.ProgramareInmormantari
             {
                 religieComboBox.Items.Add(r.nume);
             }
+            cimitirComboBox.SelectedIndex = 0;
+            religieComboBox.SelectedIndex = 0;
         }
 
         public string GetCimitir()

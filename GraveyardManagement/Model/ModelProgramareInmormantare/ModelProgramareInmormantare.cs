@@ -8,17 +8,17 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 {
     public class ModelProgramareInmormantare
     {
-        private readonly NecropolisEntities entities;
+        private readonly NecropolisEntities _entities;
 
         public ModelProgramareInmormantare(NecropolisEntities entities)
         {
-            this.entities = entities;
+            _entities = entities;
         }
 
         public void AdaugaProgramareInmormantare(string cnpDecedat, string cimitir, string parcela, int numarMormant, DateTime? data, string religieNume)
         {
             var queryDecedat =
-                from persoana in entities.Persoana
+                from persoana in _entities.Persoana
                 where persoana.cnp == cnpDecedat
                 select persoana;
 
@@ -28,7 +28,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
 
             var queryExistaDejaProgramare =
-                from progr in entities.ProgramareInmormantare
+                from progr in _entities.ProgramareInmormantare
                 where progr.cnpDecedat == cnpDecedat
                 select progr.cnpDecedat;
 
@@ -38,7 +38,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
 
             var queryMormant =
-                from mormant in entities.Mormant
+                from mormant in _entities.Mormant
                 where mormant.Cimitir.nume == cimitir && mormant.parcela == parcela && mormant.numar == numarMormant
                 select mormant;
             var listaMorminte = queryMormant.ToArray();
@@ -49,7 +49,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             var mormantulAsociatProgramarii = listaMorminte[0];
 
             var queryReligie =
-                from religie in entities.Religie
+                from religie in _entities.Religie
                 where religie.nume.Equals(religieNume) 
                 select religie;
 
@@ -61,28 +61,20 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             var religiaDecedatului = listaReligii[0];
 
-            var programare = new EntityFramework.ProgramareInmormantare(){ cnpDecedat = cnpDecedat, dataInmormantarii = data, Mormant = mormantulAsociatProgramarii, Religie = religiaDecedatului};
+            var programare = new ProgramareInmormantare{ cnpDecedat = cnpDecedat, dataInmormantarii = data, Mormant = mormantulAsociatProgramarii, Religie = religiaDecedatului};
 
-            try
-            {
-                entities.ProgramareInmormantare.Add(programare);
+            _entities.ProgramareInmormantare.Add(programare);
 
-                var detalii = String.Format("PROGRAMARE-ADAUGARE-{0}-{1},{2},{3}-{4}-{5}", programare.cnpDecedat, programare.Mormant.Cimitir.nume, programare.Mormant.parcela, programare.Mormant.numar, programare.dataInmormantarii, programare.Religie.nume);
-                //var intrareIstoric = new Istoric() {data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii};
-                //entities.Istoric.Add(intrareIstoric);
+            var detalii = String.Format("PROGRAMARE-ADAUGARE-{0}-{1},{2},{3}-{4}-{5}", programare.cnpDecedat, programare.Mormant.Cimitir.nume, programare.Mormant.parcela, programare.Mormant.numar, programare.dataInmormantarii, programare.Religie.nume);
+            var intrareIstoric = new Istoric {data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii};
+            _entities.Istoric.Add(intrareIstoric);
 
-                entities.SaveChanges();
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
+            _entities.SaveChanges();
         }
         public ProgramareInmormantareDTO CautaProgramareDupaDecedat(string cnpDecedat)
         {
             var queryCNP =
-                from decedat in entities.Persoana
+                from decedat in _entities.Persoana
                 where decedat.cnp.Equals(cnpDecedat)
                 select decedat;
 
@@ -92,7 +84,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
 
             var queryProgramare =
-                from programare in entities.ProgramareInmormantare
+                from programare in _entities.ProgramareInmormantare
                 where programare.cnpDecedat == cnpDecedat
                 select programare;
 
@@ -103,7 +95,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
 
             var programareGasita = listaProgramari[0];
-            var progDTO = new ProgramareInmormantareDTO()
+            var progDTO = new ProgramareInmormantareDTO
             {
                 Id = programareGasita.id,
                 CnpDecedat = programareGasita.cnpDecedat,   
@@ -143,12 +135,12 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             }
 
             var query =
-                from programare in entities.ProgramareInmormantare
+                from programare in _entities.ProgramareInmormantare
                 where programare.dataInmormantarii >= data1 && programare.dataInmormantarii <= data2
                 orderby programare.dataInmormantarii descending 
                 select programare;
 
-            return query.ToArray().Select(programare => new ProgramareInmormantareDTO()
+            return query.ToArray().Select(programare => new ProgramareInmormantareDTO
             {
                 Id = programare.id, CnpDecedat = programare.cnpDecedat, NumeDecedat = programare.Persoana.nume, PrenumeDecedat = programare.Persoana.prenume, Religie = programare.Religie.nume, Cimitir = programare.Mormant.Cimitir.nume, Parcela = programare.Mormant.parcela, NumarMormant = programare.Mormant.numar, Data = programare.dataInmormantarii
             }).ToList();
@@ -156,7 +148,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
         public void ActualizeazaProgramareInmormantare(int id, string cimitirNou, string parcelaNoua, int? numarMormantNou, DateTime? dataNoua, string religieNoua)
         {
             var query =
-                from programare in entities.ProgramareInmormantare
+                from programare in _entities.ProgramareInmormantare
                 where programare.id == id
                 select programare;
 
@@ -169,36 +161,12 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             var programareDeActualizat = listaProgramari[0];
 
-            string cimitir = null;
-            string parcela = null;
-            int? numar = null;
-            string data = null;
-            string religie = null;
+            string data;
+            string religie;
 
-            if (cimitirNou != null)
-            {
-                    cimitir = cimitirNou;
-            }
-            else
-            {
-                cimitir = "null";
-            }
-            if (parcelaNoua != null)
-            {
-                parcela = parcelaNoua;
-            }
-            else
-            {
-                parcela = "null";
-            }
-            if (numarMormantNou != null)
-            {
-                numar = numarMormantNou;
-            }
-            else
-            {
-                numar = null;
-            }
+            var cimitir = cimitirNou ?? "null";
+            var parcela = parcelaNoua ?? "null";
+            var numar = numarMormantNou;
             if (dataNoua != null)
             {
                 programareDeActualizat.dataInmormantarii = dataNoua;
@@ -212,7 +180,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             {
                 try
                 {
-                    programareDeActualizat.religieId = entities.Religie.First(rel => rel.nume == religieNoua).id;
+                    programareDeActualizat.religieId = _entities.Religie.First(rel => rel.nume == religieNoua).id;
                     religie = religieNoua;
                 }
                 catch (Exception)
@@ -227,7 +195,7 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             // exista mormantul dorit?
             var queryMormant =
-                from mormant in entities.Mormant
+                from mormant in _entities.Mormant
                 where (mormant.Cimitir.nume == cimitir || cimitir == "null") && (mormant.numar == numar || numar == null) && (mormant.parcela == parcela || parcela == "null")
                 select mormant;
 
@@ -242,30 +210,21 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
             programareDeActualizat.Mormant = mormantDisponbil;
 
 
-            string nrMormant = null;
-
-            if (numar == null)
-            {
-                nrMormant = "null";
-            }
-            else
-            {
-                nrMormant = numar.ToString();
-            }
+            var nrMormant = numar == null ? "null" : numar.ToString();
             var detalii = String.Format(
                 "PROGRAMARE-ACTUALIZARE-{0}-{1},{2},{3}-{4}-{5}",
                 programareDeActualizat.cnpDecedat, cimitir, parcela, nrMormant, data, religie);
 
-            //var intrareIstoric = new Istoric() { data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii };
-            //
-            //entities.Istoric.Add(intrareIstoric);
+            var intrareIstoric = new Istoric { data = DateTime.Now, numeUtilizator = GlobalVariables.CurrentUser.AccountName, numarDocument = null, detalii = detalii };
             
-            entities.SaveChanges();
+            _entities.Istoric.Add(intrareIstoric);
+            
+            _entities.SaveChanges();
         }
         public void StergeProgramareInmormantare(int id)
         {
             var query =
-                from programare in entities.ProgramareInmormantare
+                from programare in _entities.ProgramareInmormantare
                 where programare.id == id
                 select programare;
 
@@ -279,18 +238,18 @@ namespace GraveyardManagement.Model.ModelProgramareInmormantare
 
             try
             {
-                entities.ProgramareInmormantare.Remove(programareDeSters);
-                //var intrareIstoric = new Istoric()
-                //{
-                //    data = DateTime.Now,
-                //    numeUtilizator = GlobalVariables.CurrentUser.AccountName,
-                //    numarDocument = null,
-                //    detalii = detalii
-                //};
-                //
-                //entities.Istoric.Add(intrareIstoric); // logare stergere
+                _entities.ProgramareInmormantare.Remove(programareDeSters);
+                var intrareIstoric = new Istoric
+                {
+                    data = DateTime.Now,
+                    numeUtilizator = GlobalVariables.CurrentUser.AccountName,
+                    numarDocument = null,
+                    detalii = detalii
+                };
+                
+                _entities.Istoric.Add(intrareIstoric); // logare stergere
 
-                entities.SaveChanges();
+                _entities.SaveChanges();
 
             }
             catch (Exception)
