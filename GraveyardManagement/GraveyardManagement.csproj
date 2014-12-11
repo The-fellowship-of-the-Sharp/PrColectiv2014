@@ -142,20 +142,26 @@
     <Compile Include="Model\Utils\CimitirDTO.cs" />
     <Compile Include="Model\Utils\ModelUtils.cs" />
     <Compile Include="View\Cetatean\ActualizareCetateanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="View\Decedat\AdaugareDecedat.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Cetatean\ActualizareCetateanForm.Designer.cs">
       <DependentUpon>ActualizareCetateanForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Decedat\AdaugareDecedat.Designer.cs">
       <DependentUpon>AdaugareDecedat.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Cetatean\AdaugareCetateanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="View\Decedat\AtribuireMormant.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Cetatean\AdaugareCetateanForm.Designer.cs">
       <DependentUpon>AdaugareCetateanForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Decedat\AtribuireMormant.Designer.cs">
       <DependentUpon>AtribuireMormant.cs</DependentUpon>
     </Compile>
@@ -193,16 +199,19 @@
     </Compile>
     <EmbeddedResource Include="View\Cetatean\ActualizareCetateanForm.resx">
       <DependentUpon>ActualizareCetateanForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Decedat\AdaugareDecedat.resx">
       <DependentUpon>AdaugareDecedat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Cetatean\AdaugareCetateanForm.resx">
       <DependentUpon>AdaugareCetateanForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Decedat\AtribuireMormant.resx">
       <DependentUpon>AtribuireMormant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<repositories>
+<<<<<<< HEAD
+  <repository path="..\Test1\packages.config" />
+=======
+  <repository path="..\GraveyardManagement\packages.config" />
+>>>>>>> 443b26027ee7ffcb995416c02082fef24cf8aa31
+</repositories>
