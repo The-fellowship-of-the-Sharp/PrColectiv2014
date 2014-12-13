@@ -55,6 +55,7 @@
     <Compile Include="Controller\DecedatService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
     <Compile Include="Controller\ControllerMormant.cs" />
+    <Compile Include="Controller\StatisticiService.cs" />
     <Compile Include="CustomControls\WatermarkTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -138,6 +139,8 @@
     <Compile Include="Model\Mormant\MormantCuProprietarDTO.cs" />
     <Compile Include="Model\Mormant\MormantDTO.cs" />
     <Compile Include="Model\Mormant\MormantFaraProprietarDTO.cs" />
+    <Compile Include="Model\Statistica\StatisticaDAO.cs" />
+    <Compile Include="Model\Statistica\StatisticaDTO.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Utils\CimitirDTO.cs" />
     <Compile Include="Model\Utils\ModelUtils.cs" />
@@ -255,6 +258,7 @@
     <None Include="Properties\DataSources\GraveyardManagement.Model.EntityFramework.ProgramareInmormantare.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelCetatean.CetateanDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelProgramareInmormantare.ProgramareInmormantareDTO.datasource" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.Statistica.StatisticaDTO.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -273,7 +277,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="View\Statistica\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

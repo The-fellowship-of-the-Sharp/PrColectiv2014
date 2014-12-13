@@ -19,6 +19,7 @@ namespace GraveyardManagement.View
         private ControllerMormant _mormant;
         private CetateanService _cetateanService;
         private DecedatService _decedatService;
+        private StatisticiService _statisticiService = new StatisticiService();
 
         public MainForm()
         {
@@ -289,5 +290,20 @@ namespace GraveyardManagement.View
             gridViewCetateni.DataSource = new[] {cetatean};
         }
         #endregion
+
+        private void expiraInAnulCurrentButton_Click(object sender, EventArgs e)
+        {
+            statisticiGridView.DataSource = _statisticiService.SelectMorminteCareExpiraInAnulCurrent();
+        }
+
+        private void expiratePeAniButton_Click(object sender, EventArgs e)
+        {
+            statisticiGridView.DataSource = _statisticiService.SelectMorminteExpiratePeAni();
+        }
+
+        private void platiteInAcestAnButton_Click(object sender, EventArgs e)
+        {
+            statisticiGridView.DataSource = _statisticiService.SelectMormintePlatiteInAnulCurrent();
+        }
     }
 }
