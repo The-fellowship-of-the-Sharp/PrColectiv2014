@@ -25,6 +25,11 @@ namespace GraveyardManagement.Controller
             _modelDecedat.AdaugaDecedat(cnp, nume, prenume);
         }
 
+        public void AtribuieMormant(string cnpDecedat, int cimitirId, string parcela, int numar)
+        {
+            _modelDecedat.AtribuieMormant(cnpDecedat,cimitirId,parcela,numar);
+        }
+
         private void ValidareDecedat(string cnp, string nume, string prenume)
         {
             if (cnp.Length != 13)

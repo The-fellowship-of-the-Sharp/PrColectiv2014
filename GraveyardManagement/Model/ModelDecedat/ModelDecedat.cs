@@ -46,6 +46,34 @@ namespace GraveyardManagement.Model.ModelDecedat
             };
         }
 
+        public void AtribuieMormant(string cnpDecedat, int cimitirId, string parcela, int numar)
+        {
+            var mormant = _entities.Mormant.FirstOrDefault(m => m.cimitirId == cimitirId && m.parcela == parcela && m.numar == numar);
+
+            string numeCimitir = _entities.Cimitir.FirstOrDefault(c=>c.id==cimitirId).nume;
+
+            if (mormant == null)
+            {
+                throw new Exception(string.Format("Mormantul cu numarul {0} aflat pe parcela {1} nu exista in {2}! Va rugam sa reintroduceti datele!",numar,parcela,numeCimitir));
+            }
+
+            if (mormant.AlocareLoc.Count != 0)
+            {
+                throw new Exception(string.Format("Mormantul cu numarul {0} aflat pe parcela {1} in {2} este deja alocat!", numar, parcela, numeCimitir));
+            }
+
+            _entities.AlocareLoc.Add(new AlocareLoc
+                {
+                    suprafata = 4,
+                    dataExpirare = DateTime.Now,
+                    mormantId = mormant.id,
+                    cnpDecedat = cnpDecedat
+                });
+
+            _entities.SaveChanges();
+
+        }
+
         public List<DecedatDTO> TotiDecedatii()
         {
             var totiDecedatii = _entities.Persoana.Where(d => d.domiciliuId == null).ToList();

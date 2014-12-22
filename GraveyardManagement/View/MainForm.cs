@@ -203,22 +203,45 @@ namespace GraveyardManagement.View
             }
         }
 
+        
+        #endregion
+
         #region Decedati
 
         private void InitializeDecedati()
         {
             _decedatService = new DecedatService();
 
-            foreach (var decedat in _decedatService.TotiDecedatii())
-            {
-                decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
-            }
+            decedatGridView.DataSource = _decedatService.TotiDecedatii();
         }
 
         private void buttonAdauga_Click(object sender, System.EventArgs e)
         {
             var form = new AdaugareDecedat();
             form.ShowDialog();
+            this.InitializeDecedati();
+        }
+
+        private void atribuieButton_Click(object sender, EventArgs e)
+        {
+            string decedat = "";
+
+            for(int i = 0 ; i < decedatGridView.SelectedRows.Cast<DataGridViewRow>().First().Cells.Count - 1; i++)
+            {
+                decedat += (string)decedatGridView.SelectedRows.Cast<DataGridViewRow>().First().Cells[i].Value.ToString() + " ";
+            }
+
+            var form = new AtribuireMormant(decedat);
+
+            if (decedatGridView.SelectedRows.Cast<DataGridViewRow>().First().Cells[3].Value.ToString() != String.Empty)
+            {
+                MessageBox.Show("Decedatul selectat are deja un mormant atribuit! Va rugam sa selectati alt decedat si sa incercati din nou!");
+            }
+            else 
+            { 
+                form.ShowDialog();
+                decedatGridView.DataSource = _decedatService.TotiDecedatii();
+            }
         }
 
         private void buttonCauta_Click(object sender, System.EventArgs e)
@@ -246,7 +269,6 @@ namespace GraveyardManagement.View
 
         #endregion
 
-        #endregion
 
         #region Cetateni
 
@@ -305,5 +327,7 @@ namespace GraveyardManagement.View
         {
             statisticiGridView.DataSource = _statisticiService.SelectMormintePlatiteInAnulCurrent();
         }
+
+       
     }
 }

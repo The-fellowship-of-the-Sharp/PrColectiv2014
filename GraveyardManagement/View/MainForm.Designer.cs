@@ -91,12 +91,6 @@ namespace GraveyardManagement.View
             this.label3 = new System.Windows.Forms.Label();
             this.buttonAdauga = new System.Windows.Forms.Button();
             this.decedatGridView = new System.Windows.Forms.DataGridView();
-            this.CNP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nume = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prenume = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cimitir = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Parcela = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Numar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabCereri = new System.Windows.Forms.TabPage();
             this.tabContracte = new System.Windows.Forms.TabPage();
             this.tabInmormantari = new System.Windows.Forms.TabPage();
@@ -329,7 +323,7 @@ namespace GraveyardManagement.View
             this.cautaLoc.Name = "cautaLoc";
             this.cautaLoc.Size = new System.Drawing.Size(125, 23);
             this.cautaLoc.TabIndex = 7;
-            this.cautaLoc.Text = "Cauta dupa loc";
+            this.cautaLoc.Text = "Filtreaza";
             this.cautaLoc.UseVisualStyleBackColor = true;
             this.cautaLoc.Click += new System.EventHandler(this.cautaLoc_Click);
             // 
@@ -356,6 +350,7 @@ namespace GraveyardManagement.View
             this.filtruCimitir.Name = "filtruCimitir";
             this.filtruCimitir.Size = new System.Drawing.Size(120, 21);
             this.filtruCimitir.TabIndex = 4;
+            this.filtruCimitir.Text = "Cimitir";
             // 
             // button1
             // 
@@ -650,6 +645,7 @@ namespace GraveyardManagement.View
             this.atribuieButton.TabIndex = 7;
             this.atribuieButton.Text = "Atribuie Mormant Decedatului Selectat";
             this.atribuieButton.UseVisualStyleBackColor = true;
+            this.atribuieButton.Click += new System.EventHandler(this.atribuieButton_Click);
             // 
             // label4
             // 
@@ -706,48 +702,11 @@ namespace GraveyardManagement.View
             this.decedatGridView.AllowUserToDeleteRows = false;
             this.decedatGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.decedatGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.decedatGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.CNP,
-            this.Nume,
-            this.Prenume,
-            this.Cimitir,
-            this.Parcela,
-            this.Numar});
             this.decedatGridView.Location = new System.Drawing.Point(317, 20);
             this.decedatGridView.Name = "decedatGridView";
             this.decedatGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.decedatGridView.Size = new System.Drawing.Size(560, 262);
             this.decedatGridView.TabIndex = 0;
-            // 
-            // CNP
-            // 
-            this.CNP.HeaderText = "CNP";
-            this.CNP.Name = "CNP";
-            // 
-            // Nume
-            // 
-            this.Nume.HeaderText = "Nume";
-            this.Nume.Name = "Nume";
-            // 
-            // Prenume
-            // 
-            this.Prenume.HeaderText = "Prenume";
-            this.Prenume.Name = "Prenume";
-            // 
-            // Cimitir
-            // 
-            this.Cimitir.HeaderText = "Cimitir";
-            this.Cimitir.Name = "Cimitir";
-            // 
-            // Parcela
-            // 
-            this.Parcela.HeaderText = "Parcela";
-            this.Parcela.Name = "Parcela";
-            // 
-            // Numar
-            // 
-            this.Numar.HeaderText = "Numar";
-            this.Numar.Name = "Numar";
             // 
             // tabCereri
             // 
@@ -1043,12 +1002,6 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.Button buttonCauta;
         private WatermarkTextBox CNPwatermarkTextBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CNP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nume;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Prenume;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cimitir;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Parcela;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Numar;
         private System.Windows.Forms.Button atribuieButton;
         private System.Windows.Forms.Label nuAreAlocatLabel;
         private System.Windows.Forms.DataGridView statisticiGridView;
