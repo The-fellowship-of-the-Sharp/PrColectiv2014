@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\CerereService.cs" />
     <Compile Include="Controller\CetateanService.cs" />
     <Compile Include="Controller\DecedatService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="Controller\ILoginService.cs" />
     <Compile Include="Controller\LoginMock.cs" />
     <Compile Include="Global\GlobalVariables.cs" />
+    <Compile Include="Model\Cerere\CerereDto.cs" />
+    <Compile Include="Model\Cerere\ModelCerere.cs" />
     <Compile Include="Model\EntityFramework\AlocareCuProprietar.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
@@ -144,6 +147,18 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Utils\CimitirDTO.cs" />
     <Compile Include="Model\Utils\ModelUtils.cs" />
+    <Compile Include="View\Cerere\ActualizareCerereForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cerere\ActualizareCerereForm.Designer.cs">
+      <DependentUpon>ActualizareCerereForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Cerere\AdaugareCerereForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cerere\AdaugareCerereForm.Designer.cs">
+      <DependentUpon>AdaugareCerereForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Cetatean\ActualizareCetateanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +215,12 @@
     <Compile Include="View\ProgramareInmormantari\AdaugaProgramareForm.Designer.cs">
       <DependentUpon>AdaugaProgramareForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\Cerere\ActualizareCerereForm.resx">
+      <DependentUpon>ActualizareCerereForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Cerere\AdaugareCerereForm.resx">
+      <DependentUpon>AdaugareCerereForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Cetatean\ActualizareCetateanForm.resx">
       <DependentUpon>ActualizareCetateanForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,6 +276,7 @@
       <LastGenOutput>NecropolisEntities.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.Cerere.CerereDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.EntityFramework.ProgramareInmormantare.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelCetatean.CetateanDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelProgramareInmormantare.ProgramareInmormantareDTO.datasource" />
