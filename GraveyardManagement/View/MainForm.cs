@@ -4,8 +4,10 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using GraveyardManagement.Controller;
+using GraveyardManagement.Model.Cerere;
 using GraveyardManagement.Model.ModelCetatean;
 using GraveyardManagement.Model.ModelProgramareInmormantare;
+using GraveyardManagement.View.Cerere;
 using GraveyardManagement.View.Cetatean;
 using GraveyardManagement.View.ProgramareInmormantari;
 using GraveyardManagement.View.Decedat;
@@ -20,6 +22,7 @@ namespace GraveyardManagement.View
         private CetateanService _cetateanService;
         private DecedatService _decedatService;
         private StatisticiService _statisticiService = new StatisticiService();
+        private CerereService _cerereService;
 
         public MainForm()
         {
@@ -32,6 +35,8 @@ namespace GraveyardManagement.View
             InitializeDecedati();
 
             InitializeCetateni();
+
+            InitializeCereri();
         }
 
         #region Programare Inmormantare
@@ -43,8 +48,8 @@ namespace GraveyardManagement.View
                 var g = args.Graphics;
                 var xStart = adaugaButton.Location.X;
                 var xEnd = cautaDupaDecedatButton.Location.X + cautaDupaDecedatButton.Size.Width;
-                var yFirstLine = (cnpTextBox.Location.Y + adaugaButton.Location.Y + adaugaButton.Size.Height)/2;
-                var ySecondLine = (actualizaButton.Location.Y + endDatePicker.Location.Y + endDatePicker.Size.Height)/2;
+                var yFirstLine = (cnpTextBox.Location.Y + adaugaButton.Location.Y + adaugaButton.Size.Height) / 2;
+                var ySecondLine = (actualizaButton.Location.Y + endDatePicker.Location.Y + endDatePicker.Size.Height) / 2;
                 g.DrawLine(Pens.Black, new Point(xStart, yFirstLine), new Point(xEnd, yFirstLine));
                 g.DrawLine(Pens.Black, new Point(xStart, ySecondLine), new Point(xEnd, ySecondLine));
             };
@@ -81,7 +86,7 @@ namespace GraveyardManagement.View
                 var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
                 if (programare != null)
                 {
-                    programariView.DataSource = new[] {programare};
+                programariView.DataSource = new[] { programare };
                 }
             }
             catch (Exception ex)
@@ -155,7 +160,7 @@ namespace GraveyardManagement.View
                 return;
             }
             var parcela = adauga.getParcela();
-            try 
+            try
             {
                 _mormant.AdaugaMormant(cimitir.Id, parcela);
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
@@ -183,9 +188,9 @@ namespace GraveyardManagement.View
             try
             {
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
-                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name, 
-                    filtruParcela.Text, 
-                    (filtruNumar.Text.Length==0 ? "0" : filtruNumar.Text)));
+                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name,
+                    filtruParcela.Text,
+                    (filtruNumar.Text.Length == 0 ? "0" : filtruNumar.Text)));
             }
             catch (System.Exception err)
             {
@@ -217,7 +222,7 @@ namespace GraveyardManagement.View
             }
         }
 
-        
+
         #endregion
 
         #region Decedati
@@ -240,7 +245,7 @@ namespace GraveyardManagement.View
         {
             string decedat = "";
 
-            for(int i = 0 ; i < decedatGridView.SelectedRows.Cast<DataGridViewRow>().First().Cells.Count - 1; i++)
+            for (int i = 0; i < decedatGridView.SelectedRows.Cast<DataGridViewRow>().First().Cells.Count - 1; i++)
             {
                 decedat += (string)decedatGridView.SelectedRows.Cast<DataGridViewRow>().First().Cells[i].Value.ToString() + " ";
             }
@@ -251,8 +256,8 @@ namespace GraveyardManagement.View
             {
                 MessageBox.Show("Decedatul selectat are deja un mormant atribuit! Va rugam sa selectati alt decedat si sa incercati din nou!");
             }
-            else 
-            { 
+            else
+            {
                 form.ShowDialog();
                 decedatGridView.DataSource = _decedatService.TotiDecedatii();
             }
@@ -317,7 +322,7 @@ namespace GraveyardManagement.View
                 return;
             }
 
-            gridViewCetateni.DataSource = new[] {cetatean};
+            gridViewCetateni.DataSource = new[] { cetatean };
         }
 
         private void butonActualizareCetatean_Click(object sender, EventArgs e)
@@ -329,10 +334,11 @@ namespace GraveyardManagement.View
 
             cetatean = _cetateanService.CautaCetatean(cetatean.Cnp);
 
-            gridViewCetateni.DataSource = new[] {cetatean};
+            gridViewCetateni.DataSource = new[] { cetatean };
         }
         #endregion
 
+        #region Statistici
         private void expiraInAnulCurrentButton_Click(object sender, EventArgs e)
         {
             statisticiGridView.DataSource = _statisticiService.SelectMorminteCareExpiraInAnulCurrent();
@@ -348,6 +354,76 @@ namespace GraveyardManagement.View
             statisticiGridView.DataSource = _statisticiService.SelectMormintePlatiteInAnulCurrent();
         }
 
-       
+        #endregion
+
+        private void InitializeCereri()
+        {
+            _cerereService = new CerereService();
+
+            gridViewCereri.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        private void butonAdaugareCerere_Click(object sender, EventArgs e)
+        {
+            var form = new AdaugareCerereForm();
+            form.ShowDialog();
+        }
+
+        private void butonActualizareCerere_Click(object sender, EventArgs e)
+        {
+            if (gridViewCereri.SelectedRows.Count <= 0)
+                return;
+
+            var cerere = (CerereDto)gridViewCereri.SelectedRows[0].DataBoundItem;
+
+            var form = new ActualizareCerereForm(cerere.Numar);
+            form.ShowDialog();
+
+            cerere = _cerereService.CautaCerere(cerere.Numar);
+
+            gridViewCereri.DataSource = new[] { cerere };
+        }
+
+        private void butonCautaCerere_Click(object sender, EventArgs e)
+        {
+            int nrInfocet;
+
+            try
+            {
+                nrInfocet = Convert.ToInt32(nrInfocetCerereTextBox.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Numarul Infocet introdus este invalid!");
+                return;
+            }
+
+            var dataInregistrare = dataInregistrarePicker.Value;
+
+            CerereDto cerere;
+            try
+            {
+                cerere = _cerereService.CautaCerere(nrInfocet, dataInregistrare);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            gridViewCereri.DataSource = new[] { cerere };
+        }
+
+        private void butonStergereCerere_Click(object sender, EventArgs e)
+        {
+            if (gridViewCereri.SelectedRows.Count <= 0)
+                return;
+
+            var cerere = (CerereDto) gridViewCereri.SelectedRows[0].DataBoundItem;
+
+            _cerereService.StergeCerere(cerere.Numar);
+
+            gridViewCereri.DataSource = null;
+        }
     }
 }
