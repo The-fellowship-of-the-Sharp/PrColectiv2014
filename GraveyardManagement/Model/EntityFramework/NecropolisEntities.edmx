@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NecropolisModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="NecropolisModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="NecropolisModelStoreContainer">
           <EntitySet Name="AlocareCuProprietar" EntityType="NecropolisModel.Store.AlocareCuProprietar" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AlocareFaraProprietar" EntityType="NecropolisModel.Store.AlocareFaraProprietar" store:Type="Tables" Schema="dbo" />
@@ -24,6 +24,7 @@
           <EntitySet Name="Religie" EntityType="NecropolisModel.Store.Religie" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Stadiu" EntityType="NecropolisModel.Store.Stadiu" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Strada" EntityType="NecropolisModel.Store.Strada" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.Store.FK__AlocareCu__cnpDe__267ABA7A">
             <End Role="Persoana" EntitySet="Persoana" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -258,6 +259,16 @@
           <Property Name="localitateId" Type="int" />
           <Property Name="nume" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
           <End Role="Persoana" Type="NecropolisModel.Store.Persoana" Multiplicity="0..1" />
           <End Role="AlocareCuProprietar" Type="NecropolisModel.Store.AlocareCuProprietar" Multiplicity="*" />
@@ -486,7 +497,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NecropolisModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -508,6 +520,7 @@
           <EntitySet Name="Religie" EntityType="NecropolisModel.Religie" />
           <EntitySet Name="Stadiu" EntityType="NecropolisModel.Stadiu" />
           <EntitySet Name="Strada" EntityType="NecropolisModel.Strada" />
+          <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.sysdiagrams" />
           <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A">
             <End Role="Persoana" EntitySet="Persoana" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -648,9 +661,9 @@
           <Property Name="dataEliberare" Type="DateTime" Precision="3" />
           <Property Name="dataExpirare" Type="DateTime" Precision="3" />
           <Property Name="alocareId" Type="Int32" />
+          <Property Name="nrContract" Type="Int32" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_ContractConcesiune_AlocareLoc" FromRole="ContractConcesiune" ToRole="AlocareLoc" />
           <NavigationProperty Name="Persoana" Relationship="NecropolisModel.DetinatorContractConcesiune" FromRole="ContractConcesiune" ToRole="Persoana" />
-          <Property Type="Int32" Name="nrContract" />
         </EntityType>
         <EntityType Name="Domiciliu">
           <Key>
@@ -765,6 +778,16 @@
           <Property Name="nume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Domiciliu" Relationship="NecropolisModel.FK_Domiciliu_Strada" FromRole="Strada" ToRole="Domiciliu" />
           <NavigationProperty Name="Localitate" Relationship="NecropolisModel.FK_Strada_Localitate" FromRole="Strada" ToRole="Localitate" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
           <End Role="Persoana" Type="NecropolisModel.Persoana" Multiplicity="0..1" />
@@ -1035,11 +1058,11 @@
           <EntitySetMapping Name="ContractConcesiune">
             <EntityTypeMapping TypeName="NecropolisModel.ContractConcesiune">
               <MappingFragment StoreEntitySet="ContractConcesiune">
-                <ScalarProperty Name="nrContract" ColumnName="nrContract" />
                 <ScalarProperty Name="numar" ColumnName="numar" />
                 <ScalarProperty Name="dataEliberare" ColumnName="dataEliberare" />
                 <ScalarProperty Name="dataExpirare" ColumnName="dataExpirare" />
                 <ScalarProperty Name="alocareId" ColumnName="alocareId" />
+                <ScalarProperty Name="nrContract" ColumnName="nrContract" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1146,6 +1169,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="NecropolisModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="DetinatorContractConcesiune" TypeName="NecropolisModel.DetinatorContractConcesiune" StoreEntitySet="DetinatorContractConcesiune">
             <EndProperty Name="ContractConcesiune">
               <ScalarProperty Name="numar" ColumnName="numarContract" />
@@ -1170,6 +1204,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

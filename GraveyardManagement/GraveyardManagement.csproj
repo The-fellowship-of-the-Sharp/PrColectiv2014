@@ -131,6 +131,9 @@
     <Compile Include="Model\EntityFramework\Strada.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EntityFramework\sysdiagrams.cs">
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ModelCetatean\CetateanDto.cs" />
     <Compile Include="Model\ModelCetatean\ModelCetatean.cs" />
     <Compile Include="Model\ModelDecedat\DecedatDTO.cs" />
