@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NecropolisModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NecropolisModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="NecropolisModelStoreContainer">
           <EntitySet Name="AlocareCuProprietar" EntityType="NecropolisModel.Store.AlocareCuProprietar" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="AlocareFaraProprietar" EntityType="NecropolisModel.Store.AlocareFaraProprietar" store:Type="Tables" Schema="dbo" />
@@ -156,6 +156,7 @@
           <Property Name="dataEliberare" Type="datetime" />
           <Property Name="dataExpirare" Type="datetime" />
           <Property Name="alocareId" Type="int" />
+          <Property Name="nrContract" Type="int" />
         </EntityType>
         <EntityType Name="DetinatorContractConcesiune">
           <Key>
@@ -485,8 +486,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NecropolisModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -650,6 +650,7 @@
           <Property Name="alocareId" Type="Int32" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_ContractConcesiune_AlocareLoc" FromRole="ContractConcesiune" ToRole="AlocareLoc" />
           <NavigationProperty Name="Persoana" Relationship="NecropolisModel.DetinatorContractConcesiune" FromRole="ContractConcesiune" ToRole="Persoana" />
+          <Property Type="Int32" Name="nrContract" />
         </EntityType>
         <EntityType Name="Domiciliu">
           <Key>
@@ -1034,6 +1035,7 @@
           <EntitySetMapping Name="ContractConcesiune">
             <EntityTypeMapping TypeName="NecropolisModel.ContractConcesiune">
               <MappingFragment StoreEntitySet="ContractConcesiune">
+                <ScalarProperty Name="nrContract" ColumnName="nrContract" />
                 <ScalarProperty Name="numar" ColumnName="numar" />
                 <ScalarProperty Name="dataEliberare" ColumnName="dataEliberare" />
                 <ScalarProperty Name="dataExpirare" ColumnName="dataExpirare" />

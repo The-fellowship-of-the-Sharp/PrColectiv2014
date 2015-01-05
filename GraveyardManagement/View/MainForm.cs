@@ -75,11 +75,18 @@ namespace GraveyardManagement.View
 
         private void cautaDupaDecedatButton_Click(object sender, EventArgs e)
         {
-            var cnp = cnpTextBox.Text;
-            var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
-            if (programare != null)
+            try
             {
-                programariView.DataSource = new[] { programare };   
+                var cnp = cnpTextBox.Text;
+                var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
+                if (programare != null)
+                {
+                    programariView.DataSource = new[] {programare};
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -188,9 +195,16 @@ namespace GraveyardManagement.View
 
         private void button2_Click(object sender, System.EventArgs e)
         {
-            this._mormant.ElibereazaMormant(
-                (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
-                );
+            try
+            {
+                this._mormant.ElibereazaMormant(
+                    (string) morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
+                    );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Mormantul nu are decedat!");
+            }
             loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
         }
 
@@ -258,9 +272,15 @@ namespace GraveyardManagement.View
                 return;
             }
 
-            decedatGridView.Rows.Clear();
-            decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
+            var l = new List<DecedatDTO>();
+            l.Add(decedat);
+            BindingSource bs = new BindingSource();
+            bs.DataSource = l;
 
+            decedatGridView.DataSource = bs;
+            /*decedatGridView.Rows.Clear();
+            decedatGridView.Rows.Add(decedat.Cnp, decedat.Nume, decedat.Prenume, decedat.Cimitir, decedat.Parcela, decedat.Numar);
+            */
             if (decedat.Cimitir == "")
             {
                 nuAreAlocatLabel.Visible = true;
