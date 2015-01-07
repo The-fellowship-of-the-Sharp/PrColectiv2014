@@ -25,6 +25,7 @@
           <EntitySet Name="Stadiu" EntityType="NecropolisModel.Store.Stadiu" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Strada" EntityType="NecropolisModel.Store.Strada" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Utilizator" EntityType="NecropolisModel.Store.Utilizator" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.Store.FK__AlocareCu__cnpDe__267ABA7A">
             <End Role="Persoana" EntitySet="Persoana" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -268,6 +269,17 @@
           <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Utilizator">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="prenume" Type="varchar(max)" />
+          <Property Name="nume" Type="varchar(max)" />
+          <Property Name="cont" Type="varchar" MaxLength="16" />
+          <Property Name="parola" Type="varbinary(max)" />
+          <Property Name="email" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
           <End Role="Persoana" Type="NecropolisModel.Store.Persoana" Multiplicity="0..1" />
@@ -521,6 +533,7 @@
           <EntitySet Name="Stadiu" EntityType="NecropolisModel.Stadiu" />
           <EntitySet Name="Strada" EntityType="NecropolisModel.Strada" />
           <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.sysdiagrams" />
+          <EntitySet Name="Utilizator" EntityType="NecropolisModel.Utilizator" />
           <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A">
             <End Role="Persoana" EntitySet="Persoana" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -788,6 +801,17 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Utilizator">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="prenume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="nume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="cont" Type="String" MaxLength="16" Unicode="false" FixedLength="false" />
+          <Property Name="parola" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
         </EntityType>
         <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
           <End Role="Persoana" Type="NecropolisModel.Persoana" Multiplicity="0..1" />
@@ -1177,6 +1201,18 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilizator">
+            <EntityTypeMapping TypeName="NecropolisModel.Utilizator">
+              <MappingFragment StoreEntitySet="Utilizator">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="prenume" ColumnName="prenume" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cont" ColumnName="cont" />
+                <ScalarProperty Name="parola" ColumnName="parola" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

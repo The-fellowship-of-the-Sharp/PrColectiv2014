@@ -54,6 +54,7 @@
     <Compile Include="Controller\CerereService.cs" />
     <Compile Include="Controller\CetateanService.cs" />
     <Compile Include="Controller\DecedatService.cs" />
+    <Compile Include="Controller\LoginService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
     <Compile Include="Controller\ControllerMormant.cs" />
     <Compile Include="Controller\StatisticiService.cs" />
@@ -132,6 +133,9 @@
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\sysdiagrams.cs">
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EntityFramework\Utilizator.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ModelCetatean\CetateanDto.cs" />

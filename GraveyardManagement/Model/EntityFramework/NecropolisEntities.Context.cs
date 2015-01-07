@@ -43,5 +43,6 @@ namespace GraveyardManagement.Model.EntityFramework
         public DbSet<Stadiu> Stadiu { get; set; }
         public DbSet<Strada> Strada { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public DbSet<Utilizator> Utilizator { get; set; }
     }
 }
