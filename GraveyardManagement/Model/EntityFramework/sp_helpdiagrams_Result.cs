@@ -10,18 +10,13 @@
 namespace GraveyardManagement.Model.EntityFramework
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Stadiu
+    public partial class sp_helpdiagrams_Result
     {
-        public Stadiu()
-        {
-            this.CerereLoc = new HashSet<CerereLoc>();
-        }
-    
-        public int id { get; set; }
-        public string nume { get; set; }
-    
-        public virtual ICollection<CerereLoc> CerereLoc { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

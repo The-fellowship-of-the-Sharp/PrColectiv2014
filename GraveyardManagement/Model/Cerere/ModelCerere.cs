@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Linq;
+using GraveyardManagement.Global;
 using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.Model.Cerere
@@ -34,6 +35,14 @@ namespace GraveyardManagement.Model.Cerere
                 nrInfocet = nrInfocet,
                 dataInregistrare = dataInregistrare,
                 stadiuId = stadiuIntern.id
+            });
+
+            _entities.Istoric.Add(new Istoric
+            {
+                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                data = DateTime.Now,
+                numarDocument = nrInfocet,
+                detalii = string.Format("CERERE;ADAUGARE;{{}}")
             });
 
             _entities.SaveChanges();
@@ -118,6 +127,17 @@ namespace GraveyardManagement.Model.Cerere
                 throw new Exception(string.Format("Cererea cu numarul {0} nu a fost gasita!", numar));
             }
 
+            var stadiuVechiId = cerere.stadiuId;
+
+            var stadiuVechi = _entities.Stadiu.FirstOrDefault(s => s.id == stadiuVechiId);
+
+            var numeStadiuVechi = "NULL";
+
+            if (stadiuVechi != null)
+            {
+                numeStadiuVechi = stadiuVechi.nume;
+            }
+
             var stadiuNou = _entities.Stadiu.FirstOrDefault(s => s.nume == numeStadiuNou);
 
             if (stadiuNou == null)
@@ -126,6 +146,14 @@ namespace GraveyardManagement.Model.Cerere
             }
 
             cerere.stadiuId = stadiuNou.id;
+
+            _entities.Istoric.Add(new Istoric
+            {
+                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                data = DateTime.Now,
+                numarDocument = cerere.nrInfocet,
+                detalii = string.Format("CERERE;ACTUALIZARE;{0};{1}", numeStadiuVechi, numeStadiuNou)
+            });
 
             _entities.SaveChanges();
         }
@@ -137,7 +165,17 @@ namespace GraveyardManagement.Model.Cerere
             if (cerere == null)
                 return;
 
+            var cerereNrInfocet = cerere.nrInfocet;
+
             _entities.CerereLoc.Remove(cerere);
+
+            _entities.Istoric.Add(new Istoric
+            {
+                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                data = DateTime.Now,
+                numarDocument = cerereNrInfocet,
+                detalii = "CERERE;STERGERE"
+            });
 
             _entities.SaveChanges();
         }

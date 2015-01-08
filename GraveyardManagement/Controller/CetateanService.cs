@@ -39,12 +39,12 @@ namespace GraveyardManagement.Controller
                 throw new Exception(string.Format("Codul numeric personal (CNP): {0} este invalid!", cnp));
             }
 
-            if (!Regex.IsMatch(nume, @"^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(nume, @"^[a-zA-Z ]+$"))
             {
                 throw new Exception(string.Format("Numele: {0} este invalid. Numele poate contine doar litere.", nume));
             }
 
-            if (!Regex.IsMatch(prenume, @"^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(prenume, @"^[a-zA-Z ]+$"))
             {
                 throw new Exception(string.Format("Prenumele: {0} este invalid. Prenumele poate contine doar litere.", prenume));
             }

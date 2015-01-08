@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GraveyardManagement.Global;
 using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.Model.ModelCetatean
@@ -15,6 +16,11 @@ namespace GraveyardManagement.Model.ModelCetatean
 
         public void AdaugaCetatean(string cnp, string nume, string prenume, string localitate, string strada, string numar, string alteInformatii)
         {
+            if (VerificareCnpDuplicat(cnp))
+            {
+                throw new Exception(string.Format("Cnp-ul {0} exista deja in baza de date!", cnp));
+            }
+
             //ceva verificari: daca localitatea exista, daca strada exista
             var localitateDb = _entities.Localitate.FirstOrDefault(loc => loc.nume == localitate);
 
@@ -51,6 +57,14 @@ namespace GraveyardManagement.Model.ModelCetatean
                 domiciliuId = domiciliuNou.id
             });
 
+            _entities.Istoric.Add(new Istoric
+            {
+                data = DateTime.Now,
+                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                numarDocument = null,
+                detalii = string.Format("CETATEAN;ADAUGARE;{0}", cnp)
+            });
+
             _entities.SaveChanges();
         }
 
@@ -85,6 +99,13 @@ namespace GraveyardManagement.Model.ModelCetatean
                 throw new Exception(string.Format("Strada curenta aferenta cetateanului {0} {1} cu CNP-ul {2} nu este valida.", cetateanDb.nume, cetateanDb.prenume, cetateanDb.cnp));//nu ar trebui sa fie aruncata
             }
 
+            var numeVechi = cetateanDb.nume;
+            var prenumeVechi = cetateanDb.prenume;
+            var numarVechi = domiciliuDb.numar;
+            var stradaVeche = stradaDb.nume;
+            var localitateVeche = localitateDb.nume;
+            var alteInfoVechi = domiciliuDb.alteInformatii;
+
             //introdu noile informatii in baza de date
             stradaDb.localitateId = localitateDb.id;
 
@@ -95,7 +116,23 @@ namespace GraveyardManagement.Model.ModelCetatean
             cetateanDb.nume = numeNou;
             cetateanDb.prenume = prenumeNou;
 
+            _entities.Istoric.Add(new Istoric
+            {
+                data = DateTime.Now,
+                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                numarDocument = null,
+                detalii = string.Format("CETATEAN;ACTUALIZARE;{0};{{{1}, {2}, {3}, {4}, {5}, {6}}}", cnp, numeVechi, prenumeVechi, localitateVeche,
+                    stradaVeche, numarVechi, alteInfoVechi)
+            });
+
             _entities.SaveChanges();
+        }
+
+        private bool VerificareCnpDuplicat(string cnp)
+        {
+            var cetatean = _entities.Persoana.FirstOrDefault(p => p.cnp == cnp);
+
+            return cetatean != null;
         }
 
         public CetateanDto CautaCetatean(string cnp)

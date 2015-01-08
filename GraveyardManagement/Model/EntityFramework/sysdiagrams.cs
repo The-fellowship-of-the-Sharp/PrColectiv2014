@@ -12,16 +12,12 @@ namespace GraveyardManagement.Model.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Stadiu
+    public partial class sysdiagrams
     {
-        public Stadiu()
-        {
-            this.CerereLoc = new HashSet<CerereLoc>();
-        }
-    
-        public int id { get; set; }
-        public string nume { get; set; }
-    
-        public virtual ICollection<CerereLoc> CerereLoc { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
