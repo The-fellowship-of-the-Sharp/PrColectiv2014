@@ -67,6 +67,8 @@ namespace GraveyardManagement.View
             this.prenumeMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabCetateni = new System.Windows.Forms.TabPage();
+            this.butonCereriCetatean = new System.Windows.Forms.Button();
+            this.butonContracteCetatean = new System.Windows.Forms.Button();
             this.cnpCetateanTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.butonActualizareCetatean = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -131,8 +133,6 @@ namespace GraveyardManagement.View
             this.cautaDupaDecedatButton = new System.Windows.Forms.Button();
             this.cnpTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.adaugaButton = new System.Windows.Forms.Button();
-            this.butonContracteCetatean = new System.Windows.Forms.Button();
-            this.butonCereriCetatean = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabStatistici.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statisticiGridView)).BeginInit();
@@ -505,6 +505,26 @@ namespace GraveyardManagement.View
             this.tabCetateni.TabIndex = 2;
             this.tabCetateni.Text = "Cetateni";
             this.tabCetateni.UseVisualStyleBackColor = true;
+            // 
+            // butonCereriCetatean
+            // 
+            this.butonCereriCetatean.Location = new System.Drawing.Point(504, 272);
+            this.butonCereriCetatean.Name = "butonCereriCetatean";
+            this.butonCereriCetatean.Size = new System.Drawing.Size(180, 30);
+            this.butonCereriCetatean.TabIndex = 9;
+            this.butonCereriCetatean.Text = "Vizualizeaza cereri curente";
+            this.butonCereriCetatean.UseVisualStyleBackColor = true;
+            this.butonCereriCetatean.Click += new System.EventHandler(this.butonCereriCetatean_Click);
+            // 
+            // butonContracteCetatean
+            // 
+            this.butonContracteCetatean.Location = new System.Drawing.Point(317, 272);
+            this.butonContracteCetatean.Name = "butonContracteCetatean";
+            this.butonContracteCetatean.Size = new System.Drawing.Size(180, 30);
+            this.butonContracteCetatean.TabIndex = 8;
+            this.butonContracteCetatean.Text = "Vizualizeaza contracte curente";
+            this.butonContracteCetatean.UseVisualStyleBackColor = true;
+            this.butonContracteCetatean.Click += new System.EventHandler(this.butonContracteCetatean_Click);
             // 
             // cnpCetateanTextBox
             // 
@@ -1102,24 +1122,6 @@ namespace GraveyardManagement.View
             this.adaugaButton.Text = "Adauga";
             this.adaugaButton.UseVisualStyleBackColor = true;
             this.adaugaButton.Click += new System.EventHandler(this.adaugaButton_Click);
-            // 
-            // butonContracteCetatean
-            // 
-            this.butonContracteCetatean.Location = new System.Drawing.Point(317, 272);
-            this.butonContracteCetatean.Name = "butonContracteCetatean";
-            this.butonContracteCetatean.Size = new System.Drawing.Size(180, 30);
-            this.butonContracteCetatean.TabIndex = 8;
-            this.butonContracteCetatean.Text = "Vizualizeaza contracte curente";
-            this.butonContracteCetatean.UseVisualStyleBackColor = true;
-            // 
-            // butonCereriCetatean
-            // 
-            this.butonCereriCetatean.Location = new System.Drawing.Point(504, 272);
-            this.butonCereriCetatean.Name = "butonCereriCetatean";
-            this.butonCereriCetatean.Size = new System.Drawing.Size(180, 30);
-            this.butonCereriCetatean.TabIndex = 9;
-            this.butonCereriCetatean.Text = "Vizualizeaza cereri curente";
-            this.butonCereriCetatean.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

@@ -60,7 +60,7 @@ namespace GraveyardManagement.Model.ModelCetatean
             _entities.Istoric.Add(new Istoric
             {
                 data = DateTime.Now,
-                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                numeUtilizator = GlobalVariables.CurrentUser.AccountName,
                 numarDocument = null,
                 detalii = string.Format("CETATEAN;ADAUGARE;{0}", cnp)
             });
@@ -119,7 +119,7 @@ namespace GraveyardManagement.Model.ModelCetatean
             _entities.Istoric.Add(new Istoric
             {
                 data = DateTime.Now,
-                numeUtilizator = GlobalVariables.CurrentUser.Name,
+                numeUtilizator = GlobalVariables.CurrentUser.AccountName,
                 numarDocument = null,
                 detalii = string.Format("CETATEAN;ACTUALIZARE;{0};{{{1}, {2}, {3}, {4}, {5}, {6}}}", cnp, numeVechi, prenumeVechi, localitateVeche,
                     stradaVeche, numarVechi, alteInfoVechi)

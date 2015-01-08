@@ -86,7 +86,7 @@ namespace GraveyardManagement.View
                 var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
                 if (programare != null)
                 {
-                programariView.DataSource = new[] { programare };
+                    programariView.DataSource = new[] { programare };
                 }
             }
             catch (Exception ex)
@@ -203,7 +203,7 @@ namespace GraveyardManagement.View
             try
             {
                 this._mormant.ElibereazaMormant(
-                    (string) morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
+                    (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
                     );
             }
             catch (Exception ex)
@@ -294,7 +294,6 @@ namespace GraveyardManagement.View
 
         #endregion
 
-
         #region Cetateni
 
         private void InitializeCetateni()
@@ -327,6 +326,9 @@ namespace GraveyardManagement.View
 
         private void butonActualizareCetatean_Click(object sender, EventArgs e)
         {
+            if (gridViewCetateni.SelectedRows.Count <= 0)
+                return;
+
             var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
 
             var form = new ActualizareCetateanForm(cetatean.Cnp);
@@ -335,6 +337,28 @@ namespace GraveyardManagement.View
             cetatean = _cetateanService.CautaCetatean(cetatean.Cnp);
 
             gridViewCetateni.DataSource = new[] { cetatean };
+        }
+
+        private void butonCereriCetatean_Click(object sender, EventArgs e)
+        {
+            if (gridViewCetateni.SelectedRows.Count <= 0)
+                return;
+
+            var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
+
+            var form = new VizualizareCereriPentruCetatean(cetatean.Cnp);
+
+            form.ShowDialog();
+        }
+
+        private void butonContracteCetatean_Click(object sender, EventArgs e)
+        {
+            if (gridViewCetateni.SelectedRows.Count <= 0)
+                return;
+
+            var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
+
+
         }
         #endregion
 
@@ -355,6 +379,8 @@ namespace GraveyardManagement.View
         }
 
         #endregion
+
+        #region Cereri
 
         private void InitializeCereri()
         {
@@ -419,11 +445,13 @@ namespace GraveyardManagement.View
             if (gridViewCereri.SelectedRows.Count <= 0)
                 return;
 
-            var cerere = (CerereDto) gridViewCereri.SelectedRows[0].DataBoundItem;
+            var cerere = (CerereDto)gridViewCereri.SelectedRows[0].DataBoundItem;
 
             _cerereService.StergeCerere(cerere.Numar);
 
             gridViewCereri.DataSource = null;
         }
+
+        #endregion
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="Controller\CerereService.cs" />
     <Compile Include="Controller\CetateanService.cs" />
     <Compile Include="Controller\DecedatService.cs" />
+    <Compile Include="Controller\LoginService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
     <Compile Include="Controller\ControllerMormant.cs" />
     <Compile Include="Controller\StatisticiService.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="Global\GlobalVariables.cs" />
     <Compile Include="Model\Cerere\CerereDto.cs" />
     <Compile Include="Model\Cerere\ModelCerere.cs" />
+    <Compile Include="Model\Contract\ContractDto.cs" />
+    <Compile Include="Model\Contract\ModelContract.cs" />
     <Compile Include="Model\EntityFramework\AlocareCuProprietar.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
@@ -140,6 +143,9 @@
     <Compile Include="Model\EntityFramework\sysdiagrams.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EntityFramework\Utilizator.cs">
+      <DependentUpon>NecropolisEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ModelCetatean\CetateanDto.cs" />
     <Compile Include="Model\ModelCetatean\ModelCetatean.cs" />
     <Compile Include="Model\ModelDecedat\DecedatDTO.cs" />
@@ -170,6 +176,18 @@
     </Compile>
     <Compile Include="View\Cetatean\ActualizareCetateanForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cetatean\VizualizareCereriPentruCetatean.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cetatean\VizualizareCereriPentruCetatean.Designer.cs">
+      <DependentUpon>VizualizareCereriPentruCetatean.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Cetatean\VizualizareContractePentruCetatean.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Cetatean\VizualizareContractePentruCetatean.Designer.cs">
+      <DependentUpon>VizualizareContractePentruCetatean.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Decedat\AdaugareDecedat.cs">
       <SubType>Form</SubType>
@@ -232,6 +250,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Cetatean\ActualizareCetateanForm.resx">
       <DependentUpon>ActualizareCetateanForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Cetatean\VizualizareCereriPentruCetatean.resx">
+      <DependentUpon>VizualizareCereriPentruCetatean.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Cetatean\VizualizareContractePentruCetatean.resx">
+      <DependentUpon>VizualizareContractePentruCetatean.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Decedat\AdaugareDecedat.resx">
       <DependentUpon>AdaugareDecedat.cs</DependentUpon>

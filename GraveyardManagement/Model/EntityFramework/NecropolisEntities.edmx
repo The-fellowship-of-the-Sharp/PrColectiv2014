@@ -25,6 +25,7 @@
           <EntitySet Name="Stadiu" EntityType="NecropolisModel.Store.Stadiu" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Strada" EntityType="NecropolisModel.Store.Strada" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Utilizator" EntityType="NecropolisModel.Store.Utilizator" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.Store.FK__AlocareCu__cnpDe__267ABA7A">
             <End Role="Persoana" EntitySet="Persoana" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -269,6 +270,17 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Utilizator">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="prenume" Type="varchar(max)" />
+          <Property Name="nume" Type="varchar(max)" />
+          <Property Name="cont" Type="varchar" MaxLength="16" />
+          <Property Name="parola" Type="varbinary(max)" />
+          <Property Name="email" Type="varchar(max)" />
+        </EntityType>
         <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
           <End Role="Persoana" Type="NecropolisModel.Store.Persoana" Multiplicity="0..1" />
           <End Role="AlocareCuProprietar" Type="NecropolisModel.Store.AlocareCuProprietar" Multiplicity="*" />
@@ -497,37 +509,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" ReturnType="int" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
@@ -552,6 +533,7 @@
           <EntitySet Name="Stadiu" EntityType="NecropolisModel.Stadiu" />
           <EntitySet Name="Strada" EntityType="NecropolisModel.Strada" />
           <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.sysdiagrams" />
+          <EntitySet Name="Utilizator" EntityType="NecropolisModel.Utilizator" />
           <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A">
             <End Role="Persoana" EntitySet="Persoana" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -624,36 +606,6 @@
             <End Role="ContractConcesiune" EntitySet="ContractConcesiune" />
             <End Role="Persoana" EntitySet="Persoana" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(NecropolisModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(NecropolisModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
         <EntityType Name="AlocareCuProprietar">
           <Key>
@@ -849,6 +801,17 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Utilizator">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="prenume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="nume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="cont" Type="String" MaxLength="16" Unicode="false" FixedLength="false" />
+          <Property Name="parola" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
         </EntityType>
         <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
           <End Role="Persoana" Type="NecropolisModel.Persoana" Multiplicity="0..1" />
@@ -1058,17 +1021,6 @@
           <End Role="ContractConcesiune" Type="NecropolisModel.ContractConcesiune" Multiplicity="*" />
           <End Role="Persoana" Type="NecropolisModel.Persoana" Multiplicity="*" />
         </Association>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1252,6 +1204,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Utilizator">
+            <EntityTypeMapping TypeName="NecropolisModel.Utilizator">
+              <MappingFragment StoreEntitySet="Utilizator">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="prenume" ColumnName="prenume" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cont" ColumnName="cont" />
+                <ScalarProperty Name="parola" ColumnName="parola" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="DetinatorContractConcesiune" TypeName="NecropolisModel.DetinatorContractConcesiune" StoreEntitySet="DetinatorContractConcesiune">
             <EndProperty Name="ContractConcesiune">
               <ScalarProperty Name="numar" ColumnName="numarContract" />
@@ -1260,30 +1224,6 @@
               <ScalarProperty Name="cnp" ColumnName="cnpDetinator" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="NecropolisModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="NecropolisModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="NecropolisModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="NecropolisModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="NecropolisModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="NecropolisModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="NecropolisModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="NecropolisModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="NecropolisModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

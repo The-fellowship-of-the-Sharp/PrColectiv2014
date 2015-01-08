@@ -12,7 +12,8 @@ namespace GraveyardManagement.View.Login
         public LoginForm()
         {
             InitializeComponent();
-            loginService = new LoginMock(); // TODO: asta trebuie schimbat cu un serviciu autentic ... candva
+            //loginService = new LoginMock();
+            loginService = new LoginService(GlobalVariables.Entities);
         }
 
         private void applicationClose(object sender, EventArgs e) 

@@ -12,12 +12,13 @@ namespace GraveyardManagement.Model.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class Utilizator
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int id { get; set; }
+        public string prenume { get; set; }
+        public string nume { get; set; }
+        public string cont { get; set; }
+        public byte[] parola { get; set; }
+        public string email { get; set; }
     }
 }

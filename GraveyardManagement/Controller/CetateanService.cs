@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GraveyardManagement.Global;
+using GraveyardManagement.Model.Cerere;
 using GraveyardManagement.Model.ModelCetatean;
 using GraveyardManagement.Model.Utils;
 
@@ -10,11 +11,13 @@ namespace GraveyardManagement.Controller
     public class CetateanService
     {
         private readonly ModelCetatean _modelCetatean;
+        private readonly ModelCerere _modelCerere;
         private readonly ModelUtils _modelUtils;
 
         public CetateanService()
         {
             _modelCetatean = new ModelCetatean(GlobalVariables.Entities);
+            _modelCerere = new ModelCerere(GlobalVariables.Entities);
             _modelUtils = new ModelUtils(GlobalVariables.Entities);
         }
 
@@ -63,6 +66,11 @@ namespace GraveyardManagement.Controller
         public CetateanDto CautaCetatean(string cnp)
         {
             return _modelCetatean.CautaCetatean(cnp);
+        }
+
+        public List<CerereDto> CautaCereri(string cnp)
+        {
+            return _modelCerere.CautaCereri(cnp);
         }
 
         public List<string> ObtineLocalitatile()
