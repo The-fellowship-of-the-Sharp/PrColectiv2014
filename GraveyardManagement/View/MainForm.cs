@@ -358,7 +358,9 @@ namespace GraveyardManagement.View
 
             var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
 
+            var form = new VizualizareContractePentruCetatean(cetatean.Cnp);
 
+            form.ShowDialog();
         }
         #endregion
 

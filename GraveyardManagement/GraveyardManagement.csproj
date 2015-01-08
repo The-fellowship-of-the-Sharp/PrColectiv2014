@@ -310,6 +310,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.Cerere.CerereDto.datasource" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.Contract.ContractDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.EntityFramework.ProgramareInmormantare.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelCetatean.CetateanDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelProgramareInmormantare.ProgramareInmormantareDTO.datasource" />

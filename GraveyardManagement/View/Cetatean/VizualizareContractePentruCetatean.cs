@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using GraveyardManagement.Controller;
 
 namespace GraveyardManagement.View.Cetatean
 {
     public partial class VizualizareContractePentruCetatean : Form
     {
-        public VizualizareContractePentruCetatean()
+        public VizualizareContractePentruCetatean(string cnpCetatean)
         {
             InitializeComponent();
+
+            var cetateanService = new CetateanService();
+
+            contracteGridView.DataSource = cetateanService.CautaContracte(cnpCetatean);
         }
     }
 }
