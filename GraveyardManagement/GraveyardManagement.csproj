@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Controller\CerereService.cs" />
     <Compile Include="Controller\CetateanService.cs" />
+    <Compile Include="Controller\ContractService.cs" />
     <Compile Include="Controller\DecedatService.cs" />
     <Compile Include="Controller\LoginService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
@@ -128,12 +129,6 @@
     <Compile Include="Model\EntityFramework\Religie.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\EntityFramework\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>NecropolisEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EntityFramework\sp_helpdiagrams_Result.cs">
-      <DependentUpon>NecropolisEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\EntityFramework\Stadiu.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
@@ -162,6 +157,11 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Utils\CimitirDTO.cs" />
     <Compile Include="Model\Utils\ModelUtils.cs" />
+    <Compile Include="NecropolisDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NecropolisDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="View\Cerere\ActualizareCerereForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +188,18 @@
     </Compile>
     <Compile Include="View\Cetatean\VizualizareContractePentruCetatean.Designer.cs">
       <DependentUpon>VizualizareContractePentruCetatean.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Contract\ActualizareContract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Contract\ActualizareContract.Designer.cs">
+      <DependentUpon>ActualizareContract.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Contract\AdaugareContractForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Contract\AdaugareContractForm.Designer.cs">
+      <DependentUpon>AdaugareContractForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Decedat\AdaugareDecedat.cs">
       <SubType>Form</SubType>
@@ -257,6 +269,12 @@
     <EmbeddedResource Include="View\Cetatean\VizualizareContractePentruCetatean.resx">
       <DependentUpon>VizualizareContractePentruCetatean.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Contract\ActualizareContract.resx">
+      <DependentUpon>ActualizareContract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Contract\AdaugareContractForm.resx">
+      <DependentUpon>AdaugareContractForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Decedat\AdaugareDecedat.resx">
       <DependentUpon>AdaugareDecedat.cs</DependentUpon>
     </EmbeddedResource>
@@ -307,6 +325,17 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NecropolisEntities.edmx</DependentUpon>
       <LastGenOutput>NecropolisEntities.cs</LastGenOutput>
+    </None>
+    <None Include="NecropolisDataSet.xsc">
+      <DependentUpon>NecropolisDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="NecropolisDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>NecropolisDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NecropolisDataSet.xss">
+      <DependentUpon>NecropolisDataSet.xsd</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.Cerere.CerereDto.datasource" />

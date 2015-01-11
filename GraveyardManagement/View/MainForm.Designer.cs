@@ -114,6 +114,23 @@ namespace GraveyardManagement.View
             this.stadiuDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cerereDtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabContracte = new System.Windows.Forms.TabPage();
+            this.deleteContractbtn = new System.Windows.Forms.Button();
+            this.updateContractBtn = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cautaContractebtn = new System.Windows.Forms.Button();
+            this.cnpTextBox1 = new GraveyardManagement.CustomControls.WatermarkTextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.addContractBtn = new System.Windows.Forms.Button();
+            this.girdViewContracte = new System.Windows.Forms.DataGridView();
+            this.numarDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cnpCetateanDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prenumeCetateanDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numeCetateanDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.domiciliuCetateanDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataEliberareDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataExpirareDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contractDtoBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabInmormantari = new System.Windows.Forms.TabPage();
             this.programariView = new System.Windows.Forms.DataGridView();
             this.cnpDecedatDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -133,6 +150,9 @@ namespace GraveyardManagement.View
             this.cautaDupaDecedatButton = new System.Windows.Forms.Button();
             this.cnpTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.adaugaButton = new System.Windows.Forms.Button();
+            this.necropolisDataSet = new GraveyardManagement.NecropolisDataSet();
+            this.contractConcesiuneBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.contractConcesiuneTableAdapter = new GraveyardManagement.NecropolisDataSetTableAdapters.ContractConcesiuneTableAdapter();
             this.tabControl1.SuspendLayout();
             this.tabStatistici.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statisticiGridView)).BeginInit();
@@ -147,9 +167,14 @@ namespace GraveyardManagement.View
             this.tabCereri.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCereri)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cerereDtoBindingSource)).BeginInit();
+            this.tabContracte.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.girdViewContracte)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractDtoBindingSource)).BeginInit();
             this.tabInmormantari.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.programariView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programareInmormantareDTOBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.necropolisDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractConcesiuneBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -937,12 +962,167 @@ namespace GraveyardManagement.View
             // 
             // tabContracte
             // 
+            this.tabContracte.Controls.Add(this.deleteContractbtn);
+            this.tabContracte.Controls.Add(this.updateContractBtn);
+            this.tabContracte.Controls.Add(this.label9);
+            this.tabContracte.Controls.Add(this.cautaContractebtn);
+            this.tabContracte.Controls.Add(this.cnpTextBox1);
+            this.tabContracte.Controls.Add(this.label10);
+            this.tabContracte.Controls.Add(this.label8);
+            this.tabContracte.Controls.Add(this.addContractBtn);
+            this.tabContracte.Controls.Add(this.girdViewContracte);
             this.tabContracte.Location = new System.Drawing.Point(4, 22);
             this.tabContracte.Name = "tabContracte";
             this.tabContracte.Size = new System.Drawing.Size(893, 366);
             this.tabContracte.TabIndex = 5;
             this.tabContracte.Text = "Contracte";
             this.tabContracte.UseVisualStyleBackColor = true;
+            // 
+            // deleteContractbtn
+            // 
+            this.deleteContractbtn.Location = new System.Drawing.Point(34, 268);
+            this.deleteContractbtn.Name = "deleteContractbtn";
+            this.deleteContractbtn.Size = new System.Drawing.Size(156, 32);
+            this.deleteContractbtn.TabIndex = 15;
+            this.deleteContractbtn.Text = "Stergere contract selectat";
+            this.deleteContractbtn.UseVisualStyleBackColor = true;
+            this.deleteContractbtn.Click += new System.EventHandler(this.deleteContractbtn_Click);
+            // 
+            // updateContractBtn
+            // 
+            this.updateContractBtn.Location = new System.Drawing.Point(34, 216);
+            this.updateContractBtn.Name = "updateContractBtn";
+            this.updateContractBtn.Size = new System.Drawing.Size(156, 32);
+            this.updateContractBtn.TabIndex = 14;
+            this.updateContractBtn.Text = "Actualiare contract selectat";
+            this.updateContractBtn.UseVisualStyleBackColor = true;
+            this.updateContractBtn.Click += new System.EventHandler(this.updateContractBtn_Click);
+            // 
+            // label9
+            // 
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label9.Location = new System.Drawing.Point(0, 181);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(230, 2);
+            this.label9.TabIndex = 13;
+            // 
+            // cautaContractebtn
+            // 
+            this.cautaContractebtn.Location = new System.Drawing.Point(108, 119);
+            this.cautaContractebtn.Name = "cautaContractebtn";
+            this.cautaContractebtn.Size = new System.Drawing.Size(82, 32);
+            this.cautaContractebtn.TabIndex = 12;
+            this.cautaContractebtn.Text = "Cauta";
+            this.cautaContractebtn.UseVisualStyleBackColor = true;
+            this.cautaContractebtn.Click += new System.EventHandler(this.cautaContractebtn_Click);
+            // 
+            // cnpTextBox1
+            // 
+            this.cnpTextBox1.Location = new System.Drawing.Point(6, 74);
+            this.cnpTextBox1.Name = "cnpTextBox1";
+            this.cnpTextBox1.Size = new System.Drawing.Size(184, 20);
+            this.cnpTextBox1.TabIndex = 9;
+            this.cnpTextBox1.WatermarkText = "CNP Cetatean";
+            // 
+            // label10
+            // 
+            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label10.Location = new System.Drawing.Point(0, 58);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(230, 2);
+            this.label10.TabIndex = 7;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 47);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(0, 13);
+            this.label8.TabIndex = 2;
+            // 
+            // addContractBtn
+            // 
+            this.addContractBtn.Location = new System.Drawing.Point(6, 12);
+            this.addContractBtn.Name = "addContractBtn";
+            this.addContractBtn.Size = new System.Drawing.Size(82, 32);
+            this.addContractBtn.TabIndex = 1;
+            this.addContractBtn.Text = "Adauga";
+            this.addContractBtn.UseVisualStyleBackColor = true;
+            this.addContractBtn.Click += new System.EventHandler(this.addContractBtn_Click);
+            // 
+            // girdViewContracte
+            // 
+            this.girdViewContracte.AllowUserToAddRows = false;
+            this.girdViewContracte.AllowUserToDeleteRows = false;
+            this.girdViewContracte.AutoGenerateColumns = false;
+            this.girdViewContracte.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.girdViewContracte.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.numarDataGridViewTextBoxColumn2,
+            this.cnpCetateanDataGridViewTextBoxColumn1,
+            this.prenumeCetateanDataGridViewTextBoxColumn1,
+            this.numeCetateanDataGridViewTextBoxColumn1,
+            this.domiciliuCetateanDataGridViewTextBoxColumn1,
+            this.dataEliberareDataGridViewTextBoxColumn,
+            this.dataExpirareDataGridViewTextBoxColumn1});
+            this.girdViewContracte.DataSource = this.contractDtoBindingSource;
+            this.girdViewContracte.Location = new System.Drawing.Point(252, 12);
+            this.girdViewContracte.Name = "girdViewContracte";
+            this.girdViewContracte.ReadOnly = true;
+            this.girdViewContracte.Size = new System.Drawing.Size(634, 251);
+            this.girdViewContracte.TabIndex = 0;
+            // 
+            // numarDataGridViewTextBoxColumn2
+            // 
+            this.numarDataGridViewTextBoxColumn2.DataPropertyName = "Numar";
+            this.numarDataGridViewTextBoxColumn2.HeaderText = "Numar";
+            this.numarDataGridViewTextBoxColumn2.Name = "numarDataGridViewTextBoxColumn2";
+            this.numarDataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // cnpCetateanDataGridViewTextBoxColumn1
+            // 
+            this.cnpCetateanDataGridViewTextBoxColumn1.DataPropertyName = "CnpCetatean";
+            this.cnpCetateanDataGridViewTextBoxColumn1.HeaderText = "CnpCetatean";
+            this.cnpCetateanDataGridViewTextBoxColumn1.Name = "cnpCetateanDataGridViewTextBoxColumn1";
+            this.cnpCetateanDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // prenumeCetateanDataGridViewTextBoxColumn1
+            // 
+            this.prenumeCetateanDataGridViewTextBoxColumn1.DataPropertyName = "PrenumeCetatean";
+            this.prenumeCetateanDataGridViewTextBoxColumn1.HeaderText = "PrenumeCetatean";
+            this.prenumeCetateanDataGridViewTextBoxColumn1.Name = "prenumeCetateanDataGridViewTextBoxColumn1";
+            this.prenumeCetateanDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // numeCetateanDataGridViewTextBoxColumn1
+            // 
+            this.numeCetateanDataGridViewTextBoxColumn1.DataPropertyName = "NumeCetatean";
+            this.numeCetateanDataGridViewTextBoxColumn1.HeaderText = "NumeCetatean";
+            this.numeCetateanDataGridViewTextBoxColumn1.Name = "numeCetateanDataGridViewTextBoxColumn1";
+            this.numeCetateanDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // domiciliuCetateanDataGridViewTextBoxColumn1
+            // 
+            this.domiciliuCetateanDataGridViewTextBoxColumn1.DataPropertyName = "DomiciliuCetatean";
+            this.domiciliuCetateanDataGridViewTextBoxColumn1.HeaderText = "DomiciliuCetatean";
+            this.domiciliuCetateanDataGridViewTextBoxColumn1.Name = "domiciliuCetateanDataGridViewTextBoxColumn1";
+            this.domiciliuCetateanDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataEliberareDataGridViewTextBoxColumn
+            // 
+            this.dataEliberareDataGridViewTextBoxColumn.DataPropertyName = "DataEliberare";
+            this.dataEliberareDataGridViewTextBoxColumn.HeaderText = "DataEliberare";
+            this.dataEliberareDataGridViewTextBoxColumn.Name = "dataEliberareDataGridViewTextBoxColumn";
+            this.dataEliberareDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // dataExpirareDataGridViewTextBoxColumn1
+            // 
+            this.dataExpirareDataGridViewTextBoxColumn1.DataPropertyName = "DataExpirare";
+            this.dataExpirareDataGridViewTextBoxColumn1.HeaderText = "DataExpirare";
+            this.dataExpirareDataGridViewTextBoxColumn1.Name = "dataExpirareDataGridViewTextBoxColumn1";
+            this.dataExpirareDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // contractDtoBindingSource
+            // 
+            this.contractDtoBindingSource.DataSource = typeof(GraveyardManagement.Model.Contract.ContractDto);
             // 
             // tabInmormantari
             // 
@@ -1123,6 +1303,20 @@ namespace GraveyardManagement.View
             this.adaugaButton.UseVisualStyleBackColor = true;
             this.adaugaButton.Click += new System.EventHandler(this.adaugaButton_Click);
             // 
+            // necropolisDataSet
+            // 
+            this.necropolisDataSet.DataSetName = "NecropolisDataSet";
+            this.necropolisDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // contractConcesiuneBindingSource
+            // 
+            this.contractConcesiuneBindingSource.DataMember = "ContractConcesiune";
+            this.contractConcesiuneBindingSource.DataSource = this.necropolisDataSet;
+            // 
+            // contractConcesiuneTableAdapter
+            // 
+            this.contractConcesiuneTableAdapter.ClearBeforeFill = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1131,6 +1325,7 @@ namespace GraveyardManagement.View
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabStatistici.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.statisticiGridView)).EndInit();
@@ -1149,10 +1344,16 @@ namespace GraveyardManagement.View
             this.tabCereri.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewCereri)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cerereDtoBindingSource)).EndInit();
+            this.tabContracte.ResumeLayout(false);
+            this.tabContracte.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.girdViewContracte)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractDtoBindingSource)).EndInit();
             this.tabInmormantari.ResumeLayout(false);
             this.tabInmormantari.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.programariView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.programareInmormantareDTOBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.necropolisDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contractConcesiuneBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1248,8 +1449,6 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.Button butonActualizareCerere;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button butonCautaCerere;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker dataInregistrarePicker;
         private System.Windows.Forms.BindingSource cerereDtoBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn numarDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnpCetateanDataGridViewTextBoxColumn;
@@ -1261,5 +1460,27 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.DataGridViewTextBoxColumn stadiuDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button butonCereriCetatean;
         private System.Windows.Forms.Button butonContracteCetatean;
+        private System.Windows.Forms.DataGridView girdViewContracte;
+        private NecropolisDataSet necropolisDataSet;
+        private System.Windows.Forms.BindingSource contractConcesiuneBindingSource;
+        private NecropolisDataSetTableAdapters.ContractConcesiuneTableAdapter contractConcesiuneTableAdapter;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button addContractBtn;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button cautaContractebtn;
+        private WatermarkTextBox cnpTextBox1;
+        private System.Windows.Forms.Button deleteContractbtn;
+        private System.Windows.Forms.Button updateContractBtn;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numarDataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cnpCetateanDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn prenumeCetateanDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn numeCetateanDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn domiciliuCetateanDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataEliberareDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataExpirareDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.BindingSource contractDtoBindingSource;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DateTimePicker dataInregistrarePicker;
     }
 }

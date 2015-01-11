@@ -12,6 +12,8 @@ using GraveyardManagement.View.Cetatean;
 using GraveyardManagement.View.ProgramareInmormantari;
 using GraveyardManagement.View.Decedat;
 using GraveyardManagement.Model.ModelDecedat;
+using GraveyardManagement.Model.Contract;
+using GraveyardManagement.View.Contract;
 
 namespace GraveyardManagement.View
 {
@@ -23,6 +25,7 @@ namespace GraveyardManagement.View
         private DecedatService _decedatService;
         private StatisticiService _statisticiService = new StatisticiService();
         private CerereService _cerereService;
+        private ContractService _contractService;
 
         public MainForm()
         {
@@ -37,6 +40,7 @@ namespace GraveyardManagement.View
             InitializeCetateni();
 
             InitializeCereri();
+            InitializeContracte();
         }
 
         #region Programare Inmormantare
@@ -301,6 +305,8 @@ namespace GraveyardManagement.View
             _cetateanService = new CetateanService();
         }
 
+
+
         private void butonAdaugareCetatean_Click(object sender, EventArgs e)
         {
             var form = new AdaugareCetateanForm();
@@ -362,6 +368,83 @@ namespace GraveyardManagement.View
 
             form.ShowDialog();
         }
+        #endregion
+
+
+        #region Contracte
+
+        private void InitializeContracte()
+        {
+            _contractService = new ContractService();
+        }
+
+
+        private void addContractBtn_Click(object sender, EventArgs e)
+        {
+            var form = new AdaugareContractForm();
+            form.ShowDialog();
+        }
+
+        private void cautaContractebtn_Click(object sender, EventArgs e)
+        {
+            string CNP;
+
+            try
+            {
+                CNP = cnpTextBox1.Text.ToString();
+                if (CNP.Length != 13)
+                {
+                    throw new Exception("CNP nu are 13 cifre!");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("CNP-ul introdus este invalid!");
+                return;
+            }
+
+
+            List<ContractDto> contract;
+            try
+            {
+                contract = _contractService.CautaContracte(CNP);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            girdViewContracte.DataSource = new[] { contract };
+        }
+
+        private void updateContractBtn_Click(object sender, EventArgs e)
+        {
+            if (girdViewContracte.SelectedRows.Count <= 0)
+                return;
+
+            var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
+
+            var form = new ActualizareCerereForm(contract.Numar);
+            form.ShowDialog();
+
+            contract = _contractService.CautaContract(contract.Numar);
+
+            girdViewContracte.DataSource = new[] { contract };
+        }
+
+        private void deleteContractbtn_Click(object sender, EventArgs e)
+        {
+            if (girdViewContracte.SelectedRows.Count <= 0)
+                return;
+
+            var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
+
+            _contractService.StergeContract(contract.Numar);
+
+            gridViewCereri.DataSource = null;
+        }
+
         #endregion
 
         #region Statistici
@@ -455,5 +538,22 @@ namespace GraveyardManagement.View
         }
 
         #endregion
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'necropolisDataSet.ContractConcesiune' table. You can move, or remove it, as needed.
+            this.contractConcesiuneTableAdapter.Fill(this.necropolisDataSet.ContractConcesiune);
+
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
