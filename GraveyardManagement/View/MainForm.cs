@@ -376,6 +376,7 @@ namespace GraveyardManagement.View
         private void InitializeContracte()
         {
             _contractService = new ContractService();
+            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
 
@@ -425,7 +426,7 @@ namespace GraveyardManagement.View
 
             var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
 
-            var form = new ActualizareCerereForm(contract.Numar);
+            var form = new ActualizareContract(contract.Numar);
             form.ShowDialog();
 
             contract = _contractService.CautaContract(contract.Numar);

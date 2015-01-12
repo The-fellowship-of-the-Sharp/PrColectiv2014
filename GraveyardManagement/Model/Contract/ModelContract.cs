@@ -25,7 +25,7 @@ namespace GraveyardManagement.Model.Contract
                 throw new Exception("Contractul cu id primit nu exista in baza de date.");
             }
             var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
-            var persona = _entities.Persoana.FirstOrDefault(p => p.ContractConcesiune.Contains(contact));
+            var persona = contact.Persoana.ToList()[0];
             var cetacean = modelCetatean.CautaCetatean(persona.cnp);
             ContractDto return_contract = new ContractDto
             {
@@ -90,6 +90,36 @@ namespace GraveyardManagement.Model.Contract
             return contracte;
         }
 
+        public List<ContractDto> GetAllContracte()
+        {
+            var contracte = new List<ContractDto>();
+
+            var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
+
+
+            var rawContracte =
+                _entities.ContractConcesiune.Where(c => c.alocareId > 0);
+
+            foreach (var contractConcesiune in rawContracte)
+            {
+                var persoana = contractConcesiune.Persoana.ToList()[0] ;
+                var cetatean = modelCetatean.CautaCetatean(persoana.cnp);
+                contracte.Add(new ContractDto
+                {
+                    Numar = contractConcesiune.numar,
+                    CnpCetatean = cetatean.Cnp,
+                    PrenumeCetatean = cetatean.Prenume,
+                    NumeCetatean = cetatean.Nume,
+                    DomiciliuCetatean = string.Format("{0}, Strada {1}, Numarul {2}, {3}",
+                        cetatean.Localitate, cetatean.Strada, cetatean.Numar, cetatean.AlteInformatii),
+                    DataEliberare = (contractConcesiune.dataEliberare.HasValue) ? contractConcesiune.dataEliberare.Value : DateTime.MinValue,
+                    DataExpirare = (contractConcesiune.dataExpirare.HasValue) ? contractConcesiune.dataExpirare.Value : DateTime.MaxValue
+                });
+            }
+
+            return contracte;
+        }
+
         public int findLocAlocat(string cnpDecedat)
         {
             var locAlocat = _entities.AlocareLoc.FirstOrDefault(l => l.cnpDecedat == cnpDecedat);
@@ -101,7 +131,17 @@ namespace GraveyardManagement.Model.Contract
 
             return locAlocat.id;
         }
-
+        
+        public Boolean ChechExistaContract(int idloc)
+        {
+            var contr = _entities.ContractConcesiune.FirstOrDefault(c => c.alocareId == idloc);
+            if (contr != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        
         public void AdaugaPropContract(int nrContract, DateTime dataEmit, DateTime dateExp, int idLoc)
         {
 
