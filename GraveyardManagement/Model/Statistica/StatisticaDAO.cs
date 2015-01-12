@@ -12,44 +12,50 @@ namespace GraveyardManagement.Model.Statistica
         public List<StatisticaDTO> GetDataFromDB()
         {
             var database = GlobalVariables.Entities;
-            
-            return (from al in database.AlocareLoc
-                    join acp in database.AlocareCuProprietar on al.id equals acp.alocareId into acps
-                    from ap in acps.DefaultIfEmpty()
-                    join p in database.Poza on ap.pozaId equals p.id into poze
-                    from poz in poze.DefaultIfEmpty()
-                    join persoana in database.Persoana on ap.cnpDetinator equals persoana.cnp into persoane
-                    from pers in persoane.DefaultIfEmpty()
-                    join m in database.Mormant on al.mormantId equals m.id into morminte
-                    from mormant in morminte.DefaultIfEmpty()
-                    join c in database.Cimitir on mormant.cimitirId equals c.id into cimitire
-                    from cimitir in cimitire.DefaultIfEmpty()
+            var list = new List<StatisticaDTO>();
 
-                    select new
+            foreach (var alocareLoc in database.AlocareLoc)
+            {
+                var alocareCuProprietar = alocareLoc.AlocareCuProprietar;
+                var mormant = alocareLoc.Mormant;
+                var cimitir = mormant.Cimitir;
+                if (alocareCuProprietar != null && alocareCuProprietar.Count > 0)
+                {
+                    foreach (var cuProprietar in alocareCuProprietar)
+                    {
+                        var poza = cuProprietar.Poza;
+                        var persoana = cuProprietar.Persoana;
+                        list.Add(new StatisticaDTO
+                        {
+                            Cimitir = cimitir != null ? cimitir.nume : "N/A",
+                            CNPDecedat = alocareLoc.cnpDecedat,
+                            DataExpirare = alocareLoc.dataExpirare,
+                            NumarMormant = mormant != null ? mormant.numar : null,
+                            Parcela = mormant != null ? mormant.parcela : "N/A",
+                            Suprafata = alocareLoc.suprafata,
+                            Poza = poza != null ? ConvertByteArrayToImage(poza.continut) : null,
+                            Nume = persoana != null ? persoana.nume : "N/A",
+                            Prenume = persoana != null ? persoana.prenume : "N/A",
+                            DataEmitere = cuProprietar.dataEmitereChitanta
+                        });
+                    }
+                }
+                else
+                {
+                    list.Add(new StatisticaDTO
                     {
                         Cimitir = cimitir != null ? cimitir.nume : "N/A",
-                        CNPDecedat = al.cnpDecedat ?? "N/A",
-                        DataExpirare = al.dataExpirare,
+                        CNPDecedat = alocareLoc.cnpDecedat,
+                        DataExpirare = alocareLoc.dataExpirare,
                         NumarMormant = mormant != null ? mormant.numar : null,
                         Parcela = mormant != null ? mormant.parcela : "N/A",
-                        Suprafata = al.suprafata,
-                        Poza = (poz != null) ? poz.continut : null,
-                        Nume = ap != null ? pers.nume : "N/A",
-                        Prenume = ap != null ? pers.prenume : "N/A",
-                        DataEmiterii = ap != null ? ap.dataEmitereChitanta : null
-                    }).ToList().Select(element => new StatisticaDTO
-                    {
-                        Cimitir = element.Cimitir,
-                        CNPDecedat = element.CNPDecedat,
-                        DataExpirare = element.DataExpirare,
-                        NumarMormant = element.NumarMormant,
-                        Parcela = element.Parcela,
-                        Suprafata = element.Suprafata,
-                        Poza = ConvertByteArrayToImage(element.Poza),
-                        Nume = element.Nume,
-                        Prenume = element.Prenume,
-                        DataEmitere = element.DataEmiterii
-                    }).ToList();
+                        Suprafata = alocareLoc.suprafata,
+                        Nume = "N/A",
+                        Prenume = "N/A"
+                    });
+                }
+            }
+            return list;
         } 
 
         public List<StatisticaDTO> SelectMorminteCareExpiraInAnulCurrent()

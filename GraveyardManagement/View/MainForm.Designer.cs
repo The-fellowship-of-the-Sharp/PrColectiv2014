@@ -1324,7 +1324,7 @@ namespace GraveyardManagement.View
             this.ClientSize = new System.Drawing.Size(914, 428);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "Main";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabStatistici.ResumeLayout(false);
