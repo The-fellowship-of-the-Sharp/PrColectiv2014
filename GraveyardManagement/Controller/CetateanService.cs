@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GraveyardManagement.Global;
+using GraveyardManagement.Model.Cerere;
+using GraveyardManagement.Model.Contract;
 using GraveyardManagement.Model.ModelCetatean;
 using GraveyardManagement.Model.Utils;
 
@@ -10,11 +12,15 @@ namespace GraveyardManagement.Controller
     public class CetateanService
     {
         private readonly ModelCetatean _modelCetatean;
+        private readonly ModelCerere _modelCerere;
+        private readonly ModelContract _modelContract;
         private readonly ModelUtils _modelUtils;
 
         public CetateanService()
         {
             _modelCetatean = new ModelCetatean(GlobalVariables.Entities);
+            _modelCerere = new ModelCerere(GlobalVariables.Entities);
+            _modelContract = new ModelContract(GlobalVariables.Entities);
             _modelUtils = new ModelUtils(GlobalVariables.Entities);
         }
 
@@ -39,12 +45,12 @@ namespace GraveyardManagement.Controller
                 throw new Exception(string.Format("Codul numeric personal (CNP): {0} este invalid!", cnp));
             }
 
-            if (!Regex.IsMatch(nume, @"^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(nume, @"^[a-zA-Z ]+$"))
             {
                 throw new Exception(string.Format("Numele: {0} este invalid. Numele poate contine doar litere.", nume));
             }
 
-            if (!Regex.IsMatch(prenume, @"^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(prenume, @"^[a-zA-Z ]+$"))
             {
                 throw new Exception(string.Format("Prenumele: {0} este invalid. Prenumele poate contine doar litere.", prenume));
             }
@@ -63,6 +69,16 @@ namespace GraveyardManagement.Controller
         public CetateanDto CautaCetatean(string cnp)
         {
             return _modelCetatean.CautaCetatean(cnp);
+        }
+
+        public List<CerereDto> CautaCereri(string cnp)
+        {
+            return _modelCerere.CautaCereri(cnp);
+        }
+
+        public List<ContractDto> CautaContracte(string cnp)
+        {
+            return _modelContract.CautaContracte(cnp);
         }
 
         public List<string> ObtineLocalitatile()

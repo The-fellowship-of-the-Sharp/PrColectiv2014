@@ -12,6 +12,8 @@ using GraveyardManagement.View.Cetatean;
 using GraveyardManagement.View.ProgramareInmormantari;
 using GraveyardManagement.View.Decedat;
 using GraveyardManagement.Model.ModelDecedat;
+using GraveyardManagement.Model.Contract;
+using GraveyardManagement.View.Contract;
 
 namespace GraveyardManagement.View
 {
@@ -23,6 +25,7 @@ namespace GraveyardManagement.View
         private DecedatService _decedatService;
         private StatisticiService _statisticiService = new StatisticiService();
         private CerereService _cerereService;
+        private ContractService _contractService;
 
         public MainForm()
         {
@@ -37,6 +40,7 @@ namespace GraveyardManagement.View
             InitializeCetateni();
 
             InitializeCereri();
+            InitializeContracte();
         }
 
         #region Programare Inmormantare
@@ -86,7 +90,7 @@ namespace GraveyardManagement.View
                 var programare = _programareInmormantare.CautaProgramareInmormantareDupaCNP(cnp);
                 if (programare != null)
                 {
-                programariView.DataSource = new[] { programare };
+                    programariView.DataSource = new[] { programare };
                 }
             }
             catch (Exception ex)
@@ -203,7 +207,7 @@ namespace GraveyardManagement.View
             try
             {
                 this._mormant.ElibereazaMormant(
-                    (string) morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
+                    (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
                     );
             }
             catch (Exception ex)
@@ -294,13 +298,14 @@ namespace GraveyardManagement.View
 
         #endregion
 
-
         #region Cetateni
 
         private void InitializeCetateni()
         {
             _cetateanService = new CetateanService();
         }
+
+
 
         private void butonAdaugareCetatean_Click(object sender, EventArgs e)
         {
@@ -327,6 +332,9 @@ namespace GraveyardManagement.View
 
         private void butonActualizareCetatean_Click(object sender, EventArgs e)
         {
+            if (gridViewCetateni.SelectedRows.Count <= 0)
+                return;
+
             var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
 
             var form = new ActualizareCetateanForm(cetatean.Cnp);
@@ -336,6 +344,107 @@ namespace GraveyardManagement.View
 
             gridViewCetateni.DataSource = new[] { cetatean };
         }
+
+        private void butonCereriCetatean_Click(object sender, EventArgs e)
+        {
+            if (gridViewCetateni.SelectedRows.Count <= 0)
+                return;
+
+            var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
+
+            var form = new VizualizareCereriPentruCetatean(cetatean.Cnp);
+
+            form.ShowDialog();
+        }
+
+        private void butonContracteCetatean_Click(object sender, EventArgs e)
+        {
+            if (gridViewCetateni.SelectedRows.Count <= 0)
+                return;
+
+            var cetatean = (CetateanDto)gridViewCetateni.SelectedRows[0].DataBoundItem;
+
+            var form = new VizualizareContractePentruCetatean(cetatean.Cnp);
+
+            form.ShowDialog();
+        }
+        #endregion
+
+
+        #region Contracte
+
+        private void InitializeContracte()
+        {
+            _contractService = new ContractService();
+        }
+
+
+        private void addContractBtn_Click(object sender, EventArgs e)
+        {
+            var form = new AdaugareContractForm();
+            form.ShowDialog();
+        }
+
+        private void cautaContractebtn_Click(object sender, EventArgs e)
+        {
+            string CNP;
+
+            try
+            {
+                CNP = cnpTextBox1.Text.ToString();
+                if (CNP.Length != 13)
+                {
+                    throw new Exception("CNP nu are 13 cifre!");
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("CNP-ul introdus este invalid!");
+                return;
+            }
+
+
+            List<ContractDto> contract;
+            try
+            {
+                contract = _contractService.CautaContracte(CNP);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            girdViewContracte.DataSource = new[] { contract };
+        }
+
+        private void updateContractBtn_Click(object sender, EventArgs e)
+        {
+            if (girdViewContracte.SelectedRows.Count <= 0)
+                return;
+
+            var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
+
+            var form = new ActualizareCerereForm(contract.Numar);
+            form.ShowDialog();
+
+            contract = _contractService.CautaContract(contract.Numar);
+
+            girdViewContracte.DataSource = new[] { contract };
+        }
+
+        private void deleteContractbtn_Click(object sender, EventArgs e)
+        {
+            if (girdViewContracte.SelectedRows.Count <= 0)
+                return;
+
+            var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
+
+            _contractService.StergeContract(contract.Numar);
+
+            gridViewCereri.DataSource = null;
+        }
+
         #endregion
 
         #region Statistici
@@ -355,6 +464,8 @@ namespace GraveyardManagement.View
         }
 
         #endregion
+
+        #region Cereri
 
         private void InitializeCereri()
         {
@@ -419,11 +530,30 @@ namespace GraveyardManagement.View
             if (gridViewCereri.SelectedRows.Count <= 0)
                 return;
 
-            var cerere = (CerereDto) gridViewCereri.SelectedRows[0].DataBoundItem;
+            var cerere = (CerereDto)gridViewCereri.SelectedRows[0].DataBoundItem;
 
             _cerereService.StergeCerere(cerere.Numar);
 
             gridViewCereri.DataSource = null;
         }
+
+        #endregion
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'necropolisDataSet.ContractConcesiune' table. You can move, or remove it, as needed.
+            this.contractConcesiuneTableAdapter.Fill(this.necropolisDataSet.ContractConcesiune);
+
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

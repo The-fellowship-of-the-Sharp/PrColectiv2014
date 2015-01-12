@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Objects;
 using System.Linq;
+using GraveyardManagement.Global;
 using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.Model.Cerere
@@ -18,8 +19,6 @@ namespace GraveyardManagement.Model.Cerere
 
         public void AdaugaCerere(string cnpCetatean, int nrInfocet, DateTime dataInregistrare)
         {
-            //ceva verificari: daca nrInfocet exista deja?
-
             //gasire stadiu Intern
             var stadiuIntern = _entities.Stadiu.FirstOrDefault(s => s.nume == "Intern");
 
@@ -28,12 +27,27 @@ namespace GraveyardManagement.Model.Cerere
                 throw new Exception("Cererea nu a putut fi adaugata. Va rugam contactati IT suport.");
             }
 
+            var existaCetatean = _entities.Persoana.FirstOrDefault(c => c.cnp == cnpCetatean && c.domiciliuId.HasValue);
+
+            if (existaCetatean == null)
+            {
+                throw new Exception("CNP-ul cetateanului nu exista. Va rugam introduceti cetateanul in baza de date prima data.");
+            }
+
             _entities.CerereLoc.Add(new CerereLoc
             {
                 cnpPersoana = cnpCetatean,
                 nrInfocet = nrInfocet,
                 dataInregistrare = dataInregistrare,
                 stadiuId = stadiuIntern.id
+            });
+
+            _entities.Istoric.Add(new Istoric
+            {
+                numeUtilizator = GlobalVariables.CurrentUser.AccountName,
+                data = DateTime.Now,
+                numarDocument = nrInfocet,
+                detalii = string.Format("CERERE;ADAUGARE;{0}", cnpCetatean)
             });
 
             _entities.SaveChanges();
@@ -109,6 +123,42 @@ namespace GraveyardManagement.Model.Cerere
             };
         }
 
+        public List<CerereDto> CautaCereri(string cnpCetatean)
+        {
+            var cereri = new List<CerereDto>();
+
+            var rawCereri = _entities.CerereLoc.Where(c => c.cnpPersoana == cnpCetatean).ToList();
+
+            foreach (var cerereLoc in rawCereri)
+            {
+                var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
+
+                var cetatean = modelCetatean.CautaCetatean(cerereLoc.cnpPersoana);
+
+                var stadiu = _entities.Stadiu.FirstOrDefault(s => s.id == cerereLoc.stadiuId);
+
+                if (stadiu == null)
+                {
+                    continue;
+                }
+
+                cereri.Add(new CerereDto
+                {
+                    Numar = cerereLoc.numar,
+                    NumarInfocet = cerereLoc.nrInfocet.GetValueOrDefault(),
+                    DataInregistrare = cerereLoc.dataInregistrare.GetValueOrDefault(),
+                    Stadiu = stadiu.nume,
+                    CnpCetatean = cetatean.Cnp,
+                    NumeCetatean = cetatean.Nume,
+                    PrenumeCetatean = cetatean.Prenume,
+                    DomiciliuCetatean = string.Format("{0}, Strada {1}, Numarul {2}, {3}",
+                        cetatean.Localitate, cetatean.Strada, cetatean.Numar, cetatean.AlteInformatii)
+                });
+            }
+
+            return cereri;
+        }
+
         public void ActualizeazaCerere(int numar, string numeStadiuNou)
         {
             var cerere = _entities.CerereLoc.FirstOrDefault(c => c.numar == numar);
@@ -116,6 +166,17 @@ namespace GraveyardManagement.Model.Cerere
             if (cerere == null)
             {
                 throw new Exception(string.Format("Cererea cu numarul {0} nu a fost gasita!", numar));
+            }
+
+            var stadiuVechiId = cerere.stadiuId;
+
+            var stadiuVechi = _entities.Stadiu.FirstOrDefault(s => s.id == stadiuVechiId);
+
+            var numeStadiuVechi = "NULL";
+
+            if (stadiuVechi != null)
+            {
+                numeStadiuVechi = stadiuVechi.nume;
             }
 
             var stadiuNou = _entities.Stadiu.FirstOrDefault(s => s.nume == numeStadiuNou);
@@ -127,6 +188,14 @@ namespace GraveyardManagement.Model.Cerere
 
             cerere.stadiuId = stadiuNou.id;
 
+            _entities.Istoric.Add(new Istoric
+            {
+                numeUtilizator = GlobalVariables.CurrentUser.AccountName,
+                data = DateTime.Now,
+                numarDocument = cerere.nrInfocet,
+                detalii = string.Format("CERERE;ACTUALIZARE;{0};{1}", numeStadiuVechi, numeStadiuNou)
+            });
+
             _entities.SaveChanges();
         }
 
@@ -137,7 +206,17 @@ namespace GraveyardManagement.Model.Cerere
             if (cerere == null)
                 return;
 
+            var cerereNrInfocet = cerere.nrInfocet;
+
             _entities.CerereLoc.Remove(cerere);
+
+            _entities.Istoric.Add(new Istoric
+            {
+                numeUtilizator = GlobalVariables.CurrentUser.AccountName,
+                data = DateTime.Now,
+                numarDocument = cerereNrInfocet,
+                detalii = "CERERE;STERGERE"
+            });
 
             _entities.SaveChanges();
         }
