@@ -16,9 +16,11 @@ namespace GraveyardManagement.Controller
             model = new ModelMormant(Global.GlobalVariables.Entities);
         }
 
-        public void AdaugaMormant(int cimitir, String parcela)
+        public void AdaugaMormant(int cimitirId, string numeCimitir, String parcela, int numar, bool esteMonument)
         {
-            this.model.AdaugaMormant(cimitir, parcela);
+            VerificareDuplicat(numeCimitir, parcela, numar);
+
+            this.model.AdaugaMormant(cimitirId, parcela, numar, esteMonument);
         }
 
         public List<MormantDTO> CautaMormantDupaDecedat(String cnp)
@@ -48,6 +50,17 @@ namespace GraveyardManagement.Controller
         {
             int validId = int.Parse(id);
             this.model.ElibereazaMormant(validId);
+        }
+
+        private void VerificareDuplicat(string cimitir, string parcela, int numar)
+        {
+            var morminte = CautaMormantDupaLoc(cimitir, parcela, numar.ToString());
+
+            if (morminte.Count > 0)
+            {
+                throw new Exception(string.Format("Exista deja un mormant in cimitirul {0} pe parcela {1} cu numarul {2}!", 
+                    cimitir, parcela, numar));
+            }
         }
     }
 }

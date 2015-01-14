@@ -202,6 +202,7 @@
           <Property Name="cimitirId" Type="int" />
           <Property Name="parcela" Type="varchar(max)" />
           <Property Name="numar" Type="int" />
+          <Property Name="EsteMonument" Type="bit" />
         </EntityType>
         <EntityType Name="Persoana">
           <Key>
@@ -715,6 +716,7 @@
           <Property Name="cimitirId" Type="Int32" />
           <Property Name="parcela" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="numar" Type="Int32" />
+          <Property Name="EsteMonument" Type="Boolean" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_AlocareLoc_Mormant" FromRole="Mormant" ToRole="AlocareLoc" />
           <NavigationProperty Name="Cimitir" Relationship="NecropolisModel.FK_Mormant_Cimitir" FromRole="Mormant" ToRole="Cimitir" />
           <NavigationProperty Name="ProgramareInmormantare" Relationship="NecropolisModel.FK_ProgramareInmormantare_Mormant" FromRole="Mormant" ToRole="ProgramareInmormantare" />
@@ -1126,6 +1128,7 @@
                 <ScalarProperty Name="cimitirId" ColumnName="cimitirId" />
                 <ScalarProperty Name="parcela" ColumnName="parcela" />
                 <ScalarProperty Name="numar" ColumnName="numar" />
+                <ScalarProperty Name="EsteMonument" ColumnName="EsteMonument" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

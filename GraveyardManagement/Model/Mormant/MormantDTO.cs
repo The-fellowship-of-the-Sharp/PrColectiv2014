@@ -79,6 +79,8 @@ namespace GraveyardManagement.Model.Mormant
             set { prenumeDecedat = value; }
         }
 
+        public String EsteMonument { get; set; }
+
         public virtual String Tip() 
         {
             return "General";

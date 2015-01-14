@@ -54,6 +54,7 @@
     <Compile Include="Controller\CerereService.cs" />
     <Compile Include="Controller\CetateanService.cs" />
     <Compile Include="Controller\ContractService.cs" />
+    <Compile Include="Controller\DecedatiFaraApartinatoriService.cs" />
     <Compile Include="Controller\DecedatService.cs" />
     <Compile Include="Controller\LoginService.cs" />
     <Compile Include="Controller\ProgramareInmormantareService.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Model\Cerere\ModelCerere.cs" />
     <Compile Include="Model\Contract\ContractDto.cs" />
     <Compile Include="Model\Contract\ModelContract.cs" />
+    <Compile Include="Model\DecedatiFaraApartinatori\DecedatiFaraApartinatoriDAO.cs" />
+    <Compile Include="Model\DecedatiFaraApartinatori\DecedatiFaraApartinatoriDTO.cs" />
     <Compile Include="Model\EntityFramework\AlocareCuProprietar.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
@@ -135,7 +138,7 @@
     <Compile Include="Model\EntityFramework\Strada.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\EntityFramework\sysdiagrams.cs">
+	<Compile Include="Model\EntityFramework\sysdiagrams.cs">
       <DependentUpon>NecropolisEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EntityFramework\Utilizator.cs">
@@ -340,6 +343,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.Cerere.CerereDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.Contract.ContractDto.datasource" />
+    <None Include="Properties\DataSources\GraveyardManagement.Model.DecedatiFaraApartinatori.DecedatiFaraApartinatoriDTO.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.EntityFramework.ProgramareInmormantare.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelCetatean.CetateanDto.datasource" />
     <None Include="Properties\DataSources\GraveyardManagement.Model.ModelProgramareInmormantare.ProgramareInmormantareDTO.datasource" />
@@ -362,9 +366,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\Statistica\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
