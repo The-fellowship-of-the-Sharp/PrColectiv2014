@@ -79,7 +79,7 @@ namespace GraveyardManagement.View
             foreach (var it in list)
             {
                 morminteView.Rows.Add(it.Cimitir, it.Parcela, it.NumarMormant,
-                    it.DataExpirare, it.Suprafata, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
+                    it.DataExpirare, it.Suprafata, it.EsteMonument, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
             }
         }
 
@@ -173,9 +173,22 @@ namespace GraveyardManagement.View
                 return;
             }
             var parcela = adauga.getParcela();
+            int numar = -1;
             try
             {
-                _mormant.AdaugaMormant(cimitir.Id, parcela);
+                numar = Convert.ToInt32(adauga.GetNumar());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Numarul de mormant introdus este invalid.");
+                return;
+            }
+
+            var esteMonument = adauga.GetMonument();
+
+            try
+            {
+                _mormant.AdaugaMormant(cimitir.Id, cimitir.Name, parcela, numar, esteMonument);
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
             }
             catch (System.Exception err)
