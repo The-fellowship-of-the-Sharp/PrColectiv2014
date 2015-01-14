@@ -40,5 +40,15 @@ namespace GraveyardManagement.View.Mormant
         {
             return this.parcelaTextBox.Text;
         }
+
+        public String GetNumar()
+        {
+            return numarTextBox.Text;
+        }
+
+        public bool GetMonument()
+        {
+            return monumentCheckBox.Checked;
+        }
     }
 }

@@ -155,10 +155,10 @@
             <PropertyRef Name="numar" />
           </Key>
           <Property Name="numar" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="nrContract" Type="int" />
           <Property Name="dataEliberare" Type="datetime" />
           <Property Name="dataExpirare" Type="datetime" />
           <Property Name="alocareId" Type="int" />
+          <Property Name="nrContract" Type="int" />
         </EntityType>
         <EntityType Name="DetinatorContractConcesiune">
           <Key>
@@ -202,6 +202,7 @@
           <Property Name="cimitirId" Type="int" />
           <Property Name="parcela" Type="varchar(max)" />
           <Property Name="numar" Type="int" />
+          <Property Name="EsteMonument" Type="bit" />
         </EntityType>
         <EntityType Name="Persoana">
           <Key>
@@ -671,10 +672,10 @@
             <PropertyRef Name="numar" />
           </Key>
           <Property Name="numar" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="nrContract" Type="Int32" />
           <Property Name="dataEliberare" Type="DateTime" Precision="3" />
           <Property Name="dataExpirare" Type="DateTime" Precision="3" />
           <Property Name="alocareId" Type="Int32" />
+          <Property Name="nrContract" Type="Int32" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_ContractConcesiune_AlocareLoc" FromRole="ContractConcesiune" ToRole="AlocareLoc" />
           <NavigationProperty Name="Persoana" Relationship="NecropolisModel.DetinatorContractConcesiune" FromRole="ContractConcesiune" ToRole="Persoana" />
         </EntityType>
@@ -715,6 +716,7 @@
           <Property Name="cimitirId" Type="Int32" />
           <Property Name="parcela" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="numar" Type="Int32" />
+          <Property Name="EsteMonument" Type="Boolean" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_AlocareLoc_Mormant" FromRole="Mormant" ToRole="AlocareLoc" />
           <NavigationProperty Name="Cimitir" Relationship="NecropolisModel.FK_Mormant_Cimitir" FromRole="Mormant" ToRole="Cimitir" />
           <NavigationProperty Name="ProgramareInmormantare" Relationship="NecropolisModel.FK_ProgramareInmormantare_Mormant" FromRole="Mormant" ToRole="ProgramareInmormantare" />
@@ -1083,10 +1085,10 @@
             <EntityTypeMapping TypeName="NecropolisModel.ContractConcesiune">
               <MappingFragment StoreEntitySet="ContractConcesiune">
                 <ScalarProperty Name="numar" ColumnName="numar" />
-                <ScalarProperty Name="nrContract" ColumnName="nrContract" />
                 <ScalarProperty Name="dataEliberare" ColumnName="dataEliberare" />
                 <ScalarProperty Name="dataExpirare" ColumnName="dataExpirare" />
                 <ScalarProperty Name="alocareId" ColumnName="alocareId" />
+                <ScalarProperty Name="nrContract" ColumnName="nrContract" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1126,6 +1128,7 @@
                 <ScalarProperty Name="cimitirId" ColumnName="cimitirId" />
                 <ScalarProperty Name="parcela" ColumnName="parcela" />
                 <ScalarProperty Name="numar" ColumnName="numar" />
+                <ScalarProperty Name="EsteMonument" ColumnName="EsteMonument" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1238,7 +1241,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

@@ -20,10 +20,10 @@ namespace GraveyardManagement.Model.EntityFramework
         }
     
         public int numar { get; set; }
-        public Nullable<int> nrContract { get; set; }
         public Nullable<System.DateTime> dataEliberare { get; set; }
         public Nullable<System.DateTime> dataExpirare { get; set; }
         public Nullable<int> alocareId { get; set; }
+        public Nullable<int> nrContract { get; set; }
     
         public virtual AlocareLoc AlocareLoc { get; set; }
         public virtual ICollection<Persoana> Persoana { get; set; }
