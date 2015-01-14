@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using GraveyardManagement.Controller;
@@ -27,20 +28,55 @@ namespace GraveyardManagement.View
         private CerereService _cerereService;
         private ContractService _contractService;
 
+        private delegate void ThreadFunction();
+
+        private void InitializeWithThreads()
+        {
+            var threadFunctions = new ThreadFunction[]
+            {
+                InitializeUiProgramari,
+                InitializeUiMorminte,
+                InitializeDecedati,
+                InitializeCetateni,
+                InitializeCetateni,
+                InitializeContracte
+
+            };
+            var threads = new List<Thread>();
+
+            foreach (var thread in threadFunctions.Select(threadFunction => new Thread(new ThreadStart(threadFunction))))
+            {
+                threads.Add(thread);
+                thread.Start();
+            }
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
+        }
+        private void InitializeWithoutThreads()
+        {
+            InitializeUiProgramari();
+            InitializeUiMorminte();
+            InitializeDecedati();
+            InitializeCetateni();
+            InitializeCetateni();
+            InitializeContracte();
+        }
+
         public MainForm()
         {
+            this.Show();
             InitializeComponent();
 
-            InitializeUiProgramari();
+            /* 
+             Initializarea multithreaded cateodata crapa la InitializeDecedati() la apelul functiei _decedatService.TotiDecedatii() in linia
+             var alocare = _entities.AlocareLoc.FirstOrDefault(a => a.cnpDecedat == decedat.cnp);
+             din cauza a NullReferenceException dar n-am reusit sa-mi dau seama ce anume ii null
+             */
+            //InitializeWithThreads(); 
 
-            InitializeUiMorminte();
-
-            InitializeDecedati();
-
-            InitializeCetateni();
-
-            InitializeCereri();
-            InitializeContracte();
+            InitializeWithoutThreads();
         }
 
         #region Programare Inmormantare
