@@ -607,7 +607,7 @@ namespace GraveyardManagement.View
             }
             else
             {
-                MessageBox.Show(@"Te rog introduce un cnp pentru cautare!", @"Nu este cnp specificat",
+                MessageBox.Show(@"Va rugam introduceti un CNP!", @"CNP nespecificat",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -623,13 +623,13 @@ namespace GraveyardManagement.View
                 }
                 catch (FormatException)
                 {
-                    MessageBox.Show(@"Te rog introduce un numarul pentru cautare!", @"Nu este numar",
+                    MessageBox.Show(@"Va rugam introduceti un numar valid!", @"Numar invalid",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show(@"Te rog introduce numarul de solicitare pentru cautare!", @"Nu este numar de solicitare specificat",
+                MessageBox.Show(@"Va rugam introduceti un numar!", @"Numar nespecificat",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -645,13 +645,13 @@ namespace GraveyardManagement.View
                 }
                 catch (FormatException)
                 {
-                    MessageBox.Show(@"Te rog introduce un numarul pentru cautare!", @"Nu este numar",
+                    MessageBox.Show(@"Va rugam introduceti un numar valid!", @"Numar invalid",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show(@"Te rog introduce numarul de adeverinta pentru cautare!", @"Nu este numar de adeverinta specificat",
+                MessageBox.Show(@"Va rugam introduceti un numar!", @"Numar nespecificat",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

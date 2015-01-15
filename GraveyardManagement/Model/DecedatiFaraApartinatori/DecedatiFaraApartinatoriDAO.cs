@@ -10,7 +10,11 @@ namespace GraveyardManagement.Model.DecedatiFaraApartinatori
         {
             var decedatiFaraApartinatori = new List<DecedatiFaraApartinatoriDTO>();
             var alocareLoc = GlobalVariables.Entities.AlocareLoc;
-            var decedat = alocareLoc.First(alocare => alocare.cnpDecedat.Equals(cnp));
+            var decedat = alocareLoc.FirstOrDefault(alocare => alocare.cnpDecedat.Equals(cnp));
+            if (decedat == null)
+            {
+                return new List<DecedatiFaraApartinatoriDTO>();
+            }
             if (decedat.AlocareFaraProprietar != null && decedat.AlocareFaraProprietar.Count > 0)
             {
                 decedatiFaraApartinatori.AddRange(decedat.AlocareFaraProprietar.Select(alocare => new DecedatiFaraApartinatoriDTO
