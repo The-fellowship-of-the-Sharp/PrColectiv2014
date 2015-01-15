@@ -247,10 +247,17 @@ namespace GraveyardManagement.View
 
         private void cautaLoc_Click(object sender, System.EventArgs e)
         {
+            //Sry for the crappy code, vroiam sa fie si searchable dupa nume dar si selectable
+            string numeCimitir;
+            try {
+                numeCimitir = ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name;
+            } catch(System.Exception err) {
+                numeCimitir = filtruCimitir.Text;
+            }
             try
             {
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
-                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name,
+                    numeCimitir,
                     filtruParcela.Text,
                     (filtruNumar.Text.Length == 0 ? "0" : filtruNumar.Text)));
             }
