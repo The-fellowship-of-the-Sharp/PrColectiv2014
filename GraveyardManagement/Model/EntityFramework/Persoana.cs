@@ -16,7 +16,6 @@ namespace GraveyardManagement.Model.EntityFramework
     {
         public Persoana()
         {
-            this.AlocareCuProprietar = new HashSet<AlocareCuProprietar>();
             this.AlocareLoc = new HashSet<AlocareLoc>();
             this.CerereLoc = new HashSet<CerereLoc>();
             this.ProgramareInmormantare = new HashSet<ProgramareInmormantare>();
@@ -29,7 +28,6 @@ namespace GraveyardManagement.Model.EntityFramework
         public string prenume { get; set; }
         public Nullable<int> domiciliuId { get; set; }
     
-        public virtual ICollection<AlocareCuProprietar> AlocareCuProprietar { get; set; }
         public virtual ICollection<AlocareLoc> AlocareLoc { get; set; }
         public virtual ICollection<CerereLoc> CerereLoc { get; set; }
         public virtual Domiciliu Domiciliu { get; set; }

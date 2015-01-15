@@ -26,10 +26,6 @@
           <EntitySet Name="Strada" EntityType="NecropolisModel.Store.Strada" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Utilizator" EntityType="NecropolisModel.Store.Utilizator" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.Store.FK__AlocareCu__cnpDe__267ABA7A">
-            <End Role="Persoana" EntitySet="Persoana" />
-            <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
-          </AssociationSet>
           <AssociationSet Name="FK__AlocareCu__pozaI__276EDEB3" Association="NecropolisModel.Store.FK__AlocareCu__pozaI__276EDEB3">
             <End Role="Poza" EntitySet="Poza" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -111,7 +107,6 @@
           <Property Name="alocareId" Type="int" />
           <Property Name="nrChitanta" Type="int" />
           <Property Name="dataEmitereChitanta" Type="datetime" />
-          <Property Name="cnpDetinator" Type="varchar" MaxLength="13" />
           <Property Name="pozaId" Type="int" />
         </EntityType>
         <EntityType Name="AlocareFaraProprietar">
@@ -282,18 +277,6 @@
           <Property Name="parola" Type="varbinary(max)" />
           <Property Name="email" Type="varchar(max)" />
         </EntityType>
-        <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
-          <End Role="Persoana" Type="NecropolisModel.Store.Persoana" Multiplicity="0..1" />
-          <End Role="AlocareCuProprietar" Type="NecropolisModel.Store.AlocareCuProprietar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persoana">
-              <PropertyRef Name="cnp" />
-            </Principal>
-            <Dependent Role="AlocareCuProprietar">
-              <PropertyRef Name="cnpDetinator" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__AlocareCu__pozaI__276EDEB3">
           <End Role="Poza" Type="NecropolisModel.Store.Poza" Multiplicity="0..1" />
           <End Role="AlocareCuProprietar" Type="NecropolisModel.Store.AlocareCuProprietar" Multiplicity="*" />
@@ -535,10 +518,6 @@
           <EntitySet Name="Strada" EntityType="NecropolisModel.Strada" />
           <EntitySet Name="sysdiagrams" EntityType="NecropolisModel.sysdiagrams" />
           <EntitySet Name="Utilizator" EntityType="NecropolisModel.Utilizator" />
-          <AssociationSet Name="FK__AlocareCu__cnpDe__267ABA7A" Association="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A">
-            <End Role="Persoana" EntitySet="Persoana" />
-            <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
-          </AssociationSet>
           <AssociationSet Name="FK__AlocareCu__pozaI__276EDEB3" Association="NecropolisModel.FK__AlocareCu__pozaI__276EDEB3">
             <End Role="Poza" EntitySet="Poza" />
             <End Role="AlocareCuProprietar" EntitySet="AlocareCuProprietar" />
@@ -616,9 +595,7 @@
           <Property Name="alocareId" Type="Int32" />
           <Property Name="nrChitanta" Type="Int32" />
           <Property Name="dataEmitereChitanta" Type="DateTime" Precision="3" />
-          <Property Name="cnpDetinator" Type="String" MaxLength="13" Unicode="false" FixedLength="false" />
           <Property Name="pozaId" Type="Int32" />
-          <NavigationProperty Name="Persoana" Relationship="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A" FromRole="AlocareCuProprietar" ToRole="Persoana" />
           <NavigationProperty Name="Poza" Relationship="NecropolisModel.FK__AlocareCu__pozaI__276EDEB3" FromRole="AlocareCuProprietar" ToRole="Poza" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_AlocareCuProprietar_AlocareLoc" FromRole="AlocareCuProprietar" ToRole="AlocareLoc" />
         </EntityType>
@@ -729,7 +706,6 @@
           <Property Name="nume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="prenume" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="domiciliuId" Type="Int32" />
-          <NavigationProperty Name="AlocareCuProprietar" Relationship="NecropolisModel.FK__AlocareCu__cnpDe__267ABA7A" FromRole="Persoana" ToRole="AlocareCuProprietar" />
           <NavigationProperty Name="AlocareLoc" Relationship="NecropolisModel.FK_AlocalreLoc_Persoana" FromRole="Persoana" ToRole="AlocareLoc" />
           <NavigationProperty Name="CerereLoc" Relationship="NecropolisModel.FK_CerereLoc_Persoana" FromRole="Persoana" ToRole="CerereLoc" />
           <NavigationProperty Name="Domiciliu" Relationship="NecropolisModel.FK_Persoana_Domiciliu" FromRole="Persoana" ToRole="Domiciliu" />
@@ -815,18 +791,6 @@
           <Property Name="parola" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="email" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
         </EntityType>
-        <Association Name="FK__AlocareCu__cnpDe__267ABA7A">
-          <End Role="Persoana" Type="NecropolisModel.Persoana" Multiplicity="0..1" />
-          <End Role="AlocareCuProprietar" Type="NecropolisModel.AlocareCuProprietar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persoana">
-              <PropertyRef Name="cnp" />
-            </Principal>
-            <Dependent Role="AlocareCuProprietar">
-              <PropertyRef Name="cnpDetinator" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__AlocareCu__pozaI__276EDEB3">
           <End Role="Poza" Type="NecropolisModel.Poza" Multiplicity="0..1" />
           <End Role="AlocareCuProprietar" Type="NecropolisModel.AlocareCuProprietar" Multiplicity="*" />
@@ -1036,7 +1000,6 @@
                 <ScalarProperty Name="alocareId" ColumnName="alocareId" />
                 <ScalarProperty Name="nrChitanta" ColumnName="nrChitanta" />
                 <ScalarProperty Name="dataEmitereChitanta" ColumnName="dataEmitereChitanta" />
-                <ScalarProperty Name="cnpDetinator" ColumnName="cnpDetinator" />
                 <ScalarProperty Name="pozaId" ColumnName="pozaId" />
               </MappingFragment>
             </EntityTypeMapping>

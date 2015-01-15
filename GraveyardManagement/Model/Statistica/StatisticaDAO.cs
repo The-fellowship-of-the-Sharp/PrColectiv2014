@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using GraveyardManagement.Global;
+using GraveyardManagement.Model.EntityFramework;
 
 namespace GraveyardManagement.Model.Statistica
 {
@@ -24,20 +25,35 @@ namespace GraveyardManagement.Model.Statistica
                     foreach (var cuProprietar in alocareCuProprietar)
                     {
                         var poza = cuProprietar.Poza;
-                        var persoana = cuProprietar.Persoana;
-                        list.Add(new StatisticaDTO
+
+                        var query = from aloc in database.AlocareLoc
+                            join aloccupropr in database.AlocareCuProprietar
+                                on aloc.id equals aloccupropr.alocareId
+                            join contract in database.ContractConcesiune
+                                on aloc.id equals contract.alocareId
+                            where aloc.id == cuProprietar.alocareId
+                            select contract.Persoana;
+
+                        foreach (var detinatoriiUnuiContract in query.ToArray())
                         {
-                            Cimitir = cimitir != null ? cimitir.nume : "N/A",
-                            CNPDecedat = alocareLoc.cnpDecedat,
-                            DataExpirare = alocareLoc.dataExpirare,
-                            NumarMormant = mormant != null ? mormant.numar : null,
-                            Parcela = mormant != null ? mormant.parcela : "N/A",
-                            Suprafata = alocareLoc.suprafata,
-                            Poza = poza != null ? ConvertByteArrayToImage(poza.continut) : null,
-                            Nume = persoana != null ? persoana.nume : "N/A",
-                            Prenume = persoana != null ? persoana.prenume : "N/A",
-                            DataEmitere = cuProprietar.dataEmitereChitanta
-                        });
+                            foreach (var detinator in detinatoriiUnuiContract.ToArray())
+                            {
+                                var persoana = detinator;
+                                list.Add(new StatisticaDTO
+                                {
+                                    Cimitir = cimitir != null ? cimitir.nume : "N/A",
+                                    CNPDecedat = alocareLoc.cnpDecedat,
+                                    DataExpirare = alocareLoc.dataExpirare,
+                                    NumarMormant = mormant != null ? mormant.numar : null,
+                                    Parcela = mormant != null ? mormant.parcela : "N/A",
+                                    Suprafata = alocareLoc.suprafata,
+                                    Poza = poza != null ? ConvertByteArrayToImage(poza.continut) : null,
+                                    Nume = persoana != null ? persoana.nume : "N/A",
+                                    Prenume = persoana != null ? persoana.prenume : "N/A",
+                                    DataEmitere = cuProprietar.dataEmitereChitanta
+                                });
+                            }
+                        }
                     }
                 }
                 else
