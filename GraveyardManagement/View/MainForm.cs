@@ -39,7 +39,7 @@ namespace GraveyardManagement.View
                 InitializeUiMorminte,
                 InitializeDecedati,
                 InitializeCetateni,
-                InitializeCetateni,
+                InitializeCereri,
                 InitializeContracte
 
             };
@@ -61,7 +61,7 @@ namespace GraveyardManagement.View
             InitializeUiMorminte();
             InitializeDecedati();
             InitializeCetateni();
-            InitializeCetateni();
+            InitializeCereri();
             InitializeContracte();
         }
 
