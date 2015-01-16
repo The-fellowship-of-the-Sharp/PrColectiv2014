@@ -115,7 +115,7 @@ namespace GraveyardManagement.View
             foreach (var it in list)
             {
                 morminteView.Rows.Add(it.Cimitir, it.Parcela, it.NumarMormant,
-                    it.DataExpirare, it.Suprafata, it.EsteMonument, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
+                    it.DataExpirare, it.Suprafata, it.EsteMonument, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat, it.Id);
             }
         }
 
@@ -273,7 +273,7 @@ namespace GraveyardManagement.View
             try
             {
                 this._mormant.ElibereazaMormant(
-                    (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
+                    (int)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[9].Value
                     );
             }
             catch (Exception)

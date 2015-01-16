@@ -62,10 +62,10 @@ namespace GraveyardManagement.Controller
             
         }
 
-        public void ElibereazaMormant(String id)
+        public void ElibereazaMormant(int id)
         {
-            int validId = int.Parse(id);
-            this.model.ElibereazaMormant(validId);
+            
+            this.model.ElibereazaMormant(id);
         }
 
         private void VerificareDuplicat(string cimitir, string parcela, int numar)
