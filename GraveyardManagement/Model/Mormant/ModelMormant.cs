@@ -132,13 +132,13 @@ namespace GraveyardManagement.Model.Mormant
             if (numar != null)
             {
                 faraProprietar = from fara in faraProprietar
-                                 where fara.NumarMormant.Equals(numar)
+                                 where fara.NumarMormant.Equals((int)numar)
                                  select fara;
                 cuProprietar = from cu in cuProprietar
-                               where cu.NumarMormant.Equals(numar)
+                               where cu.NumarMormant.Equals((int)numar)
                                select cu;
                 neatribuit = from neattr in neatribuit
-                             where neattr.NumarMormant.Equals(numar)
+                             where neattr.NumarMormant.Equals((int)numar)
                              select neattr;
             }
             if (monument != null)
