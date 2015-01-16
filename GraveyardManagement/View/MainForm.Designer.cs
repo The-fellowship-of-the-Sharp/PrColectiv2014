@@ -1030,7 +1030,7 @@ namespace GraveyardManagement.View
             this.updateContractBtn.Name = "updateContractBtn";
             this.updateContractBtn.Size = new System.Drawing.Size(156, 32);
             this.updateContractBtn.TabIndex = 14;
-            this.updateContractBtn.Text = "Actualiare Contracte";
+            this.updateContractBtn.Text = "Actualizare Contracte";
             this.updateContractBtn.UseVisualStyleBackColor = true;
             this.updateContractBtn.Click += new System.EventHandler(this.updateContractBtn_Click);
             // 
