@@ -40,7 +40,6 @@ namespace GraveyardManagement.View.Login
                 var mainForm = new MainForm();
                 mainForm.Show();
                 mainForm.FormClosed += applicationClose;
-                // TODO: apelat formul principal
                 this.Hide();
             }
         }

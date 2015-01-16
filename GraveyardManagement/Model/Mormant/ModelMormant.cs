@@ -19,6 +19,41 @@ namespace GraveyardManagement.Model.Mormant
         private IQueryable<MormantDTO> ToateMorminteCuProprietar()
         {
             var morminte = from mmt in entities.Mormant
+                join aloc in entities.AlocareLoc
+                    on mmt.id equals aloc.mormantId
+                join aloccupropr in entities.AlocareCuProprietar
+                    on aloc.id equals aloccupropr.alocareId
+                join contr in entities.ContractConcesiune
+                    on aloc.id equals contr.alocareId
+                join decedat in entities.Persoana
+                on aloc.cnpDecedat equals decedat.cnp
+                select new MormantCuProprietarDTO
+                {
+                    Cimitir = mmt.Cimitir.nume,
+                    Id = mmt.id,
+                    Parcela = mmt.parcela,
+                    NumarMormant = (int) mmt.numar,
+                    EsteMonument = mmt.EsteMonument.HasValue ? (mmt.EsteMonument.Value ? "Da" : "Nu") : "Nu",
+                    DataExpirare = (DateTime) aloc.dataExpirare,
+                    Suprafata = (double) aloc.suprafata,
+                    Poza = aloccupropr.Poza,
+                    CnpDecedat = aloc.cnpDecedat,
+                    NumeDecedat = decedat.nume,
+                    PrenumeDecedat = decedat.prenume,
+                    /*NumeDetinator = det.nume,
+                    PrenumeDetinator = det.prenume,*/
+                    NumarChitanta = (int) aloccupropr.nrChitanta,
+                    NumarContract = (int) contr.numar,
+                    DataEliberareContract = (DateTime) contr.dataEliberare,
+                    /* Domiciliu = new Domiciliu
+                                {
+                                    Localitate = det.Domiciliu.Strada.Localitate.nume,
+                                    Strada = det.Domiciliu.Strada.nume,
+                                    Numar = det.Domiciliu.numar,
+                                    AlteInformatii = det.Domiciliu.alteInformatii
+                                }*/
+                };
+            /*IQueryable<MormantDTO> morminte = from mmt in entities.Mormant
                             join aloc in entities.AlocareLoc
                             on mmt.id equals aloc.mormantId
                             join alocProprietar in entities.AlocareCuProprietar 
@@ -54,7 +89,8 @@ namespace GraveyardManagement.Model.Mormant
                                     Numar = det.Domiciliu.numar,
                                     AlteInformatii = det.Domiciliu.alteInformatii
                                 }
-                            };
+                            };*/
+            var m = morminte.ToArray();
             return morminte;
         }
 

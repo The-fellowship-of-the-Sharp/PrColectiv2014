@@ -25,7 +25,7 @@ namespace GraveyardManagement.Model.Contract
                 throw new Exception("Contractul cu id primit nu exista in baza de date.");
             }
             var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
-            var persona = _entities.Persoana.FirstOrDefault(p => p.ContractConcesiune.Contains(contact));
+            var persona = contact.Persoana.ToList()[0];
             var cetacean = modelCetatean.CautaCetatean(persona.cnp);
             ContractDto return_contract = new ContractDto
             {
@@ -44,12 +44,26 @@ namespace GraveyardManagement.Model.Contract
         public void StergeContract(int numar)
         {
             var contract = _entities.ContractConcesiune.FirstOrDefault(c => c.numar == numar);
+            var alcoareID = contract.alocareId;
+            var aclocCuProp = _entities.AlocareCuProprietar.FirstOrDefault(a => a.alocareId == alcoareID);
             if (contract == null)
                 return;
-
+            
             var conrcarcNrContract = contract.nrContract;
 
             _entities.ContractConcesiune.Remove(contract);
+            if (aclocCuProp != null)
+            {
+                _entities.AlocareCuProprietar.Remove(aclocCuProp);
+                _entities.Istoric.Add(new Istoric
+                {
+                    numeUtilizator = GlobalVariables.CurrentUser.AccountName,
+                    data = DateTime.Now,
+                    numarDocument = aclocCuProp.id,
+                    detalii = "ALOCARECUPROPIETAR;STERGERE"
+                });
+
+            }
             _entities.Istoric.Add(new Istoric
             {
                 numeUtilizator = GlobalVariables.CurrentUser.AccountName,
@@ -59,6 +73,7 @@ namespace GraveyardManagement.Model.Contract
             });
 
             _entities.SaveChanges();
+
         }
 
         public List<ContractDto> CautaContracte(string cnpCetatean)
@@ -90,6 +105,36 @@ namespace GraveyardManagement.Model.Contract
             return contracte;
         }
 
+        public List<ContractDto> GetAllContracte()
+        {
+            var contracte = new List<ContractDto>();
+
+            var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
+
+
+            var rawContracte =
+                _entities.ContractConcesiune.Where(c => c.alocareId > 0);
+
+            foreach (var contractConcesiune in rawContracte)
+            {
+                var persoana = contractConcesiune.Persoana.ToList()[0] ;
+                var cetatean = modelCetatean.CautaCetatean(persoana.cnp);
+                contracte.Add(new ContractDto
+                {
+                    Numar = contractConcesiune.numar,
+                    CnpCetatean = cetatean.Cnp,
+                    PrenumeCetatean = cetatean.Prenume,
+                    NumeCetatean = cetatean.Nume,
+                    DomiciliuCetatean = string.Format("{0}, Strada {1}, Numarul {2}, {3}",
+                        cetatean.Localitate, cetatean.Strada, cetatean.Numar, cetatean.AlteInformatii),
+                    DataEliberare = (contractConcesiune.dataEliberare.HasValue) ? contractConcesiune.dataEliberare.Value : DateTime.MinValue,
+                    DataExpirare = (contractConcesiune.dataExpirare.HasValue) ? contractConcesiune.dataExpirare.Value : DateTime.MaxValue
+                });
+            }
+
+            return contracte;
+        }
+
         public int findLocAlocat(string cnpDecedat)
         {
             var locAlocat = _entities.AlocareLoc.FirstOrDefault(l => l.cnpDecedat == cnpDecedat);
@@ -101,7 +146,17 @@ namespace GraveyardManagement.Model.Contract
 
             return locAlocat.id;
         }
-
+        
+        public Boolean ChechExistaContract(int idloc)
+        {
+            var contr = _entities.ContractConcesiune.FirstOrDefault(c => c.alocareId == idloc);
+            if (contr != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        
         public void AdaugaPropContract(int nrContract, DateTime dataEmit, DateTime dateExp, int idLoc)
         {
 
@@ -206,22 +261,23 @@ namespace GraveyardManagement.Model.Contract
             _entities.SaveChanges();
         }
 
-        public void ActualizeazaCerere(int numarContract,int nrChitanta, DateTime dateContr, DateTime dateChitanta)
+        public void ActualizeazaContract(int numarContract, int nrChitanta, DateTime dateContr, DateTime dateChitanta)
         {
             var contract = _entities.ContractConcesiune.FirstOrDefault(c => c.numar == numarContract);
+            var alocid = contract.alocareId;
+            var alocareprop = _entities.AlocareCuProprietar.FirstOrDefault(a => a.alocareId == alocid);
+
             if (contract == null)
             {
                 throw new Exception(string.Format("Contractul cu numarul {0} nu a fost gasita!", numarContract));
             }
-            var dataContractVeche = contract.dataExpirare;
-            contract.dataExpirare = dateContr;
-            var alocid = contract.alocareId;
-            var alocareprop = _entities.AlocareCuProprietar.FirstOrDefault(a => a.alocareId == alocid);
-
             if (alocareprop == null)
             {
                 throw new Exception(string.Format("Alocare loc cu proprietar pe alocareid {0} nu a fost gasita!", alocid));
             }
+            var dataContractVeche = contract.dataExpirare;
+            contract.dataExpirare = dateContr;
+            
 
             var nrchitantavechi = alocareprop.nrChitanta;
             alocareprop.nrChitanta = nrChitanta;
