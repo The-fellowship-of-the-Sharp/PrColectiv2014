@@ -384,6 +384,7 @@ namespace GraveyardManagement.View
         {
             var form = new AdaugareContractForm();
             form.ShowDialog();
+            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
         private void cautaContractebtn_Click(object sender, EventArgs e)
@@ -431,7 +432,7 @@ namespace GraveyardManagement.View
 
             contract = _contractService.CautaContract(contract.Numar);
 
-            girdViewContracte.DataSource = new[] { contract };
+            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
         private void deleteContractbtn_Click(object sender, EventArgs e)
@@ -443,7 +444,7 @@ namespace GraveyardManagement.View
 
             _contractService.StergeContract(contract.Numar);
 
-            gridViewCereri.DataSource = null;
+            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
         #endregion

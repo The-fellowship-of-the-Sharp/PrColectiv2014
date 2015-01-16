@@ -80,9 +80,9 @@ namespace GraveyardManagement.Controller
             _modelContract.AdaugaAlocareFaraProprietar(idloc, solicitate, adeverinta);
         }
 
-        public void ActualizeazaCerere(int nrContract, int nrChitanta, DateTime ContractDate, DateTime ChitantaDate)
+        public void ActualizeazaContract(int nrContract, int nrChitanta, DateTime ContractDate, DateTime ChitantaDate)
         {
-
+            _modelContract.ActualizeazaContract(nrContract, nrChitanta, ContractDate, ChitantaDate);
         }
     }
 
