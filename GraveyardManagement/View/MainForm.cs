@@ -247,10 +247,17 @@ namespace GraveyardManagement.View
 
         private void cautaLoc_Click(object sender, System.EventArgs e)
         {
+            //Sry for the crappy code, vroiam sa fie si searchable dupa nume dar si selectable
+            string numeCimitir;
+            try {
+                numeCimitir = ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name;
+            } catch(System.Exception err) {
+                numeCimitir = filtruCimitir.Text;
+            }
             try
             {
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
-                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name,
+                    numeCimitir,
                     filtruParcela.Text,
                     (filtruNumar.Text.Length == 0 ? "0" : filtruNumar.Text)));
             }
@@ -473,7 +480,7 @@ namespace GraveyardManagement.View
                 return;
             }
 
-            girdViewContracte.DataSource = new[] { contract };
+            girdViewContracte.DataSource =  contract ;
         }
 
         private void updateContractBtn_Click(object sender, EventArgs e)
@@ -483,7 +490,7 @@ namespace GraveyardManagement.View
 
             var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
 
-            var form = new ActualizareCerereForm(contract.Numar);
+            var form = new ActualizareContract(contract.Numar);
             form.ShowDialog();
 
             contract = _contractService.CautaContract(contract.Numar);
@@ -500,7 +507,6 @@ namespace GraveyardManagement.View
 
             _contractService.StergeContract(contract.Numar);
 
-            gridViewCereri.DataSource = null;
         }
 
         #endregion

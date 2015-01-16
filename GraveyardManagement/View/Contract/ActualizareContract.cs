@@ -50,7 +50,7 @@ namespace GraveyardManagement.View.Contract
             try
             {
                 nrChitanta = Convert.ToInt32(ChitantaTextBox.Text);
-                _contactService.ActualizeazaCerere(_numarContract, nrChitanta, CexpiraredateTimePicker.Value, ChitantadateTimePicker.Value);
+                _contactService.ActualizeazaContract(_numarContract, nrChitanta, CexpiraredateTimePicker.Value, ChitantadateTimePicker.Value);
             }
             catch (Exception ex)
             {
