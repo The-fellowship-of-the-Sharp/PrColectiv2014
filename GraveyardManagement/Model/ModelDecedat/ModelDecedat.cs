@@ -29,6 +29,22 @@ namespace GraveyardManagement.Model.ModelDecedat
             _entities.SaveChanges();
         }
 
+        public void TransformaCetateanInDecedat(string cnp)
+        {
+            var cetatean = _entities.Persoana.FirstOrDefault(cet => cet.cnp == cnp && cet.domiciliuId != null);
+            if (cetatean == null)
+            {
+                throw new Exception("Cetateanul cu CNP-ul introdus nu exista!");
+            }
+            cetatean.domiciliuId = null;
+            cetatean.Domiciliu = null;
+            _entities.SaveChanges();
+
+        }
+        public bool ExistaCetateanCuCNPulDecedatului(string cnp)
+        {
+            return _entities.Persoana.FirstOrDefault(cetatean => cetatean.cnp == cnp && cetatean.domiciliuId != null) != null;
+        }
         public DecedatDTO CautaDecedat(string cnp)
         {
             var decedatDb = _entities.Persoana.FirstOrDefault(d => d.cnp == cnp && d.domiciliuId == null);

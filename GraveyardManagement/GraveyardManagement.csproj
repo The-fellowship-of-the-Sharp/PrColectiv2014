@@ -165,6 +165,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NecropolisDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Exceptions\ConflictCetateanDecedatException.cs" />
     <Compile Include="View\Cerere\ActualizareCerereForm.cs">
       <SubType>Form</SubType>
     </Compile>
