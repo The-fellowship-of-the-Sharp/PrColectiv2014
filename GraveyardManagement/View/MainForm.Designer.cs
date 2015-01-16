@@ -167,6 +167,7 @@ namespace GraveyardManagement.View
             this.necropolisDataSet = new GraveyardManagement.NecropolisDataSet();
             this.contractConcesiuneBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contractConcesiuneTableAdapter = new GraveyardManagement.NecropolisDataSetTableAdapters.ContractConcesiuneTableAdapter();
+            this.monumentCheckBox = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabStatistici.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statisticiGridView)).BeginInit();
@@ -357,6 +358,7 @@ namespace GraveyardManagement.View
             // 
             // tabMorminte
             // 
+            this.tabMorminte.Controls.Add(this.monumentCheckBox);
             this.tabMorminte.Controls.Add(this.button2);
             this.tabMorminte.Controls.Add(this.cautaLoc);
             this.tabMorminte.Controls.Add(this.filtruParcela);
@@ -371,7 +373,7 @@ namespace GraveyardManagement.View
             this.tabMorminte.Padding = new System.Windows.Forms.Padding(3);
             this.tabMorminte.Size = new System.Drawing.Size(891, 378);
             this.tabMorminte.TabIndex = 1;
-            this.tabMorminte.Text = "Morminte";
+            this.tabMorminte.Text = "Locuri de veci";
             this.tabMorminte.UseVisualStyleBackColor = true;
             // 
             // button2
@@ -1468,6 +1470,16 @@ namespace GraveyardManagement.View
             // 
             this.contractConcesiuneTableAdapter.ClearBeforeFill = true;
             // 
+            // monumentCheckBox
+            // 
+            this.monumentCheckBox.AutoSize = true;
+            this.monumentCheckBox.Location = new System.Drawing.Point(7, 184);
+            this.monumentCheckBox.Name = "monumentCheckBox";
+            this.monumentCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.monumentCheckBox.TabIndex = 9;
+            this.monumentCheckBox.Text = "Este monument";
+            this.monumentCheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1651,5 +1663,6 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.BindingSource decedatiFaraApartinatoriDTOBindingSource;
         private System.Windows.Forms.Button btn_CautaCerereDupaData;
         private System.Windows.Forms.Button btn_CautaCerereDupaNumar;
+        private System.Windows.Forms.CheckBox monumentCheckBox;
     }
 }

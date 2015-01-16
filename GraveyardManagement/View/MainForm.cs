@@ -105,7 +105,7 @@ namespace GraveyardManagement.View
             }
             filtruCimitir.DisplayMember = "Name";
             this._mormant = new ControllerMormant();
-            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", null, false));
             morminteView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
@@ -225,7 +225,7 @@ namespace GraveyardManagement.View
             try
             {
                 _mormant.AdaugaMormant(cimitir.Id, cimitir.Name, parcela, numar, esteMonument);
-                loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+                loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", null, false));
             }
             catch (System.Exception err)
             {
@@ -259,7 +259,8 @@ namespace GraveyardManagement.View
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
                     numeCimitir,
                     filtruParcela.Text,
-                    (filtruNumar.Text.Length == 0 ? "0" : filtruNumar.Text)));
+                    (filtruNumar.Text.Length == 0 ? null : filtruNumar.Text),
+                    monumentCheckBox.Checked));
             }
             catch (System.Exception err)
             {
@@ -279,7 +280,7 @@ namespace GraveyardManagement.View
             {
                 MessageBox.Show(@"Mormantul nu are decedat!");
             }
-            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", null, false));
         }
 
         private void loadIntoDecedato(List<Model.ModelDecedat.DecedatDTO> listDecedati)
