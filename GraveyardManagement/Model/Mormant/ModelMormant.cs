@@ -60,10 +60,9 @@ namespace GraveyardManagement.Model.Mormant
                             on aloc.id equals alocProprietar.alocareId
                             join pers in entities.Persoana
                             on aloc.cnpDecedat equals pers.cnp 
-                            join det in entities.Persoana
-                            on alocProprietar.cnpDetinator equals det.cnp
                             join contract in entities.ContractConcesiune
                             on aloc.id equals contract.alocareId
+                            from det in contract.Persoana
                             select new MormantCuProprietarDTO
                             {
                                 Cimitir = mmt.Cimitir.nume,
