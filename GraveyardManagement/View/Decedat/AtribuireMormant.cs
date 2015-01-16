@@ -38,7 +38,7 @@ namespace GraveyardManagement.View.Decedat
             {
                 CimitirDTO cimitir = (CimitirDTO)this.cimitirCombo.SelectedItem;
 
-                _decedatService.AtribuieMormant(label1.Text.Substring(0, 13), cimitir.Id, watermarkTextBox1.Text, Int32.Parse(watermarkTextBox2.Text));
+                _decedatService.AtribuieMormant(label1.Text.Substring(0, 13), cimitir.Id, watermarkTextBox1.Text, txt_Suprafata.Text.Trim(), Int32.Parse(watermarkTextBox2.Text));
 
                 Close();
             }

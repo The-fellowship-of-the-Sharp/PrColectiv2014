@@ -181,7 +181,7 @@ namespace GraveyardManagement.Model.Mormant
             var cimitirPentruLog = (from cim in entities.Cimitir
                           where cim.id.Equals(cimitir) select cim.nume).First();
             var istoricNou = new EntityFramework.Istoric();
-            istoricNou.numeUtilizator = Global.GlobalVariables.CurrentUser.Name;
+            istoricNou.numeUtilizator = Global.GlobalVariables.CurrentUser.AccountName;
             istoricNou.data = DateTime.Now;
             var detalii = String.Format("MORMANT;ADAUGARE;{0};{1};{2}", cimitirPentruLog, mormantNou.parcela, mormantNou.numar);
             if (esteMormant)

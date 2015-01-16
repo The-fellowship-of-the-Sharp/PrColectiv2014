@@ -92,19 +92,19 @@ namespace GraveyardManagement.Model.ModelCetatean
                 throw new Exception(string.Format("Localitatea {0} nu exista printre localitatile inregistrate.", localitateNoua));
             }
 
-            var stradaDb = _entities.Strada.FirstOrDefault(str => str.localitateId == localitateDb.id);
+            var stradaDb = _entities.Strada.FirstOrDefault(str => str.nume == stradaNoua);
 
             if (stradaDb == null)
             {
-                throw new Exception(string.Format("Strada curenta aferenta cetateanului {0} {1} cu CNP-ul {2} nu este valida.", cetateanDb.nume, cetateanDb.prenume, cetateanDb.cnp));//nu ar trebui sa fie aruncata
+                throw new Exception(string.Format("Strada {0} nu exista printre strazile inregistrate.", stradaNoua));
             }
 
             var numeVechi = cetateanDb.nume;
             var prenumeVechi = cetateanDb.prenume;
             var numarVechi = domiciliuDb.numar;
-            var stradaVeche = stradaDb.nume;
-            var localitateVeche = localitateDb.nume;
-            var alteInfoVechi = domiciliuDb.alteInformatii;
+            var stradaVeche = cetateanDb.Domiciliu.Strada.nume;
+            var localitateVeche = cetateanDb.Domiciliu.Strada.Localitate.nume;
+            var alteInfoVechi = cetateanDb.Domiciliu.alteInformatii;
 
             //introdu noile informatii in baza de date
             stradaDb.localitateId = localitateDb.id;

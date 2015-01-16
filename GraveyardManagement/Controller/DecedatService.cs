@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,9 +34,17 @@ namespace GraveyardManagement.Controller
         {
             _modelDecedat.TransformaCetateanInDecedat(cnp);
         }
-        public void AtribuieMormant(string cnpDecedat, int cimitirId, string parcela, int numar)
+        public void AtribuieMormant(string cnpDecedat, int cimitirId, string parcela, string suprafata, int numar)
         {
-            _modelDecedat.AtribuieMormant(cnpDecedat,cimitirId,parcela,numar);
+            try
+            {
+                var suprafataNumar = double.Parse(suprafata, CultureInfo.InvariantCulture);
+                _modelDecedat.AtribuieMormant(cnpDecedat, cimitirId, parcela, suprafataNumar, numar);
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Suprafata este invalida!");
+            }
         }
 
         private void ValidareDecedat(string cnp, string nume, string prenume)
