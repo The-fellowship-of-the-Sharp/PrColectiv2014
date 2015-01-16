@@ -224,7 +224,7 @@
             this.Controls.Add(this.dataEliberareContractLabel);
             this.Controls.Add(this.ContractEliberareDateTimePicker);
             this.Name = "AdaugareContractForm";
-            this.Text = "AdaugareContractForm";
+            this.Text = "AdaugareContract";
             this.ResumeLayout(false);
             this.PerformLayout();
 

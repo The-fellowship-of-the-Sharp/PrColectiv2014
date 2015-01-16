@@ -35,6 +35,7 @@ namespace GraveyardManagement.Model.Mormant
                                 Id = mmt.id,
                                 Parcela = mmt.parcela,
                                 NumarMormant = (int)mmt.numar,
+                                EsteMonument = mmt.EsteMonument.HasValue ? (mmt.EsteMonument.Value ? "Da" : "Nu") : "Nu",
                                 DataExpirare = (DateTime)aloc.dataExpirare,
                                 Suprafata = (double)aloc.suprafata,
                                 Poza = alocProprietar.Poza,
@@ -66,7 +67,8 @@ namespace GraveyardManagement.Model.Mormant
                                Cimitir = mmt.Cimitir.nume,
                                Id = mmt.id,
                                Parcela = mmt.parcela,
-                               NumarMormant = (mmt.numar == null ? 0 : (int)mmt.numar)
+                               NumarMormant = (mmt.numar == null ? 0 : (int)mmt.numar),
+                               EsteMonument = mmt.EsteMonument.HasValue ? (mmt.EsteMonument.Value ? "Da" : "Nu") : "Nu"
                            };
             return morminte;
         }
@@ -86,6 +88,7 @@ namespace GraveyardManagement.Model.Mormant
                                Id = mmt.id,
                                Parcela = mmt.parcela,
                                NumarMormant = (int)mmt.numar,
+                               EsteMonument = mmt.EsteMonument.HasValue ? (mmt.EsteMonument.Value ? "Da" : "Nu") : "Nu",
                                DataExpirare = (DateTime)aloc.dataExpirare,
                                Suprafata = (double)aloc.suprafata,
                                CnpDecedat = aloc.cnpDecedat,
@@ -121,15 +124,15 @@ namespace GraveyardManagement.Model.Mormant
             {
                 faraProprietar = from fara in this.ToateMorminteFaraProrietar()
                                     where fara.Cimitir.Contains(cimitir) && fara.Parcela.Contains(parcela)
-                                    || fara.NumarMormant.Equals(numar)    
+                                    && fara.NumarMormant.Equals(numar)    
                                     select fara;
                 cuProprietar = from cu in this.ToateMorminteFaraProrietar()
                                    where cu.Cimitir.Contains(cimitir) && cu.Parcela.Contains(parcela)
-                                   || cu.NumarMormant.Equals(numar)
+                                   && cu.NumarMormant.Equals(numar)
                                    select cu;
                 neatribuit = from neattr in this.ToateMorminteleInclomplete()
-                             where neattr.Cimitir.Contains(cimitir) || neattr.Parcela.Contains(parcela)
-                             || neattr.NumarMormant.Equals(numar)
+                             where neattr.Cimitir.Contains(cimitir) && neattr.Parcela.Contains(parcela)
+                             && neattr.NumarMormant.Equals(numar)
                              select neattr;
             }
             else
@@ -149,18 +152,27 @@ namespace GraveyardManagement.Model.Mormant
             return result;
         }
         
-        public void AdaugaMormant(int cimitir, String parcela)
+        public void AdaugaMormant(int cimitir, String parcela, int numar, bool esteMormant)
         {
             var mormantNou = new EntityFramework.Mormant();
             mormantNou.cimitirId = cimitir;
             mormantNou.parcela = parcela;
+            mormantNou.numar = numar;
+            mormantNou.EsteMonument = esteMormant;
             entities.Mormant.Add(mormantNou);
             var cimitirPentruLog = (from cim in entities.Cimitir
                           where cim.id.Equals(cimitir) select cim.nume).First();
             var istoricNou = new EntityFramework.Istoric();
             istoricNou.numeUtilizator = Global.GlobalVariables.CurrentUser.Name;
             istoricNou.data = DateTime.Now;
-            var detalii = String.Format("MORMANT-ADAUGARE-{0},{1},{2}", cimitirPentruLog, mormantNou.parcela, mormantNou.numar);
+            var detalii = String.Format("MORMANT;ADAUGARE;{0};{1};{2}", cimitirPentruLog, mormantNou.parcela, mormantNou.numar);
+            if (esteMormant)
+            {
+                detalii = string.Concat(detalii, ";MONUMENT");
+            }
+
+            istoricNou.detalii = detalii;
+
             entities.Istoric.Add(istoricNou);
             entities.SaveChanges();
         }

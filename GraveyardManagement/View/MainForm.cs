@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using GraveyardManagement.Controller;
@@ -23,24 +24,60 @@ namespace GraveyardManagement.View
         private ControllerMormant _mormant;
         private CetateanService _cetateanService;
         private DecedatService _decedatService;
-        private StatisticiService _statisticiService = new StatisticiService();
+        private readonly StatisticiService _statisticiService = new StatisticiService();
         private CerereService _cerereService;
         private ContractService _contractService;
+        private readonly DecedatiFaraApartinatoriService _faraApartinatoriService = new DecedatiFaraApartinatoriService();
+
+        private delegate void ThreadFunction();
+
+        private void InitializeWithThreads()
+        {
+            var threadFunctions = new ThreadFunction[]
+            {
+                InitializeUiProgramari,
+                InitializeUiMorminte,
+                InitializeDecedati,
+                InitializeCetateni,
+                InitializeCereri,
+                InitializeContracte
+
+            };
+            var threads = new List<Thread>();
+
+            foreach (var thread in threadFunctions.Select(threadFunction => new Thread(new ThreadStart(threadFunction))))
+            {
+                threads.Add(thread);
+                thread.Start();
+            }
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
+        }
+        private void InitializeWithoutThreads()
+        {
+            InitializeUiProgramari();
+            InitializeUiMorminte();
+            InitializeDecedati();
+            InitializeCetateni();
+            InitializeCereri();
+            InitializeContracte();
+        }
 
         public MainForm()
         {
+            this.Show();
             InitializeComponent();
 
-            InitializeUiProgramari();
+            /* 
+             Initializarea multithreaded cateodata crapa la InitializeDecedati() la apelul functiei _decedatService.TotiDecedatii() in linia
+             var alocare = _entities.AlocareLoc.FirstOrDefault(a => a.cnpDecedat == decedat.cnp);
+             din cauza a NullReferenceException dar n-am reusit sa-mi dau seama ce anume ii null
+             */
+            //InitializeWithThreads(); 
 
-            InitializeUiMorminte();
-
-            InitializeDecedati();
-
-            InitializeCetateni();
-
-            InitializeCereri();
-            InitializeContracte();
+            InitializeWithoutThreads();
         }
 
         #region Programare Inmormantare
@@ -78,7 +115,7 @@ namespace GraveyardManagement.View
             foreach (var it in list)
             {
                 morminteView.Rows.Add(it.Cimitir, it.Parcela, it.NumarMormant,
-                    it.DataExpirare, it.Suprafata, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
+                    it.DataExpirare, it.Suprafata, it.EsteMonument, it.CnpDecedat, it.NumeDecedat, it.PrenumeDecedat);
             }
         }
 
@@ -148,7 +185,15 @@ namespace GraveyardManagement.View
             var nrMormant = adaugaForm.GetNumarMormant();
             if (religie.Trim().Equals("") || cnp.Trim().Equals("") || cimitir.Trim().Equals("") ||
                 parcela.Trim().Equals("") || cimitir.Equals(@"Cimitir") || religie.Equals(@"Religie")) return;
-            _programareInmormantare.AdaugaProgramareInmormantare(cnp, cimitir, parcela, nrMormant, data, religie);
+            try
+            {
+                _programareInmormantare.AdaugaProgramareInmormantare(cnp, cimitir, parcela, nrMormant, data, religie);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, @"Eroare la adaugat", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
             programariView.DataSource = null;
         }
 
@@ -164,9 +209,22 @@ namespace GraveyardManagement.View
                 return;
             }
             var parcela = adauga.getParcela();
+            int numar = -1;
             try
             {
-                _mormant.AdaugaMormant(cimitir.Id, parcela);
+                numar = Convert.ToInt32(adauga.GetNumar());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Numarul de mormant introdus este invalid.");
+                return;
+            }
+
+            var esteMonument = adauga.GetMonument();
+
+            try
+            {
+                _mormant.AdaugaMormant(cimitir.Id, cimitir.Name, parcela, numar, esteMonument);
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
             }
             catch (System.Exception err)
@@ -189,10 +247,17 @@ namespace GraveyardManagement.View
 
         private void cautaLoc_Click(object sender, System.EventArgs e)
         {
+            //Sry for the crappy code, vroiam sa fie si searchable dupa nume dar si selectable
+            string numeCimitir;
+            try {
+                numeCimitir = ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name;
+            } catch(System.Exception err) {
+                numeCimitir = filtruCimitir.Text;
+            }
             try
             {
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
-                    ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name,
+                    numeCimitir,
                     filtruParcela.Text,
                     (filtruNumar.Text.Length == 0 ? "0" : filtruNumar.Text)));
             }
@@ -210,9 +275,9 @@ namespace GraveyardManagement.View
                     (string)morminteView.SelectedRows.Cast<DataGridViewRow>().First().Cells[8].Value
                     );
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Mormantul nu are decedat!");
+                MessageBox.Show(@"Mormantul nu are decedat!");
             }
             loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
         }
@@ -541,21 +606,72 @@ namespace GraveyardManagement.View
 
         #endregion
 
+        #region DecedatiFaraApartinatori
+        private void cautaDecedatFaraApartinatoriButton_Click(object sender, EventArgs e)
+        {
+            var cnpDecedat = cnpDecedatFaraApartinatorText.Text;
+            if (cnpDecedat != "")
+            {
+                decedatiFaraApartinatoriGrid.DataSource = _faraApartinatoriService.CautaDupaCNPDecedat(cnpDecedat);
+            }
+            else
+            {
+                MessageBox.Show(@"Te rog introduce un cnp pentru cautare!", @"Nu este cnp specificat",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void cautaDupaNrSolicitareButton_Click(object sender, EventArgs e)
+        {
+            var nrSolicitare = nrSolicitareText.Text;
+            if (nrSolicitare != "")
+            {
+                try
+                {
+                    decedatiFaraApartinatoriGrid.DataSource = _faraApartinatoriService.CautaDupaNrSolicitare(Convert.ToInt32(nrSolicitare));
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show(@"Te rog introduce un numarul pentru cautare!", @"Nu este numar",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show(@"Te rog introduce numarul de solicitare pentru cautare!", @"Nu este numar de solicitare specificat",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void cautaDupaNrAdeverintaButton_Click(object sender, EventArgs e)
+        {
+            var nrAdeverinta = nrAdeverintaText.Text;
+            if (nrAdeverinta != "")
+            {
+                try
+                {
+                    decedatiFaraApartinatoriGrid.DataSource = _faraApartinatoriService.CautaDupaNrAdeverinta(Convert.ToInt32(nrAdeverinta));
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show(@"Te rog introduce un numarul pentru cautare!", @"Nu este numar",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show(@"Te rog introduce numarul de adeverinta pentru cautare!", @"Nu este numar de adeverinta specificat",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        #endregion
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'necropolisDataSet.ContractConcesiune' table. You can move, or remove it, as needed.
             this.contractConcesiuneTableAdapter.Fill(this.necropolisDataSet.ContractConcesiune);
 
         }
-
-
-
-
-
-
-
-
-
 
     }
 }

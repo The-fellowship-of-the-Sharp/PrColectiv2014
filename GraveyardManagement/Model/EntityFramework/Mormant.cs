@@ -24,6 +24,7 @@ namespace GraveyardManagement.Model.EntityFramework
         public Nullable<int> cimitirId { get; set; }
         public string parcela { get; set; }
         public Nullable<int> numar { get; set; }
+        public Nullable<bool> EsteMonument { get; set; }
     
         public virtual ICollection<AlocareLoc> AlocareLoc { get; set; }
         public virtual Cimitir Cimitir { get; set; }

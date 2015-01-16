@@ -137,7 +137,7 @@
             this.Controls.Add(this.localitateComboBox);
             this.Controls.Add(this.cnpLabel);
             this.Name = "ActualizareCetateanForm";
-            this.Text = "ActualizareCetateanForm";
+            this.Text = "ActualizareCetatean";
             this.ResumeLayout(false);
             this.PerformLayout();
 

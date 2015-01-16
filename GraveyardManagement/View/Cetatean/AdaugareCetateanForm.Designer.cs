@@ -131,7 +131,7 @@
             this.Controls.Add(this.prenumeTextBox);
             this.Controls.Add(this.numeTextBox);
             this.Name = "AdaugareCetateanForm";
-            this.Text = "AdaugareCetateanForm";
+            this.Text = "AdaugareCetatean";
             this.ResumeLayout(false);
             this.PerformLayout();
 
