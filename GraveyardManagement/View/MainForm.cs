@@ -441,7 +441,6 @@ namespace GraveyardManagement.View
         private void InitializeContracte()
         {
             _contractService = new ContractService();
-            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
 
@@ -449,7 +448,6 @@ namespace GraveyardManagement.View
         {
             var form = new AdaugareContractForm();
             form.ShowDialog();
-            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
         private void cautaContractebtn_Click(object sender, EventArgs e)
@@ -482,7 +480,7 @@ namespace GraveyardManagement.View
                 return;
             }
 
-            girdViewContracte.DataSource = new[] { contract };
+            girdViewContracte.DataSource =  contract ;
         }
 
         private void updateContractBtn_Click(object sender, EventArgs e)
@@ -497,7 +495,7 @@ namespace GraveyardManagement.View
 
             contract = _contractService.CautaContract(contract.Numar);
 
-            girdViewContracte.DataSource = _contractService.ToateContractele();
+            girdViewContracte.DataSource = new[] { contract };
         }
 
         private void deleteContractbtn_Click(object sender, EventArgs e)
@@ -509,7 +507,6 @@ namespace GraveyardManagement.View
 
             _contractService.StergeContract(contract.Numar);
 
-            girdViewContracte.DataSource = _contractService.ToateContractele();
         }
 
         #endregion
