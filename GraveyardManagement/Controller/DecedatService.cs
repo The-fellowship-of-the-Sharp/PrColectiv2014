@@ -41,7 +41,7 @@ namespace GraveyardManagement.Controller
                 var suprafataNumar = double.Parse(suprafata, CultureInfo.InvariantCulture);
                 _modelDecedat.AtribuieMormant(cnpDecedat, cimitirId, parcela, suprafataNumar, numar);
             }
-            catch (Exception)
+            catch (FormatException)
             {
                 throw new Exception("Suprafata este invalida!");
             }

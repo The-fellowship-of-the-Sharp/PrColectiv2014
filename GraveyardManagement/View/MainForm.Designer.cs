@@ -95,12 +95,13 @@ namespace GraveyardManagement.View
             this.buttonAdauga = new System.Windows.Forms.Button();
             this.decedatGridView = new System.Windows.Forms.DataGridView();
             this.tabCereri = new System.Windows.Forms.TabPage();
+            this.btn_CautaCerereDupaData = new System.Windows.Forms.Button();
+            this.btn_CautaCerereDupaNumar = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.dataInregistrarePicker = new System.Windows.Forms.DateTimePicker();
             this.butonStergereCerere = new System.Windows.Forms.Button();
             this.butonActualizareCerere = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.butonCautaCerere = new System.Windows.Forms.Button();
             this.nrInfocetCerereTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
             this.butonAdaugareCerere = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -805,12 +806,13 @@ namespace GraveyardManagement.View
             // 
             // tabCereri
             // 
+            this.tabCereri.Controls.Add(this.btn_CautaCerereDupaData);
+            this.tabCereri.Controls.Add(this.btn_CautaCerereDupaNumar);
             this.tabCereri.Controls.Add(this.label7);
             this.tabCereri.Controls.Add(this.dataInregistrarePicker);
             this.tabCereri.Controls.Add(this.butonStergereCerere);
             this.tabCereri.Controls.Add(this.butonActualizareCerere);
             this.tabCereri.Controls.Add(this.label6);
-            this.tabCereri.Controls.Add(this.butonCautaCerere);
             this.tabCereri.Controls.Add(this.nrInfocetCerereTextBox);
             this.tabCereri.Controls.Add(this.butonAdaugareCerere);
             this.tabCereri.Controls.Add(this.label5);
@@ -821,6 +823,26 @@ namespace GraveyardManagement.View
             this.tabCereri.TabIndex = 4;
             this.tabCereri.Text = "Cereri";
             this.tabCereri.UseVisualStyleBackColor = true;
+            // 
+            // btn_CautaCerereDupaData
+            // 
+            this.btn_CautaCerereDupaData.Location = new System.Drawing.Point(131, 152);
+            this.btn_CautaCerereDupaData.Name = "btn_CautaCerereDupaData";
+            this.btn_CautaCerereDupaData.Size = new System.Drawing.Size(102, 23);
+            this.btn_CautaCerereDupaData.TabIndex = 17;
+            this.btn_CautaCerereDupaData.Text = "Cauta dupa data";
+            this.btn_CautaCerereDupaData.UseVisualStyleBackColor = true;
+            this.btn_CautaCerereDupaData.Click += new System.EventHandler(this.btn_CautaCerereDupaData_Click);
+            // 
+            // btn_CautaCerereDupaNumar
+            // 
+            this.btn_CautaCerereDupaNumar.Location = new System.Drawing.Point(131, 100);
+            this.btn_CautaCerereDupaNumar.Name = "btn_CautaCerereDupaNumar";
+            this.btn_CautaCerereDupaNumar.Size = new System.Drawing.Size(102, 23);
+            this.btn_CautaCerereDupaNumar.TabIndex = 16;
+            this.btn_CautaCerereDupaNumar.Text = "Cauta dupa numar";
+            this.btn_CautaCerereDupaNumar.UseVisualStyleBackColor = true;
+            this.btn_CautaCerereDupaNumar.Click += new System.EventHandler(this.btn_CautaCerereDupaNumar_Click);
             // 
             // label7
             // 
@@ -865,16 +887,6 @@ namespace GraveyardManagement.View
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(230, 2);
             this.label6.TabIndex = 11;
-            // 
-            // butonCautaCerere
-            // 
-            this.butonCautaCerere.Location = new System.Drawing.Point(96, 161);
-            this.butonCautaCerere.Name = "butonCautaCerere";
-            this.butonCautaCerere.Size = new System.Drawing.Size(75, 30);
-            this.butonCautaCerere.TabIndex = 10;
-            this.butonCautaCerere.Text = "Cauta";
-            this.butonCautaCerere.UseVisualStyleBackColor = true;
-            this.butonCautaCerere.Click += new System.EventHandler(this.butonCautaCerere_Click);
             // 
             // nrInfocetCerereTextBox
             // 
@@ -1582,7 +1594,6 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.Button butonStergereCerere;
         private System.Windows.Forms.Button butonActualizareCerere;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button butonCautaCerere;
         private System.Windows.Forms.BindingSource cerereDtoBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn numarDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn cnpCetateanDataGridViewTextBoxColumn;
@@ -1638,5 +1649,7 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.DataGridViewTextBoxColumn nrSolicitareDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nrAdeverintaDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource decedatiFaraApartinatoriDTOBindingSource;
+        private System.Windows.Forms.Button btn_CautaCerereDupaData;
+        private System.Windows.Forms.Button btn_CautaCerereDupaNumar;
     }
 }

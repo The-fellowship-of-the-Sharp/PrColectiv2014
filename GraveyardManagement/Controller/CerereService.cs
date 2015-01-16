@@ -22,11 +22,15 @@ namespace GraveyardManagement.Controller
             _modelCerere.AdaugaCerere(cnpCetatean, nrInfocet, dataInregistrare);
         }
 
-        public CerereDto CautaCerere(int nrInfocet, DateTime dataInregistrare)
+        public CerereDto CautaCerereDupaNumar(int nrInfocet)
         {
-            return _modelCerere.CautaCerere(nrInfocet, dataInregistrare);
+            return _modelCerere.CautaCerereDupaNumar(nrInfocet);
         }
 
+        public List<CerereDto> CautaCerereDupaData(DateTime dataInregistrare)
+        {
+            return _modelCerere.CautaCerereDupaData(dataInregistrare);
+        }
         public CerereDto CautaCerere(int numar)
         {
             return _modelCerere.CautaCerere(numar);

@@ -53,6 +53,79 @@ namespace GraveyardManagement.Model.Cerere
             _entities.SaveChanges();
         }
 
+        public CerereDto CautaCerereDupaNumar(int nrInfocet)
+        {
+            var cerere = _entities.CerereLoc.FirstOrDefault(c => c.nrInfocet == nrInfocet);
+
+            if (cerere == null)
+            {
+                throw new Exception(string.Format("Cererea cu numarul Infocet: {0} nu a fost gasita!", nrInfocet));
+            }
+            var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
+
+            var cetatean = modelCetatean.CautaCetatean(cerere.cnpPersoana);
+
+            var stadiu = _entities.Stadiu.FirstOrDefault(s => s.id == cerere.stadiuId);
+
+            if (stadiu == null)
+            {
+                throw new Exception(string.Format("Stadiul: {0} atribuit cererii cu numarul Infocet {1} nu este valid!",
+                    cerere.Stadiu.nume, nrInfocet));
+            }
+
+            return new CerereDto
+            {
+                Numar = cerere.numar,
+                NumarInfocet = cerere.nrInfocet.GetValueOrDefault(),
+                DataInregistrare = cerere.dataInregistrare.GetValueOrDefault(),
+                Stadiu = stadiu.nume,
+                CnpCetatean = cetatean.Cnp,
+                NumeCetatean = cetatean.Nume,
+                PrenumeCetatean = cetatean.Prenume,
+                DomiciliuCetatean = string.Format("{0}, Strada {1}, Numarul {2}, {3}",
+                    cetatean.Localitate, cetatean.Strada, cetatean.Numar, cetatean.AlteInformatii)
+            };
+        }
+
+        public List<CerereDto> CautaCerereDupaData(DateTime dataInregistrare)
+        {
+            var cereri = _entities.CerereLoc.Where(c => EntityFunctions.TruncateTime(c.dataInregistrare) == dataInregistrare.Date);
+            var list = new List<CerereDto>();
+            foreach (var cerere in cereri)
+            {
+                if (cerere == null)
+                {
+                    throw new Exception(string.Format("Cererea inregistrata pe data de: {0} nu a fost gasita!",
+                        dataInregistrare));
+                }
+                var modelCetatean = new ModelCetatean.ModelCetatean(_entities);
+
+                var cetatean = modelCetatean.CautaCetatean(cerere.cnpPersoana);
+
+                var stadiu = _entities.Stadiu.FirstOrDefault(s => s.id == cerere.stadiuId);
+
+                if (stadiu == null)
+                {
+                    throw new Exception(string.Format("Stadiul: {0} atribuit cererii din data de {1} nu este valid!",
+                        cerere.Stadiu.nume, dataInregistrare));
+                }
+
+                list.Add(new CerereDto
+                {
+                    Numar = cerere.numar,
+                    NumarInfocet = cerere.nrInfocet.GetValueOrDefault(),
+                    DataInregistrare = cerere.dataInregistrare.GetValueOrDefault(),
+                    Stadiu = stadiu.nume,
+                    CnpCetatean = cetatean.Cnp,
+                    NumeCetatean = cetatean.Nume,
+                    PrenumeCetatean = cetatean.Prenume,
+                    DomiciliuCetatean = string.Format("{0}, Strada {1}, Numarul {2}, {3}",
+                        cetatean.Localitate, cetatean.Strada, cetatean.Numar, cetatean.AlteInformatii)
+                });
+            }
+
+            return list;
+        }
         public CerereDto CautaCerere(int nrInfocet, DateTime dataInregistrare)
         {
             var cerere = _entities.CerereLoc.FirstOrDefault(c => c.nrInfocet == nrInfocet && 

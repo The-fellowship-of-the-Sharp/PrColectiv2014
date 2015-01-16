@@ -559,6 +559,48 @@ namespace GraveyardManagement.View
             gridViewCereri.DataSource = new[] { cerere };
         }
 
+        private void btn_CautaCerereDupaNumar_Click(object sender, EventArgs e)
+        {
+            int nrInfocet;
+
+            try
+            {
+                nrInfocet = Convert.ToInt32(nrInfocetCerereTextBox.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Numarul Infocet introdus este invalid!");
+                return;
+            }
+            CerereDto cerere;
+            try
+            {
+                cerere = _cerereService.CautaCerereDupaNumar(nrInfocet);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            gridViewCereri.DataSource = new[] { cerere };
+        }
+        private void btn_CautaCerereDupaData_Click(object sender, EventArgs e)
+        {
+            var dataInregistrare = dataInregistrarePicker.Value;
+
+            List<CerereDto> cereri;
+            try
+            {
+                cereri = _cerereService.CautaCerereDupaData(dataInregistrare);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            gridViewCereri.DataSource = cereri;
+        }/*
         private void butonCautaCerere_Click(object sender, EventArgs e)
         {
             int nrInfocet;
@@ -572,6 +614,7 @@ namespace GraveyardManagement.View
                 MessageBox.Show("Numarul Infocet introdus este invalid!");
                 return;
             }
+
 
             var dataInregistrare = dataInregistrarePicker.Value;
 
@@ -588,7 +631,7 @@ namespace GraveyardManagement.View
 
             gridViewCereri.DataSource = new[] { cerere };
         }
-
+        */
         private void butonStergereCerere_Click(object sender, EventArgs e)
         {
             if (gridViewCereri.SelectedRows.Count <= 0)
