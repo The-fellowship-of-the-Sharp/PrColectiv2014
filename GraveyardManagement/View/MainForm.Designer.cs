@@ -38,12 +38,23 @@ namespace GraveyardManagement.View
             this.expiratePeAniButton = new System.Windows.Forms.Button();
             this.statisticiGridView = new System.Windows.Forms.DataGridView();
             this.tabMorminte = new System.Windows.Forms.TabPage();
+            this.monumentCheckBox = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.cautaLoc = new System.Windows.Forms.Button();
             this.filtruCimitir = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.adaugaMorminte = new System.Windows.Forms.Button();
             this.morminteView = new System.Windows.Forms.DataGridView();
+            this.cimitirMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.parcelaMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numarMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataExpirareMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.suprafataMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EsteMonument = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cnpMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numeMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.prenumeMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabCetateni = new System.Windows.Forms.TabPage();
             this.butonCereriCetatean = new System.Windows.Forms.Button();
             this.butonContracteCetatean = new System.Windows.Forms.Button();
@@ -89,6 +100,11 @@ namespace GraveyardManagement.View
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.cautaDupaDecedatButton = new System.Windows.Forms.Button();
             this.adaugaButton = new System.Windows.Forms.Button();
+            this.tabDecedatiFaraApartinatori = new System.Windows.Forms.TabPage();
+            this.decedatiFaraApartinatoriGrid = new System.Windows.Forms.DataGridView();
+            this.cautaDupaNrAdeverintaButton = new System.Windows.Forms.Button();
+            this.cautaDupaNrSolicitareButton = new System.Windows.Forms.Button();
+            this.cautaDecedatFaraApartinatoriButton = new System.Windows.Forms.Button();
             this.necropolisDataSet = new GraveyardManagement.NecropolisDataSet();
             this.contractConcesiuneBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contractConcesiuneTableAdapter = new GraveyardManagement.NecropolisDataSetTableAdapters.ContractConcesiuneTableAdapter();
@@ -144,28 +160,13 @@ namespace GraveyardManagement.View
             this.dataDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.programareInmormantareDTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cnpTextBox = new GraveyardManagement.CustomControls.WatermarkTextBox();
-            this.cimitirMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.parcelaMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numarMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataExpirareMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.suprafataMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EsteMonument = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cnpMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numeMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.prenumeMormant = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabDecedatiFaraApartinatori = new System.Windows.Forms.TabPage();
-            this.decedatiFaraApartinatoriGrid = new System.Windows.Forms.DataGridView();
             this.cNPDecedatDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nrSolicitareDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nrAdeverintaDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.decedatiFaraApartinatoriDTOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.nrAdeverintaText = new GraveyardManagement.CustomControls.WatermarkTextBox();
-            this.cautaDupaNrAdeverintaButton = new System.Windows.Forms.Button();
             this.nrSolicitareText = new GraveyardManagement.CustomControls.WatermarkTextBox();
-            this.cautaDupaNrSolicitareButton = new System.Windows.Forms.Button();
             this.cnpDecedatFaraApartinatorText = new GraveyardManagement.CustomControls.WatermarkTextBox();
-            this.cautaDecedatFaraApartinatoriButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabStatistici.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statisticiGridView)).BeginInit();
@@ -183,7 +184,6 @@ namespace GraveyardManagement.View
             ((System.ComponentModel.ISupportInitialize)(this.programariView)).BeginInit();
             this.tabDecedatiFaraApartinatori.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.decedatiFaraApartinatoriGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.decedatiFaraApartinatoriDTOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.necropolisDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.contractConcesiuneBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statisticaDTOBindingSource)).BeginInit();
@@ -191,6 +191,7 @@ namespace GraveyardManagement.View
             ((System.ComponentModel.ISupportInitialize)(this.cerereDtoBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.contractDtoBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.programareInmormantareDTOBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.decedatiFaraApartinatoriDTOBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -280,6 +281,7 @@ namespace GraveyardManagement.View
             // 
             // tabMorminte
             // 
+            this.tabMorminte.Controls.Add(this.monumentCheckBox);
             this.tabMorminte.Controls.Add(this.button2);
             this.tabMorminte.Controls.Add(this.cautaLoc);
             this.tabMorminte.Controls.Add(this.filtruParcela);
@@ -294,8 +296,18 @@ namespace GraveyardManagement.View
             this.tabMorminte.Padding = new System.Windows.Forms.Padding(3);
             this.tabMorminte.Size = new System.Drawing.Size(891, 378);
             this.tabMorminte.TabIndex = 1;
-            this.tabMorminte.Text = "Morminte";
+            this.tabMorminte.Text = "Locuri de veci";
             this.tabMorminte.UseVisualStyleBackColor = true;
+            // 
+            // monumentCheckBox
+            // 
+            this.monumentCheckBox.AutoSize = true;
+            this.monumentCheckBox.Location = new System.Drawing.Point(7, 184);
+            this.monumentCheckBox.Name = "monumentCheckBox";
+            this.monumentCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.monumentCheckBox.TabIndex = 9;
+            this.monumentCheckBox.Text = "Este monument";
+            this.monumentCheckBox.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
@@ -324,7 +336,7 @@ namespace GraveyardManagement.View
             this.filtruCimitir.Name = "filtruCimitir";
             this.filtruCimitir.Size = new System.Drawing.Size(120, 21);
             this.filtruCimitir.TabIndex = 4;
-            this.filtruCimitir.Text = "Cimitir";
+            this.filtruCimitir.Text = "Nume Cimitir";
             // 
             // button1
             // 
@@ -368,6 +380,74 @@ namespace GraveyardManagement.View
             this.morminteView.ReadOnly = true;
             this.morminteView.Size = new System.Drawing.Size(580, 354);
             this.morminteView.TabIndex = 0;
+            // 
+            // cimitirMormant
+            // 
+            this.cimitirMormant.HeaderText = "Cimitir";
+            this.cimitirMormant.Name = "cimitirMormant";
+            this.cimitirMormant.ReadOnly = true;
+            this.cimitirMormant.Width = 60;
+            // 
+            // parcelaMormant
+            // 
+            this.parcelaMormant.HeaderText = "Parcela";
+            this.parcelaMormant.Name = "parcelaMormant";
+            this.parcelaMormant.ReadOnly = true;
+            this.parcelaMormant.Width = 50;
+            // 
+            // numarMormant
+            // 
+            this.numarMormant.HeaderText = "Nr mormant";
+            this.numarMormant.Name = "numarMormant";
+            this.numarMormant.ReadOnly = true;
+            this.numarMormant.Width = 50;
+            // 
+            // dataExpirareMormant
+            // 
+            this.dataExpirareMormant.HeaderText = "Data Expirare";
+            this.dataExpirareMormant.Name = "dataExpirareMormant";
+            this.dataExpirareMormant.ReadOnly = true;
+            this.dataExpirareMormant.Width = 70;
+            // 
+            // suprafataMormant
+            // 
+            this.suprafataMormant.HeaderText = "Suprafata";
+            this.suprafataMormant.Name = "suprafataMormant";
+            this.suprafataMormant.ReadOnly = true;
+            this.suprafataMormant.Width = 60;
+            // 
+            // EsteMonument
+            // 
+            this.EsteMonument.HeaderText = "Este Monument";
+            this.EsteMonument.Name = "EsteMonument";
+            this.EsteMonument.ReadOnly = true;
+            // 
+            // cnpMormant
+            // 
+            this.cnpMormant.HeaderText = "CNP Decedat";
+            this.cnpMormant.Name = "cnpMormant";
+            this.cnpMormant.ReadOnly = true;
+            // 
+            // numeMormant
+            // 
+            this.numeMormant.HeaderText = "Nume";
+            this.numeMormant.Name = "numeMormant";
+            this.numeMormant.ReadOnly = true;
+            this.numeMormant.Width = 75;
+            // 
+            // prenumeMormant
+            // 
+            this.prenumeMormant.HeaderText = "Prenume";
+            this.prenumeMormant.Name = "prenumeMormant";
+            this.prenumeMormant.ReadOnly = true;
+            this.prenumeMormant.Width = 75;
+            // 
+            // id
+            // 
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
             // 
             // tabCetateni
             // 
@@ -887,6 +967,71 @@ namespace GraveyardManagement.View
             this.adaugaButton.UseVisualStyleBackColor = true;
             this.adaugaButton.Click += new System.EventHandler(this.adaugaButton_Click);
             // 
+            // tabDecedatiFaraApartinatori
+            // 
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.decedatiFaraApartinatoriGrid);
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.nrAdeverintaText);
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.cautaDupaNrAdeverintaButton);
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.nrSolicitareText);
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.cautaDupaNrSolicitareButton);
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.cnpDecedatFaraApartinatorText);
+            this.tabDecedatiFaraApartinatori.Controls.Add(this.cautaDecedatFaraApartinatoriButton);
+            this.tabDecedatiFaraApartinatori.Location = new System.Drawing.Point(4, 22);
+            this.tabDecedatiFaraApartinatori.Name = "tabDecedatiFaraApartinatori";
+            this.tabDecedatiFaraApartinatori.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDecedatiFaraApartinatori.Size = new System.Drawing.Size(891, 378);
+            this.tabDecedatiFaraApartinatori.TabIndex = 7;
+            this.tabDecedatiFaraApartinatori.Text = "Decedati Fara Apartinatori";
+            this.tabDecedatiFaraApartinatori.UseVisualStyleBackColor = true;
+            // 
+            // decedatiFaraApartinatoriGrid
+            // 
+            this.decedatiFaraApartinatoriGrid.AllowUserToAddRows = false;
+            this.decedatiFaraApartinatoriGrid.AllowUserToDeleteRows = false;
+            this.decedatiFaraApartinatoriGrid.AutoGenerateColumns = false;
+            this.decedatiFaraApartinatoriGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.decedatiFaraApartinatoriGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cNPDecedatDataGridViewTextBoxColumn2,
+            this.nrSolicitareDataGridViewTextBoxColumn,
+            this.nrAdeverintaDataGridViewTextBoxColumn});
+            this.decedatiFaraApartinatoriGrid.DataSource = this.decedatiFaraApartinatoriDTOBindingSource;
+            this.decedatiFaraApartinatoriGrid.Location = new System.Drawing.Point(308, 6);
+            this.decedatiFaraApartinatoriGrid.Name = "decedatiFaraApartinatoriGrid";
+            this.decedatiFaraApartinatoriGrid.ReadOnly = true;
+            this.decedatiFaraApartinatoriGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.decedatiFaraApartinatoriGrid.Size = new System.Drawing.Size(346, 347);
+            this.decedatiFaraApartinatoriGrid.TabIndex = 9;
+            // 
+            // cautaDupaNrAdeverintaButton
+            // 
+            this.cautaDupaNrAdeverintaButton.Location = new System.Drawing.Point(146, 293);
+            this.cautaDupaNrAdeverintaButton.Name = "cautaDupaNrAdeverintaButton";
+            this.cautaDupaNrAdeverintaButton.Size = new System.Drawing.Size(142, 20);
+            this.cautaDupaNrAdeverintaButton.TabIndex = 7;
+            this.cautaDupaNrAdeverintaButton.Text = "Cauta dupa nr adeverinta";
+            this.cautaDupaNrAdeverintaButton.UseVisualStyleBackColor = true;
+            this.cautaDupaNrAdeverintaButton.Click += new System.EventHandler(this.cautaDupaNrAdeverintaButton_Click);
+            // 
+            // cautaDupaNrSolicitareButton
+            // 
+            this.cautaDupaNrSolicitareButton.Location = new System.Drawing.Point(146, 166);
+            this.cautaDupaNrSolicitareButton.Name = "cautaDupaNrSolicitareButton";
+            this.cautaDupaNrSolicitareButton.Size = new System.Drawing.Size(142, 20);
+            this.cautaDupaNrSolicitareButton.TabIndex = 5;
+            this.cautaDupaNrSolicitareButton.Text = "Cauta dupa nr solicitare";
+            this.cautaDupaNrSolicitareButton.UseVisualStyleBackColor = true;
+            this.cautaDupaNrSolicitareButton.Click += new System.EventHandler(this.cautaDupaNrSolicitareButton_Click);
+            // 
+            // cautaDecedatFaraApartinatoriButton
+            // 
+            this.cautaDecedatFaraApartinatoriButton.Location = new System.Drawing.Point(146, 43);
+            this.cautaDecedatFaraApartinatoriButton.Name = "cautaDecedatFaraApartinatoriButton";
+            this.cautaDecedatFaraApartinatoriButton.Size = new System.Drawing.Size(142, 20);
+            this.cautaDecedatFaraApartinatoriButton.TabIndex = 3;
+            this.cautaDecedatFaraApartinatoriButton.Text = "Cauta dupa cnp decedat";
+            this.cautaDecedatFaraApartinatoriButton.UseVisualStyleBackColor = true;
+            this.cautaDecedatFaraApartinatoriButton.Click += new System.EventHandler(this.cautaDecedatFaraApartinatoriButton_Click);
+            // 
             // necropolisDataSet
             // 
             this.necropolisDataSet.DataSetName = "NecropolisDataSet";
@@ -1273,89 +1418,6 @@ namespace GraveyardManagement.View
             this.cnpTextBox.TabIndex = 1;
             this.cnpTextBox.WatermarkText = "CNP Decedat";
             // 
-            // cimitirMormant
-            // 
-            this.cimitirMormant.HeaderText = "Cimitir";
-            this.cimitirMormant.Name = "cimitirMormant";
-            this.cimitirMormant.ReadOnly = true;
-            this.cimitirMormant.Width = 60;
-            // 
-            // parcelaMormant
-            // 
-            this.parcelaMormant.HeaderText = "Parcela";
-            this.parcelaMormant.Name = "parcelaMormant";
-            this.parcelaMormant.ReadOnly = true;
-            this.parcelaMormant.Width = 50;
-            // 
-            // numarMormant
-            // 
-            this.numarMormant.HeaderText = "Nr mormant";
-            this.numarMormant.Name = "numarMormant";
-            this.numarMormant.ReadOnly = true;
-            this.numarMormant.Width = 50;
-            // 
-            // dataExpirareMormant
-            // 
-            this.dataExpirareMormant.HeaderText = "Data Expirare";
-            this.dataExpirareMormant.Name = "dataExpirareMormant";
-            this.dataExpirareMormant.ReadOnly = true;
-            this.dataExpirareMormant.Width = 70;
-            // 
-            // suprafataMormant
-            // 
-            this.suprafataMormant.HeaderText = "Suprafata";
-            this.suprafataMormant.Name = "suprafataMormant";
-            this.suprafataMormant.ReadOnly = true;
-            this.suprafataMormant.Width = 60;
-            // 
-            // EsteMonument
-            // 
-            this.EsteMonument.HeaderText = "Este Monument";
-            this.EsteMonument.Name = "EsteMonument";
-            this.EsteMonument.ReadOnly = true;
-            // 
-            // cnpMormant
-            // 
-            this.cnpMormant.HeaderText = "CNP Decedat";
-            this.cnpMormant.Name = "cnpMormant";
-            this.cnpMormant.ReadOnly = true;
-            // 
-            // tabDecedatiFaraApartinatori
-            // numeMormant
-            // 
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.decedatiFaraApartinatoriGrid);
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.nrAdeverintaText);
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.cautaDupaNrAdeverintaButton);
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.nrSolicitareText);
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.cautaDupaNrSolicitareButton);
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.cnpDecedatFaraApartinatorText);
-            this.tabDecedatiFaraApartinatori.Controls.Add(this.cautaDecedatFaraApartinatoriButton);
-            this.tabDecedatiFaraApartinatori.Location = new System.Drawing.Point(4, 22);
-            this.tabDecedatiFaraApartinatori.Name = "tabDecedatiFaraApartinatori";
-            this.tabDecedatiFaraApartinatori.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDecedatiFaraApartinatori.Size = new System.Drawing.Size(893, 366);
-            this.tabDecedatiFaraApartinatori.TabIndex = 7;
-            this.tabDecedatiFaraApartinatori.Text = "Decedati Fara Apartinatori";
-            this.tabDecedatiFaraApartinatori.UseVisualStyleBackColor = true;
-            // 
-            // decedatiFaraApartinatoriGrid
-            // 
-            this.decedatiFaraApartinatoriGrid.AllowUserToAddRows = false;
-            this.decedatiFaraApartinatoriGrid.AllowUserToDeleteRows = false;
-            this.decedatiFaraApartinatoriGrid.AutoGenerateColumns = false;
-            this.decedatiFaraApartinatoriGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.decedatiFaraApartinatoriGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.cNPDecedatDataGridViewTextBoxColumn2,
-            this.nrSolicitareDataGridViewTextBoxColumn,
-            this.nrAdeverintaDataGridViewTextBoxColumn});
-            this.decedatiFaraApartinatoriGrid.DataSource = this.decedatiFaraApartinatoriDTOBindingSource;
-            this.decedatiFaraApartinatoriGrid.Location = new System.Drawing.Point(308, 6);
-            this.decedatiFaraApartinatoriGrid.Name = "decedatiFaraApartinatoriGrid";
-            this.decedatiFaraApartinatoriGrid.ReadOnly = true;
-            this.decedatiFaraApartinatoriGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.decedatiFaraApartinatoriGrid.Size = new System.Drawing.Size(346, 347);
-            this.decedatiFaraApartinatoriGrid.TabIndex = 9;
-            // 
             // cNPDecedatDataGridViewTextBoxColumn2
             // 
             this.cNPDecedatDataGridViewTextBoxColumn2.DataPropertyName = "CNPDecedat";
@@ -1389,16 +1451,6 @@ namespace GraveyardManagement.View
             this.nrAdeverintaText.TabIndex = 8;
             this.nrAdeverintaText.WatermarkText = "Nr Adeverinta";
             // 
-            // cautaDupaNrAdeverintaButton
-            // 
-            this.cautaDupaNrAdeverintaButton.Location = new System.Drawing.Point(146, 293);
-            this.cautaDupaNrAdeverintaButton.Name = "cautaDupaNrAdeverintaButton";
-            this.cautaDupaNrAdeverintaButton.Size = new System.Drawing.Size(142, 20);
-            this.cautaDupaNrAdeverintaButton.TabIndex = 7;
-            this.cautaDupaNrAdeverintaButton.Text = "Cauta dupa nr adeverinta";
-            this.cautaDupaNrAdeverintaButton.UseVisualStyleBackColor = true;
-            this.cautaDupaNrAdeverintaButton.Click += new System.EventHandler(this.cautaDupaNrAdeverintaButton_Click);
-            // 
             // nrSolicitareText
             // 
             this.nrSolicitareText.Location = new System.Drawing.Point(6, 166);
@@ -1407,16 +1459,6 @@ namespace GraveyardManagement.View
             this.nrSolicitareText.TabIndex = 6;
             this.nrSolicitareText.WatermarkText = "Nr Solicitare";
             // 
-            // cautaDupaNrSolicitareButton
-            // 
-            this.cautaDupaNrSolicitareButton.Location = new System.Drawing.Point(146, 166);
-            this.cautaDupaNrSolicitareButton.Name = "cautaDupaNrSolicitareButton";
-            this.cautaDupaNrSolicitareButton.Size = new System.Drawing.Size(142, 20);
-            this.cautaDupaNrSolicitareButton.TabIndex = 5;
-            this.cautaDupaNrSolicitareButton.Text = "Cauta dupa nr solicitare";
-            this.cautaDupaNrSolicitareButton.UseVisualStyleBackColor = true;
-            this.cautaDupaNrSolicitareButton.Click += new System.EventHandler(this.cautaDupaNrSolicitareButton_Click);
-            // 
             // cnpDecedatFaraApartinatorText
             // 
             this.cnpDecedatFaraApartinatorText.Location = new System.Drawing.Point(6, 43);
@@ -1424,36 +1466,6 @@ namespace GraveyardManagement.View
             this.cnpDecedatFaraApartinatorText.Size = new System.Drawing.Size(134, 20);
             this.cnpDecedatFaraApartinatorText.TabIndex = 4;
             this.cnpDecedatFaraApartinatorText.WatermarkText = "CNP Decedat";
-            // 
-            // cautaDecedatFaraApartinatoriButton
-            // 
-            this.cautaDecedatFaraApartinatoriButton.Location = new System.Drawing.Point(146, 43);
-            this.cautaDecedatFaraApartinatoriButton.Name = "cautaDecedatFaraApartinatoriButton";
-            this.cautaDecedatFaraApartinatoriButton.Size = new System.Drawing.Size(142, 20);
-            this.cautaDecedatFaraApartinatoriButton.TabIndex = 3;
-            this.cautaDecedatFaraApartinatoriButton.Text = "Cauta dupa cnp decedat";
-            this.cautaDecedatFaraApartinatoriButton.UseVisualStyleBackColor = true;
-            this.cautaDecedatFaraApartinatoriButton.Click += new System.EventHandler(this.cautaDecedatFaraApartinatoriButton_Click);
-            // 
-            // 
-            this.numeMormant.HeaderText = "Nume";
-            this.numeMormant.Name = "numeMormant";
-            this.numeMormant.ReadOnly = true;
-            this.numeMormant.Width = 75;
-            // 
-            // prenumeMormant
-            // 
-            this.prenumeMormant.HeaderText = "Prenume";
-            this.prenumeMormant.Name = "prenumeMormant";
-            this.prenumeMormant.ReadOnly = true;
-            this.prenumeMormant.Width = 75;
-            // 
-            // id
-            // 
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
             // 
             // MainForm
             // 
@@ -1488,7 +1500,6 @@ namespace GraveyardManagement.View
             this.tabDecedatiFaraApartinatori.ResumeLayout(false);
             this.tabDecedatiFaraApartinatori.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.decedatiFaraApartinatoriGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.decedatiFaraApartinatoriDTOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.necropolisDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.contractConcesiuneBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statisticaDTOBindingSource)).EndInit();
@@ -1496,6 +1507,7 @@ namespace GraveyardManagement.View
             ((System.ComponentModel.ISupportInitialize)(this.cerereDtoBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.contractDtoBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.programareInmormantareDTOBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.decedatiFaraApartinatoriDTOBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1637,5 +1649,6 @@ namespace GraveyardManagement.View
         private System.Windows.Forms.DataGridViewTextBoxColumn nrSolicitareDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nrAdeverintaDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource decedatiFaraApartinatoriDTOBindingSource;
+        private System.Windows.Forms.CheckBox monumentCheckBox;
     }
 }

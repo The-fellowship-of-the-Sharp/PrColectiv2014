@@ -19,41 +19,6 @@ namespace GraveyardManagement.Model.Mormant
         private IQueryable<MormantDTO> ToateMorminteCuProprietar()
         {
             var morminte = from mmt in entities.Mormant
-                join aloc in entities.AlocareLoc
-                    on mmt.id equals aloc.mormantId
-                join aloccupropr in entities.AlocareCuProprietar
-                    on aloc.id equals aloccupropr.alocareId
-                join contr in entities.ContractConcesiune
-                    on aloc.id equals contr.alocareId
-                join decedat in entities.Persoana
-                on aloc.cnpDecedat equals decedat.cnp
-                select new MormantCuProprietarDTO
-                {
-                    Cimitir = mmt.Cimitir.nume,
-                    Id = mmt.id,
-                    Parcela = mmt.parcela,
-                    NumarMormant = (int) mmt.numar,
-                    EsteMonument = mmt.EsteMonument.HasValue ? (mmt.EsteMonument.Value ? "Da" : "Nu") : "Nu",
-                    DataExpirare = (DateTime) aloc.dataExpirare,
-                    Suprafata = (double) aloc.suprafata,
-                    Poza = aloccupropr.Poza,
-                    CnpDecedat = aloc.cnpDecedat,
-                    NumeDecedat = decedat.nume,
-                    PrenumeDecedat = decedat.prenume,
-                    /*NumeDetinator = det.nume,
-                    PrenumeDetinator = det.prenume,*/
-                    NumarChitanta = (int) aloccupropr.nrChitanta,
-                    NumarContract = (int) contr.numar,
-                    DataEliberareContract = (DateTime) contr.dataEliberare,
-                    /* Domiciliu = new Domiciliu
-                                {
-                                    Localitate = det.Domiciliu.Strada.Localitate.nume,
-                                    Strada = det.Domiciliu.Strada.nume,
-                                    Numar = det.Domiciliu.numar,
-                                    AlteInformatii = det.Domiciliu.alteInformatii
-                                }*/
-                };
-            /*IQueryable<MormantDTO> morminte = from mmt in entities.Mormant
                             join aloc in entities.AlocareLoc
                             on mmt.id equals aloc.mormantId
                             join alocProprietar in entities.AlocareCuProprietar 
@@ -88,8 +53,7 @@ namespace GraveyardManagement.Model.Mormant
                                     Numar = det.Domiciliu.numar,
                                     AlteInformatii = det.Domiciliu.alteInformatii
                                 }
-                            };*/
-            var m = morminte.ToArray();
+                            };
             return morminte;
         }
 
@@ -150,40 +114,59 @@ namespace GraveyardManagement.Model.Mormant
             return mormantCuProp.ToList().Concat(mormantFaraProp.ToList()).ToList();
         }
 
-        public List<MormantDTO> CautaMormantDupaLoc(String cimitir, String parcela, int numar)
+        public List<MormantDTO> CautaMormantDupaLoc(String cimitir, String parcela, int ? numar, Boolean ? monument)
         {
             IQueryable<MormantDTO> faraProprietar;
             IQueryable<MormantDTO> cuProprietar;
             IQueryable<MormantDTO> neatribuit;
-            if (numar != 0)
+
+            var esteMonument = "";
+            if (monument == true)
+                esteMonument = "Da";
+            else
+                esteMonument = "Nu";
+            
+            faraProprietar = this.ToateMorminteFaraProrietar();
+            cuProprietar = this.ToateMorminteCuProprietar();
+            neatribuit = this.ToateMorminteleInclomplete();
+            if (numar != null)
             {
-                faraProprietar = from fara in this.ToateMorminteFaraProrietar()
-                                    where fara.Cimitir.Contains(cimitir) && fara.Parcela.Contains(parcela)
-                                    && fara.NumarMormant.Equals(numar)    
-                                    select fara;
-                cuProprietar = from cu in this.ToateMorminteFaraProrietar()
-                                   where cu.Cimitir.Contains(cimitir) && cu.Parcela.Contains(parcela)
-                                   && cu.NumarMormant.Equals(numar)
-                                   select cu;
-                neatribuit = from neattr in this.ToateMorminteleInclomplete()
-                             where neattr.Cimitir.Contains(cimitir) && neattr.Parcela.Contains(parcela)
-                             && neattr.NumarMormant.Equals(numar)
+                faraProprietar = from fara in faraProprietar
+                                 where fara.NumarMormant.Equals(numar)
+                                 select fara;
+                cuProprietar = from cu in cuProprietar
+                               where cu.NumarMormant.Equals(numar)
+                               select cu;
+                neatribuit = from neattr in neatribuit
+                             where neattr.NumarMormant.Equals(numar)
                              select neattr;
             }
-            else
+            if (monument != null)
             {
-                faraProprietar = from fara in this.ToateMorminteFaraProrietar()
-                                     where fara.Cimitir.Contains(cimitir) && fara.Parcela.Contains(parcela)
-                                     select fara;
-                cuProprietar = from cu in this.ToateMorminteFaraProrietar()
-                                   where cu.Cimitir.Contains(cimitir) && cu.Parcela.Contains(parcela)
-                                   select cu;
-                neatribuit = from neattr in this.ToateMorminteleInclomplete()
-                             where neattr.Cimitir.Contains(cimitir) && neattr.Parcela.Contains(parcela)
-                                 select neattr;
+                faraProprietar = from fara in faraProprietar
+                                 where fara.EsteMonument.Equals(esteMonument)
+                                 select fara;
+                cuProprietar = from cu in cuProprietar
+                               where cu.EsteMonument.Equals(esteMonument)
+                               select cu;
+                neatribuit = from neattr in neatribuit
+                             where neattr.EsteMonument.Equals(esteMonument)
+                             select neattr;
             }
+
+            faraProprietar = from fara in faraProprietar
+                             where fara.Cimitir.Contains(cimitir) && fara.Parcela.Contains(parcela)
+                             select fara;
+            cuProprietar = from cu in cuProprietar
+                           where cu.Cimitir.Contains(cimitir) && cu.Parcela.Contains(parcela)
+                           select cu;
+            neatribuit = from neattr in neatribuit
+                         where neattr.Cimitir.Contains(cimitir) && neattr.Parcela.Contains(parcela)
+                         select neattr;
+
             var result = faraProprietar.ToList().Concat(cuProprietar.ToList()).ToList();
             result = result.Concat(neatribuit.ToList()).ToList();
+
             return result;
         }
         
@@ -222,7 +205,7 @@ namespace GraveyardManagement.Model.Mormant
                             on mmt.id equals aloc.mormantId
                             select aloc.cnpDecedat).First();
             var istoricNou = new EntityFramework.Istoric();
-            istoricNou.numeUtilizator = Global.GlobalVariables.CurrentUser.Name;
+            istoricNou.numeUtilizator = Global.GlobalVariables.CurrentUser.AccountName;
             istoricNou.data = DateTime.Now;
             var detalii = String.Format("MORMANT-ELIBERARE-{0}-{1},{2},{3}", decedatPentruLog, 
                 mormant.Cimitir.nume, mormant.parcela, mormant.numar);

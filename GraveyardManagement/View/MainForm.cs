@@ -15,6 +15,7 @@ using GraveyardManagement.View.Decedat;
 using GraveyardManagement.Model.ModelDecedat;
 using GraveyardManagement.Model.Contract;
 using GraveyardManagement.View.Contract;
+using GraveyardManagement.Utils.Exceptions;
 
 namespace GraveyardManagement.View
 {
@@ -105,7 +106,7 @@ namespace GraveyardManagement.View
             }
             filtruCimitir.DisplayMember = "Name";
             this._mormant = new ControllerMormant();
-            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", null, false));
             morminteView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
@@ -130,7 +131,7 @@ namespace GraveyardManagement.View
                     programariView.DataSource = new[] { programare };
                 }
             }
-            catch (Exception ex)
+            catch (ValidationException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -225,9 +226,9 @@ namespace GraveyardManagement.View
             try
             {
                 _mormant.AdaugaMormant(cimitir.Id, cimitir.Name, parcela, numar, esteMonument);
-                loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+                loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", null, false));
             }
-            catch (System.Exception err)
+            catch (ValidationException err)
             {
                 MessageBox.Show(err.Message);
             }
@@ -251,7 +252,7 @@ namespace GraveyardManagement.View
             string numeCimitir;
             try {
                 numeCimitir = ((Model.Utils.CimitirDTO)filtruCimitir.SelectedItem).Name;
-            } catch(System.Exception err) {
+            } catch(Exception err) {
                 numeCimitir = filtruCimitir.Text;
             }
             try
@@ -259,9 +260,10 @@ namespace GraveyardManagement.View
                 loadIntoMorminte(this._mormant.CautaMormantDupaLoc(
                     numeCimitir,
                     filtruParcela.Text,
-                    (filtruNumar.Text.Length == 0 ? "0" : filtruNumar.Text)));
+                    (filtruNumar.Text.Length == 0 ? null : filtruNumar.Text),
+                    monumentCheckBox.Checked));
             }
-            catch (System.Exception err)
+            catch (ValidationException err)
             {
                 MessageBox.Show(err.Message);
             }
@@ -279,7 +281,7 @@ namespace GraveyardManagement.View
             {
                 MessageBox.Show(@"Mormantul nu are decedat!");
             }
-            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", "0"));
+            loadIntoMorminte(this._mormant.CautaMormantDupaLoc("", "", null, false));
         }
 
         private void loadIntoDecedato(List<Model.ModelDecedat.DecedatDTO> listDecedati)
@@ -480,7 +482,7 @@ namespace GraveyardManagement.View
                 return;
             }
 
-            girdViewContracte.DataSource =  contract ;
+            girdViewContracte.DataSource = new[] { contract };
         }
 
         private void updateContractBtn_Click(object sender, EventArgs e)
@@ -490,7 +492,7 @@ namespace GraveyardManagement.View
 
             var contract = (ContractDto)girdViewContracte.SelectedRows[0].DataBoundItem;
 
-            var form = new ActualizareContract(contract.Numar);
+            var form = new ActualizareCerereForm(contract.Numar);
             form.ShowDialog();
 
             contract = _contractService.CautaContract(contract.Numar);
@@ -507,6 +509,7 @@ namespace GraveyardManagement.View
 
             _contractService.StergeContract(contract.Numar);
 
+            gridViewCereri.DataSource = null;
         }
 
         #endregion
@@ -613,7 +616,7 @@ namespace GraveyardManagement.View
             }
             else
             {
-                MessageBox.Show(@"Va rugam introduceti un CNP!", @"CNP nespecificat",
+                MessageBox.Show(@"Te rog introduce un cnp pentru cautare!", @"Nu este cnp specificat",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -629,13 +632,13 @@ namespace GraveyardManagement.View
                 }
                 catch (FormatException)
                 {
-                    MessageBox.Show(@"Va rugam introduceti un numar valid!", @"Numar invalid",
+                    MessageBox.Show(@"Te rog introduce un numarul pentru cautare!", @"Nu este numar",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show(@"Va rugam introduceti un numar!", @"Numar nespecificat",
+                MessageBox.Show(@"Te rog introduce numarul de solicitare pentru cautare!", @"Nu este numar de solicitare specificat",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -651,13 +654,13 @@ namespace GraveyardManagement.View
                 }
                 catch (FormatException)
                 {
-                    MessageBox.Show(@"Va rugam introduceti un numar valid!", @"Numar invalid",
+                    MessageBox.Show(@"Te rog introduce un numarul pentru cautare!", @"Nu este numar",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show(@"Va rugam introduceti un numar!", @"Numar nespecificat",
+                MessageBox.Show(@"Te rog introduce numarul de adeverinta pentru cautare!", @"Nu este numar de adeverinta specificat",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

@@ -9,9 +9,4 @@ namespace GraveyardManagement.Utils.Exceptions
     public class ConflictCetateanDecedatException : Exception
     {
     }
-
-    public class ValidationException : Exception
-    {
-        public ValidationException(String msg) : base(msg){}
-    }
 }

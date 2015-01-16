@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using GraveyardManagement.Model.Mormant;
+using GraveyardManagement.Utils.Exceptions;
 
 namespace GraveyardManagement.Controller
 {
@@ -27,21 +28,36 @@ namespace GraveyardManagement.Controller
         {
             Regex nonDigit = new Regex(@"[^\d]");
             if (nonDigit.IsMatch(cnp)) {
-                throw new Exception("CNP-ul poate contine numai cifre intre 0 si 9.");
+                throw new ValidationException("CNP-ul poate contine numai cifre intre 0 si 9.");
             }
             return this.model.CautaMormantDupaDecedat(cnp);
         }
 
-        public List<MormantDTO> CautaMormantDupaLoc(String cimitir, String parcela, String numar) 
+        public List<MormantDTO> CautaMormantDupaLoc(String cimitir, String parcela, String numar, Boolean monument) 
         {
             try
             {
-                int validNumber = int.Parse(numar);
-                return this.model.CautaMormantDupaLoc(cimitir, parcela, validNumber);
+                if (numar != "" && numar !=null)
+                {
+                    int validNumber = int.Parse(numar);
+                    return this.model.CautaMormantDupaLoc(cimitir, parcela, validNumber, monument);
+                }
+                else
+                {
+                    if (cimitir != "" || parcela != "")
+                    {
+                        return this.model.CautaMormantDupaLoc(cimitir, parcela, null, monument);
+                    }
+                    else
+                    {
+                        return this.model.CautaMormantDupaLoc(cimitir, parcela, null, null);
+                    }
+
+                }
             }
             catch
             {
-                throw new Exception("Numarul nu poate contine alte caractere in afara de cifre.");
+                throw new ValidationException("Numarul nu poate contine alte caractere in afara de cifre.");
             }
             
         }
@@ -54,11 +70,12 @@ namespace GraveyardManagement.Controller
 
         private void VerificareDuplicat(string cimitir, string parcela, int numar)
         {
-            var morminte = CautaMormantDupaLoc(cimitir, parcela, numar.ToString());
+            var morminte = CautaMormantDupaLoc(cimitir, parcela, numar.ToString(), true);
+            var morminte2 = CautaMormantDupaLoc(cimitir, parcela, numar.ToString(), false);
 
-            if (morminte.Count > 0)
+            if (morminte.Count > 0 || morminte2.Count > 0)
             {
-                throw new Exception(string.Format("Exista deja un mormant in cimitirul {0} pe parcela {1} cu numarul {2}!", 
+                throw new ValidationException(string.Format("Exista deja un mormant in cimitirul {0} pe parcela {1} cu numarul {2}!", 
                     cimitir, parcela, numar));
             }
         }
