@@ -94,7 +94,7 @@ namespace GraveyardManagement.Model.Mormant
             return morminte;
         }
 
-        private IQueryable<MormantDTO> ToateMorminteleInclomplete()
+        private IQueryable<MormantDTO> ToateMorminteleIncomplete()
         {
             var morminte = from mmt in entities.Mormant
                            where mmt.AlocareLoc.Count().Equals(0) || mmt.ProgramareInmormantare.Count().Equals(0)
@@ -144,11 +144,14 @@ namespace GraveyardManagement.Model.Mormant
             var mormantFaraProp = from faraProp in this.ToateMorminteFaraProrietar()
                       where faraProp.CnpDecedat.Equals(cnpDecedat)
                       select faraProp;
-            if (mormantCuProp.Count() == 0 && mormantFaraProp.Count() == 0)
+            var mormantIncomplet = from incomplet in ToateMorminteleIncomplete()
+                where incomplet.CnpDecedat.Equals(cnpDecedat)
+                select incomplet;
+            if (mormantCuProp.Count() == 0 && mormantFaraProp.Count() == 0 && mormantIncomplet.Count() == 0)
             {
                 throw new Exception("Nu s-a gasit niciun decedat cu cnp-ul dat.");    
             }
-            return mormantCuProp.ToList().Concat(mormantFaraProp.ToList()).ToList();
+            return mormantCuProp.ToList().Concat(mormantFaraProp.ToList()).ToList().Concat(mormantIncomplet.ToList()).ToList();
         }
 
         public List<MormantDTO> CautaMormantDupaLoc(String cimitir, String parcela, int numar)
@@ -166,7 +169,7 @@ namespace GraveyardManagement.Model.Mormant
                                    where cu.Cimitir.Contains(cimitir) && cu.Parcela.Contains(parcela)
                                    && cu.NumarMormant.Equals(numar)
                                    select cu;
-                neatribuit = from neattr in this.ToateMorminteleInclomplete()
+                neatribuit = from neattr in this.ToateMorminteleIncomplete()
                              where neattr.Cimitir.Contains(cimitir) && neattr.Parcela.Contains(parcela)
                              && neattr.NumarMormant.Equals(numar)
                              select neattr;
@@ -179,7 +182,7 @@ namespace GraveyardManagement.Model.Mormant
                 cuProprietar = from cu in this.ToateMorminteFaraProrietar()
                                    where cu.Cimitir.Contains(cimitir) && cu.Parcela.Contains(parcela)
                                    select cu;
-                neatribuit = from neattr in this.ToateMorminteleInclomplete()
+                neatribuit = from neattr in this.ToateMorminteleIncomplete()
                              where neattr.Cimitir.Contains(cimitir) && neattr.Parcela.Contains(parcela)
                                  select neattr;
             }

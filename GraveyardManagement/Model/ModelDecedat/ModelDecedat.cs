@@ -62,7 +62,7 @@ namespace GraveyardManagement.Model.ModelDecedat
             };
         }
 
-        public void AtribuieMormant(string cnpDecedat, int cimitirId, string parcela, int numar)
+        public void AtribuieMormant(string cnpDecedat, int cimitirId, string parcela, double suprafata, int numar)
         {
             var mormant = _entities.Mormant.FirstOrDefault(m => m.cimitirId == cimitirId && m.parcela == parcela && m.numar == numar);
 
@@ -80,7 +80,7 @@ namespace GraveyardManagement.Model.ModelDecedat
 
             _entities.AlocareLoc.Add(new AlocareLoc
                 {
-                    suprafata = 4,
+                    suprafata = Convert.ToDecimal(suprafata),
                     dataExpirare = DateTime.Now,
                     mormantId = mormant.id,
                     cnpDecedat = cnpDecedat
